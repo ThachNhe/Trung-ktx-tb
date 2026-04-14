@@ -1,15 +1,17 @@
 // ─── User ─────────────────────────────────────────────────────────────────
 
-export type UserRole = 'admin' | 'user' | 'moderator'
+export type UserRole = 'admin' | 'staff' | 'student'
+export type Gender = 'male' | 'female' | 'other'
 
 export interface User {
   id: string
+  full_name: string
+  student_code: string
   email: string
-  name: string
-  avatar?: string
+  phone: string | null
   role: UserRole
-  createdAt: string
-  updatedAt: string
+  gender: Gender
+  created_at: string
 }
 
 // ─── Pagination ────────────────────────────────────────────────────────────

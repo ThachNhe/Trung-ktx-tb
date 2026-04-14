@@ -53,7 +53,12 @@ class AuthService:
         if not token_data or token_data.get("type") != TokenType.REFRESH.value:
             raise UnauthorizedException(ErrorMessage.TOKEN_INVALID)
 
-        user = await self.user_repo.get_by_id(UUID(str(token_data["sub"])))
+        try:
+            user_id = UUID(str(token_data["sub"]))
+        except (KeyError, TypeError, ValueError):
+            raise UnauthorizedException(ErrorMessage.TOKEN_INVALID) from None
+
+        user = await self.user_repo.get_by_id(user_id)
         if not user:
             raise UnauthorizedException(ErrorMessage.USER_NOT_FOUND)
 

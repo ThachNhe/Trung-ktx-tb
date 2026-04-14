@@ -8,13 +8,14 @@ from app.constants.enums import TokenType, UserRole
 from app.constants.messages import ErrorMessage
 from app.core.database import get_db
 from app.core.exception import ForbiddenException, UnauthorizedException
+from app.core.settings import settings
 from app.models.user import User
 from app.repositories.user import UserRepository
 from app.utils.security import decode_token
 
 
 def _extract_access_token(request: Request) -> str | None:
-    access_token = request.cookies.get("access_token")
+    access_token = request.cookies.get(settings.ACCESS_TOKEN_COOKIE_NAME)
     if access_token:
         return access_token
 
@@ -64,3 +65,9 @@ def require_role(*roles: UserRole):
 
 
 AdminOnly = Depends(require_role(UserRole.ADMIN))
+AdminUser = Annotated[User, Depends(require_role(UserRole.ADMIN))]
+AdminOrStaffUser = Annotated[
+    User,
+    Depends(require_role(UserRole.ADMIN, UserRole.STAFF)),
+]
+StudentUser = Annotated[User, Depends(require_role(UserRole.STUDENT))]

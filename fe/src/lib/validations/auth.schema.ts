@@ -9,12 +9,32 @@ const emailField = z
   .toLowerCase()
   .trim()
 
+const fullNameField = z
+  .string()
+  .min(2, 'Họ và tên phải có ít nhất 2 ký tự')
+  .max(255, 'Họ và tên không được quá 255 ký tự')
+  .trim()
+
+const studentCodeField = z
+  .string()
+  .min(3, 'Mã sinh viên không hợp lệ')
+  .max(32, 'Mã sinh viên không được quá 32 ký tự')
+  .trim()
+
+const phoneField = z
+  .string()
+  .min(9, 'Số điện thoại không hợp lệ')
+  .max(20, 'Số điện thoại không hợp lệ')
+  .trim()
+
 const passwordField = z
   .string()
   .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
   .max(100, 'Mật khẩu không được quá 100 ký tự')
   .regex(/[A-Z]/, 'Mật khẩu phải có ít nhất 1 chữ hoa')
   .regex(/[0-9]/, 'Mật khẩu phải có ít nhất 1 số')
+
+const genderField = z.enum(['male', 'female', 'other'])
 
 // ─── Schemas ───────────────────────────────────────────────────────────────
 
@@ -25,12 +45,11 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
-    name: z
-      .string()
-      .min(2, 'Tên phải có ít nhất 2 ký tự')
-      .max(50, 'Tên không được quá 50 ký tự')
-      .trim(),
+    full_name: fullNameField,
+    student_code: studentCodeField,
     email: emailField,
+    phone: phoneField,
+    gender: genderField,
     password: passwordField,
     confirmPassword: z.string().min(1, 'Vui lòng xác nhận mật khẩu'),
   })

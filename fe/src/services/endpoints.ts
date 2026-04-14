@@ -16,24 +16,5 @@ export const API_ENDPOINTS = {
     LOGOUT: '/auth/logout',
     REFRESH: '/auth/refresh',
     ME: '/auth/me',
-    FORGOT_PASSWORD: '/auth/forgot-password',
-    RESET_PASSWORD: '/auth/reset-password',
   },
-
-  // ─── Users ───────────────────────────────────────────────────────────────
-  USERS: {
-    LIST: '/users',
-    BY_ID: (id: string) => `/users/${id}`,
-    CREATE: '/users',
-    UPDATE: (id: string) => `/users/${id}`,
-    DELETE: (id: string) => `/users/${id}`,
-    AVATAR: (id: string) => `/users/${id}/avatar`,
-  },
-
-  // ─── Add more domains below ───────────────────────────────────────────────
-  // PRODUCTS: {
-  //   LIST: '/products',
-  //   BY_ID: (id: string) => `/products/${id}`,
-  //   ...
-  // },
 } as const

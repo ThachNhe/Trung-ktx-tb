@@ -10,10 +10,14 @@ services:
       - .:/app
     env_file:
       - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:password@db:5432/ktx_tb
+      JWT_SECRET_KEY: dev-jwt-secret-key
+      SECRET_KEY: dev-secret-key
+      APP_ENV: development
+      DEBUG: "true"
     depends_on:
       db:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     restart: unless-stopped
     networks:
@@ -25,34 +29,22 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: fastapi_db
+      POSTGRES_DB: ktx_tb
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
       - app_network
 
-  redis:
-    image: redis:7-alpine
-    container_name: fastapi_redis
-    ports:
-      - "6379:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-    networks:
-      - app_network
-
 volumes:
   postgres_data:
+
 
 networks:
   app_network:

@@ -1,37 +1,29 @@
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2, LogIn } from 'lucide-react'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { loginSchema } from '@/lib/validations/auth.schema'
-import { ROUTES } from '@/lib/constants'
 import { useLogin } from '../hooks/useLogin'
 import type { LoginFormValues } from '../types/auth.types'
 
-export function LoginForm() {
+interface LoginFormProps {
+  onSwitchToRegister: () => void
+}
+
+export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
-  const { mutate: login, isPending } = useLogin()
+  const { mutate: login, isPending, error } = useLogin()
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false,
     },
   })
 
@@ -39,19 +31,20 @@ export function LoginForm() {
     login(values)
   }
 
+  const errorMessage = error instanceof Error ? error.message : null
+
   return (
-    <Card className="w-full max-w-md shadow-lg">
-      <CardHeader className="space-y-1 text-center">
-        <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
-        <CardDescription>
-          Nhập thông tin đăng nhập của bạn để tiếp tục
+    <Card className="w-full border-emerald-200/70 bg-white/90 shadow-[0_24px_80px_-24px_rgba(15,23,42,0.35)] backdrop-blur">
+      <CardHeader className="space-y-2 text-left">
+        <CardTitle className="text-2xl font-bold text-slate-950">Đăng nhập</CardTitle>
+        <CardDescription className="text-slate-600">
+          Dùng email sinh viên để truy cập hệ thống quản lý ký túc xá.
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Email */}
             <FormField
               control={form.control}
               name="email"
@@ -61,7 +54,7 @@ export function LoginForm() {
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="you@example.com"
+                      placeholder="sinhvien@utb.edu.vn"
                       autoComplete="email"
                       disabled={isPending}
                       {...field}
@@ -72,21 +65,12 @@ export function LoginForm() {
               )}
             />
 
-            {/* Password */}
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel>Mật khẩu</FormLabel>
-                    <Link
-                      to={ROUTES.FORGOT_PASSWORD}
-                      className="text-sm text-primary hover:underline"
-                    >
-                      Quên mật khẩu?
-                    </Link>
-                  </div>
+                  <FormLabel>Mật khẩu</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -99,15 +83,11 @@ export function LoginForm() {
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPassword((p) => !p)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={() => setShowPassword((value) => !value)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-900"
                         tabIndex={-1}
                       >
-                        {showPassword ? (
-                          <EyeOff className="size-4" />
-                        ) : (
-                          <Eye className="size-4" />
-                        )}
+                        {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                       </button>
                     </div>
                   </FormControl>
@@ -116,27 +96,13 @@ export function LoginForm() {
               )}
             />
 
-            {/* Remember me */}
-            <FormField
-              control={form.control}
-              name="rememberMe"
-              render={({ field }) => (
-                <FormItem className="flex items-center gap-2 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormLabel className="font-normal cursor-pointer">
-                    Ghi nhớ đăng nhập
-                  </FormLabel>
-                </FormItem>
-              )}
-            />
+            {errorMessage ? (
+              <p className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+                {errorMessage}
+              </p>
+            ) : null}
 
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800" disabled={isPending}>
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />
@@ -153,16 +119,10 @@ export function LoginForm() {
         </Form>
       </CardContent>
 
-      <CardFooter className="justify-center">
-        <p className="text-sm text-muted-foreground">
-          Chưa có tài khoản?{' '}
-          <Link
-            to={ROUTES.REGISTER}
-            className="font-medium text-primary hover:underline"
-          >
-            Đăng ký ngay
-          </Link>
-        </p>
+      <CardFooter className="justify-center border-t border-slate-200/80 pt-6">
+        <Button type="button" variant="ghost" className="text-slate-600 hover:text-slate-950" onClick={onSwitchToRegister}>
+          Chưa có tài khoản? Đăng ký ngay
+        </Button>
       </CardFooter>
     </Card>
   )

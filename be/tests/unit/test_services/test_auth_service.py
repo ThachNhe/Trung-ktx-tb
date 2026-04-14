@@ -94,7 +94,7 @@ class TestLoginService:
                 LoginRequest(email="user@example.com", password="wrong_password")
             )
 
-    async def test_login_banned_user_raises(self):
+    async def test_login_success_for_active_user(self):
         db = AsyncMock()
         service = AuthService(db)
         service.user_repo = AsyncMock()

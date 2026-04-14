@@ -5,13 +5,12 @@ import type { User } from '@/types/common.types'
 interface AuthState {
   // State
   user: User | null
-  token: string | null
   isAuthenticated: boolean
 
   // Actions
-  setUser: (user: User) => void
-  setToken: (token: string) => void
-  login: (user: User, token: string) => void
+  setUser: (user: User | null) => void
+  setAuthenticated: (value: boolean) => void
+  login: (user: User) => void
   logout: () => void
   updateUser: (partial: Partial<User>) => void
 }
@@ -22,20 +21,20 @@ export const useAuthStore = create<AuthState>()(
       (set) => ({
         // Initial state
         user: null,
-        token: null,
         isAuthenticated: false,
 
         // Actions
         setUser: (user) => set({ user }, false, 'auth/setUser'),
 
-        setToken: (token) => set({ token }, false, 'auth/setToken'),
+        setAuthenticated: (value) =>
+          set({ isAuthenticated: value }, false, 'auth/setAuthenticated'),
 
-        login: (user, token) =>
-          set({ user, token, isAuthenticated: true }, false, 'auth/login'),
+        login: (user) =>
+          set({ user, isAuthenticated: true }, false, 'auth/login'),
 
         logout: () =>
           set(
-            { user: null, token: null, isAuthenticated: false },
+            { user: null, isAuthenticated: false },
             false,
             'auth/logout',
           ),
@@ -51,10 +50,9 @@ export const useAuthStore = create<AuthState>()(
       }),
       {
         name: 'auth-storage',
-        // Chỉ persist những field cần thiết
+        // Chỉ persist trạng thái phiên, không lưu token
         partialize: (state) => ({
           user: state.user,
-          token: state.token,
           isAuthenticated: state.isAuthenticated,
         }),
       },

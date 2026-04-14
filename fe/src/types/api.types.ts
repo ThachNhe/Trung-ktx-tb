@@ -1,11 +1,11 @@
-import type { PaginationMeta } from './common.types'
+import type { Gender, PaginationMeta, User } from './common.types'
 
 // ─── Base API Response ─────────────────────────────────────────────────────
 
 export interface ApiResponse<T = unknown> {
-  data: T
-  message: string
   success: boolean
+  message: string
+  data: T
 }
 
 export interface ApiErrorResponse {
@@ -18,10 +18,10 @@ export interface ApiErrorResponse {
 // ─── Paginated Response ────────────────────────────────────────────────────
 
 export interface PaginatedResponse<T = unknown> {
+  success: boolean
+  message: string
   data: T[]
   meta: PaginationMeta
-  message: string
-  success: boolean
 }
 
 // ─── Auth ──────────────────────────────────────────────────────────────────
@@ -32,24 +32,38 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  accessToken: string
-  refreshToken: string
-  expiresIn: number
+  user: User
+  tokens: TokenResponse
 }
 
 export interface RegisterRequest {
-  name: string
+  full_name: string
+  student_code: string
   email: string
   password: string
+  phone?: string | null
+  gender: Gender
 }
 
 export interface RefreshTokenRequest {
-  refreshToken: string
+  refresh_token?: string
 }
 
 export interface RefreshTokenResponse {
-  accessToken: string
-  expiresIn: number
+  access_token: string
+  refresh_token: string
+  token_type: string
+}
+
+export interface TokenResponse {
+  access_token: string
+  refresh_token: string
+  token_type: string
+}
+
+export interface AuthResponse {
+  user: User
+  tokens: TokenResponse
 }
 
 // ─── Query Params helper ───────────────────────────────────────────────────

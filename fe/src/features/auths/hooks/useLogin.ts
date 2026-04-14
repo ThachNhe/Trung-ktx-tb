@@ -1,38 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from '@tanstack/react-router'
+import { useEffect } from 'react'
+
 import { useAuthStore } from '@/stores/useAuthStore'
-import { useUIStore } from '@/stores/useUIStore'
-import { QUERY_KEYS, ROUTES } from '@/lib/constants'
-import { authService } from '../services/auth.service.ts'
-import type { LoginFormValues, RegisterFormValues } from '../types/auth.types.ts'
+import { QUERY_KEYS } from '@/lib/constants'
+import { authService } from '../services/auth.service'
+import type { LoginFormValues, RegisterFormValues } from '../types/auth.types'
 
 // ─── useLogin ──────────────────────────────────────────────────────────────
 
 export function useLogin() {
-  const { login } = useAuthStore()
-  const { addToast } = useUIStore()
-  const router = useRouter()
+  const login = useAuthStore((state) => state.login)
 
   return useMutation({
-    mutationFn: ({ email, password }: LoginFormValues) =>
-      authService.login({ email, password }),
+    mutationFn: (values: LoginFormValues) => authService.login(values),
 
     onSuccess: (data) => {
-      login(data.user, data.accessToken)
-      addToast({
-        type: 'success',
-        title: 'Đăng nhập thành công',
-        description: `Chào mừng trở lại, ${data.user.name}!`,
-      })
-      router.navigate({ to: ROUTES.DASHBOARD })
-    },
-
-    onError: (error: Error) => {
-      addToast({
-        type: 'error',
-        title: 'Đăng nhập thất bại',
-        description: error.message ?? 'Email hoặc mật khẩu không đúng',
-      })
+      login(data.user)
     },
   })
 }
@@ -40,28 +23,21 @@ export function useLogin() {
 // ─── useRegister ───────────────────────────────────────────────────────────
 
 export function useRegister() {
-  const { addToast } = useUIStore()
-  const router = useRouter()
+  const login = useAuthStore((state) => state.login)
 
   return useMutation({
-    mutationFn: ({ name, email, password }: RegisterFormValues) =>
-      authService.register({ name, email, password }),
+    mutationFn: (values: RegisterFormValues) =>
+      authService.register({
+        full_name: values.full_name,
+        student_code: values.student_code,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+        gender: values.gender,
+      }),
 
-    onSuccess: () => {
-      addToast({
-        type: 'success',
-        title: 'Đăng ký thành công',
-        description: 'Vui lòng kiểm tra email để xác nhận tài khoản.',
-      })
-      router.navigate({ to: ROUTES.LOGIN })
-    },
-
-    onError: (error: Error) => {
-      addToast({
-        type: 'error',
-        title: 'Đăng ký thất bại',
-        description: error.message ?? 'Đã xảy ra lỗi, vui lòng thử lại',
-      })
+    onSuccess: (data) => {
+      login(data.user)
     },
   })
 }
@@ -70,26 +46,14 @@ export function useRegister() {
 
 export function useLogout() {
   const { logout } = useAuthStore()
-  const { addToast } = useUIStore()
   const queryClient = useQueryClient()
-  const router = useRouter()
 
   return useMutation({
     mutationFn: authService.logout,
 
     onSettled: () => {
-      // Always clear local state regardless of server response
       logout()
       queryClient.clear()
-      router.navigate({ to: ROUTES.LOGIN })
-    },
-
-    onError: () => {
-      addToast({
-        type: 'error',
-        title: 'Lỗi đăng xuất',
-        description: 'Phiên của bạn đã được xóa cục bộ.',
-      })
     },
   })
 }
@@ -97,16 +61,31 @@ export function useLogout() {
 // ─── useMe ─────────────────────────────────────────────────────────────────
 
 export function useMe() {
-  const { isAuthenticated, setUser } = useAuthStore()
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const setUser = useAuthStore((state) => state.setUser)
+  const setAuthenticated = useAuthStore((state) => state.setAuthenticated)
+  const logout = useAuthStore((state) => state.logout)
 
-  return useQuery({
+  const query = useQuery({
     queryKey: QUERY_KEYS.AUTH.ME,
-    queryFn: async () => {
-      const user = await authService.getMe()
-      setUser(user) // keep store in sync
-      return user
-    },
+    queryFn: () => authService.getMe(),
     enabled: isAuthenticated,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: 0,
+    staleTime: 1000 * 60 * 5,
   })
+
+  useEffect(() => {
+    if (query.data) {
+      setUser(query.data)
+      setAuthenticated(true)
+    }
+  }, [query.data, setAuthenticated, setUser])
+
+  useEffect(() => {
+    if (query.error) {
+      logout()
+    }
+  }, [logout, query.error])
+
+  return query
 }

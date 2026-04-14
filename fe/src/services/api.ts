@@ -1,13 +1,16 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/stores/useAuthStore'
-import type { ApiErrorResponse, RefreshTokenResponse } from '@/types/api.types'
+import type { ApiErrorResponse, ApiResponse, TokenResponse } from '@/types/api.types'
 import { API_ENDPOINTS } from './endpoints'
 
 // ─── Axios Instance ────────────────────────────────────────────────────────
 
+const baseURL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL,
   timeout: 15000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -17,33 +20,20 @@ export const api = axios.create({
 
 let isRefreshing = false
 let failedQueue: Array<{
-  resolve: (token: string) => void
+  resolve: () => void
   reject: (err: unknown) => void
 }> = []
 
-const processQueue = (error: unknown, token: string | null = null) => {
+const processQueue = (error: unknown) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error)
     } else {
-      prom.resolve(token!)
+      prom.resolve()
     }
   })
   failedQueue = []
 }
-
-// ─── Request Interceptor ───────────────────────────────────────────────────
-
-api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = useAuthStore.getState().token
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => Promise.reject(error),
-)
 
 // ─── Response Interceptor ──────────────────────────────────────────────────
 
@@ -54,45 +44,36 @@ api.interceptors.response.use(
       _retry?: boolean
     }
 
-    // Handle 401 - attempt token refresh
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Handle 401 - attempt token refresh bằng cookie
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH)
+    ) {
       if (isRefreshing) {
-        // Queue requests while refreshing
         return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject })
-        })
-          .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`
-            return api(originalRequest)
+          failedQueue.push({
+            resolve: () => resolve(api(originalRequest)),
+            reject,
           })
+        })
           .catch((err) => Promise.reject(err))
       }
 
       originalRequest._retry = true
       isRefreshing = true
 
-      const storedToken = localStorage.getItem('auth-storage')
-      const refreshToken = storedToken
-        ? JSON.parse(storedToken)?.state?.token
-        : null
-
-      if (!refreshToken) {
-        useAuthStore.getState().logout()
-        return Promise.reject(error)
-      }
-
       try {
-        const { data } = await axios.post<RefreshTokenResponse>(
-          `${import.meta.env.VITE_API_URL}${API_ENDPOINTS.AUTH.REFRESH}`,
-          { refreshToken },
+        await axios.post<ApiResponse<TokenResponse>>(
+          `${baseURL}${API_ENDPOINTS.AUTH.REFRESH}`,
+          {},
+          { withCredentials: true },
         )
 
-        useAuthStore.getState().setToken(data.accessToken)
-        processQueue(null, data.accessToken)
-        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
+        processQueue(null)
         return api(originalRequest)
       } catch (refreshError) {
-        processQueue(refreshError, null)
+        processQueue(refreshError)
         useAuthStore.getState().logout()
         return Promise.reject(refreshError)
       } finally {

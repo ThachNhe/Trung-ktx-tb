@@ -3,20 +3,37 @@ import { z } from 'zod'
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
+const fullNameField = z
+  .string()
+  .min(2, 'Họ và tên phải có ít nhất 2 ký tự')
+  .max(255, 'Họ và tên không được quá 255 ký tự')
+  .trim()
+
+const studentCodeField = z
+  .string()
+  .min(3, 'Mã sinh viên không hợp lệ')
+  .max(32, 'Mã sinh viên không được quá 32 ký tự')
+  .trim()
+
+const phoneField = z
+  .string()
+  .min(9, 'Số điện thoại không hợp lệ')
+  .max(20, 'Số điện thoại không hợp lệ')
+  .trim()
+
 // ─── Schemas ───────────────────────────────────────────────────────────────
 
 export const updateProfileSchema = z.object({
-  name: z
-    .string()
-    .min(2, 'Tên phải có ít nhất 2 ký tự')
-    .max(50, 'Tên không được quá 50 ký tự')
-    .trim(),
+  full_name: fullNameField,
+  student_code: studentCodeField,
   email: z
     .string()
     .min(1, 'Email là bắt buộc')
     .email('Email không hợp lệ')
     .toLowerCase()
     .trim(),
+  phone: phoneField,
+  gender: z.enum(['male', 'female', 'other']),
 })
 
 export const changePasswordSchema = z
@@ -51,9 +68,12 @@ export const uploadAvatarSchema = z.object({
 // ─── Admin: Create/Edit User ───────────────────────────────────────────────
 
 export const createUserSchema = z.object({
-  name: z.string().min(2).max(50).trim(),
+  full_name: fullNameField,
+  student_code: studentCodeField,
   email: z.string().email().toLowerCase().trim(),
-  role: z.enum(['admin', 'user', 'moderator']),
+  phone: phoneField,
+  gender: z.enum(['male', 'female', 'other']),
+  role: z.enum(['admin', 'staff', 'student']),
   password: z.string().min(8),
 })
 

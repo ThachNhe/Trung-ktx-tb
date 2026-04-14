@@ -1,12 +1,13 @@
 
-import type { User } from '@/types/common.types'
+import type { Gender, User } from '@/types/common.types'
+import type { AuthResponse, LoginRequest, TokenResponse } from '@/types/api.types'
 
 // ─── Auth State ────────────────────────────────────────────────────────────
 
 export interface AuthTokens {
-  accessToken: string
-  refreshToken: string
-  expiresIn: number
+  access_token: string
+  refresh_token: string
+  token_type: string
 }
 
 export interface AuthSession {
@@ -19,13 +20,15 @@ export interface AuthSession {
 export interface LoginFormValues {
   email: string
   password: string
-  rememberMe?: boolean
 }
 
 export interface RegisterFormValues {
-  name: string
+  full_name: string
+  student_code: string
   email: string
   password: string
+  phone: string
+  gender: Gender
   confirmPassword: string
 }
 
@@ -41,19 +44,12 @@ export interface ResetPasswordFormValues {
 
 // ─── API Payloads ──────────────────────────────────────────────────────────
 
-export type LoginPayload = Omit<LoginFormValues, 'rememberMe'>
+export type LoginPayload = LoginRequest
 export type RegisterPayload = Omit<RegisterFormValues, 'confirmPassword'>
 
 // ─── API Responses ─────────────────────────────────────────────────────────
 
-export interface LoginApiResponse {
-  user: User
-  accessToken: string
-  refreshToken: string
-  expiresIn: number
-}
+export type LoginApiResponse = AuthResponse
+export type RegisterApiResponse = AuthResponse
 
-export interface RegisterApiResponse {
-  user: User
-  message: string
-}
+export type { TokenResponse }
