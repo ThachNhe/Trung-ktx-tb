@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import {
     DataTable,
+    ErrorState,
     LoadingState,
     PageHeader,
     PaginationControls,
@@ -24,9 +25,9 @@ export const Route = createFileRoute('/staff/maintenance')({
 
 function StaffMaintenance() {
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+    const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
 
-    const { data, isPending } = useMaintenance({ page, limit })
+    const { data, isPending, error } = useMaintenance({ page, limit })
     const { mutate: updateStatus } = useUpdateMaintenanceStatus()
     const toast = useToast()
 
@@ -106,7 +107,9 @@ function StaffMaintenance() {
             />
 
             <SectionCard title="Danh sách yêu cầu">
-                {isPending ? (
+                {error ? (
+                    <ErrorState description={error.message} />
+                ) : isPending ? (
                     <LoadingState />
                 ) : (
                     <div className="space-y-4">

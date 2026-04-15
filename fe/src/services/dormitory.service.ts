@@ -11,9 +11,12 @@ import type {
   CreateNotificationPayload,
   CreateRegistrationPayload,
   CreateRoomPayload,
+  AvailableRoomQueryParams,
   InvoicesPage,
   ListQueryParams,
   MaintenancePage,
+  MonthlyReport,
+  MonthlyReportQueryParams,
   NotificationsPage,
   RegistrationsPage,
   RoomsPage,
@@ -55,6 +58,17 @@ export const dormitoryService = {
         cleanObject(params ?? {}),
       ),
       'Không thể tải danh sách phòng',
+    ),
+
+  listAvailableRooms: async (
+    params?: AvailableRoomQueryParams,
+  ): Promise<RoomsPage> =>
+    executeRequest(
+      apiGet<ApiResponse<RoomsPage>>(
+        API_ENDPOINTS.ROOMS.AVAILABLE,
+        cleanObject(params ?? {}),
+      ),
+      'Không thể tải danh sách phòng còn chỗ',
     ),
 
   createRoom: async (payload: CreateRoomPayload): Promise<Room> =>
@@ -194,5 +208,16 @@ export const dormitoryService = {
         payload,
       ),
       'Không thể tạo thông báo',
+    ),
+
+  getMonthlyReport: async (
+    params: MonthlyReportQueryParams,
+  ): Promise<MonthlyReport> =>
+    executeRequest(
+      apiGet<ApiResponse<MonthlyReport>>(
+        API_ENDPOINTS.REPORTS.MONTHLY,
+        cleanObject(params),
+      ),
+      'Không thể tải báo cáo tháng',
     ),
 }

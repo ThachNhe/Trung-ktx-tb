@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { ClipboardList, BedDouble, Receipt } from 'lucide-react'
 
 import {
+    ErrorState,
     LoadingState,
     MetricCard,
     PageHeader,
@@ -21,9 +22,9 @@ export const Route = createFileRoute('/staff/dashboard')({
 })
 
 function StaffDashboard() {
-    const { rooms, isLoading: isLoadingRooms } = useAllRooms('all')
-    const { data: registrationsData, isPending: isLoadingRegistrations } = useRegistrations({ page: 1, limit: 5 })
-    const { data: invoicesData, isPending: isLoadingInvoices } = useInvoices({ page: 1, limit: 5 })
+    const { rooms, isLoading: isLoadingRooms, error: roomsError } = useAllRooms('all')
+    const { data: registrationsData, isPending: isLoadingRegistrations, error: registrationsError } = useRegistrations({ page: 1, limit: 5 })
+    const { data: invoicesData, isPending: isLoadingInvoices, error: invoicesError } = useInvoices({ page: 1, limit: 5 })
 
     const allRegistrations = registrationsData?.items ?? []
     const allInvoices = invoicesData?.items ?? []
@@ -31,6 +32,10 @@ function StaffDashboard() {
     const availableRooms = rooms.filter((r) => r.status === 'available').length
     const pendingRegistrations = allRegistrations.filter((r) => r.status === 'pending').length
     const unpaidInvoices = allInvoices.filter((i) => i.status === 'unpaid').length
+
+    if (roomsError || registrationsError || invoicesError) {
+        return <ErrorState description={(roomsError ?? registrationsError ?? invoicesError)?.message} />
+    }
 
     if (isLoadingRooms || isLoadingRegistrations) return <LoadingState />
 

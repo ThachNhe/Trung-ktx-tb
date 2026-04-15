@@ -23,6 +23,7 @@ from app.schemas.maintenance import (
 )
 from app.schemas.notification import CreateNotificationRequest, NotificationResponse
 from app.schemas.registration import CreateRegistrationRequest, RegistrationResponse
+from app.schemas.report import MonthlyBuildingReportResponse, MonthlyReportResponse
 
 __all__ = [
     "BaseResponse",
@@ -53,4 +54,6 @@ __all__ = [
     "MaintenanceResponse",
     "CreateNotificationRequest",
     "NotificationResponse",
+    "MonthlyBuildingReportResponse",
+    "MonthlyReportResponse",
 ]

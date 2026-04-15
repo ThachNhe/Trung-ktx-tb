@@ -23,6 +23,7 @@ export const API_ENDPOINTS = {
   ROOMS: {
     CREATE: '/rooms',
     UPDATE_STATUS: (roomId: number) => `/rooms/${roomId}`,
+    AVAILABLE: '/rooms/available',
   },
   REGISTRATIONS: {
     LIST: '/registrations',
@@ -44,5 +45,8 @@ export const API_ENDPOINTS = {
   NOTIFICATIONS: {
     LIST_MY: '/notifications/me',
     CREATE: '/notifications',
+  },
+  REPORTS: {
+    MONTHLY: '/reports/monthly',
   },
 } as const

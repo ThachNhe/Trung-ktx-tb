@@ -2,13 +2,14 @@ import { createFileRoute } from '@tanstack/react-router'
 import { BedDouble, Building2, Users, TrendingUp } from 'lucide-react'
 
 import {
+    ErrorState,
     LoadingState,
     MetricCard,
     OccupancyChart,
     PageHeader,
     SectionCard,
 } from '@/features/dormitory/components/dormitory-ui'
-import { useAllRooms, useBuildings, useRegistrations } from '@/hooks/useDormitory'
+import { useAllRooms, useRegistrations } from '@/hooks/useDormitory'
 import { buildOccupancyByBuilding, uniqueApprovedRegistrations } from '@/lib/dormitory'
 
 export const Route = createFileRoute('/admin/dashboard')({
@@ -16,8 +17,8 @@ export const Route = createFileRoute('/admin/dashboard')({
 })
 
 function AdminDashboard() {
-    const { buildingsQuery, rooms, isLoading } = useAllRooms('all')
-    const { data: registrationsData, isPending: isLoadingReg } = useRegistrations({ page: 1, limit: 100 })
+    const { buildingsQuery, rooms, isLoading, error: roomsError } = useAllRooms('all')
+    const { data: registrationsData, isPending: isLoadingReg, error: registrationsError } = useRegistrations({ page: 1, limit: 100 })
 
     const buildings = buildingsQuery.data?.items ?? []
     const allRegistrations = registrationsData?.items ?? []
@@ -29,6 +30,14 @@ function AdminDashboard() {
     const occupancyRate = totalCapacity > 0 ? Math.round((occupiedBeds / totalCapacity) * 100) : 0
 
     const occupancyItems = buildOccupancyByBuilding(buildings, rooms)
+
+    if (roomsError || registrationsError) {
+        return (
+            <ErrorState
+                description={(roomsError ?? registrationsError)?.message}
+            />
+        )
+    }
 
     if (isLoading || isLoadingReg) return <LoadingState />
 

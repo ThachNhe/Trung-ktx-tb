@@ -8,6 +8,7 @@ import {
 import { PAGINATION, QUERY_KEYS } from '@/lib/constants'
 import { dormitoryService } from '@/services/dormitory.service'
 import type {
+  AvailableRoomQueryParams,
   CreateBuildingPayload,
   CreateInvoicePayload,
   CreateMaintenancePayload,
@@ -15,6 +16,7 @@ import type {
   CreateRegistrationPayload,
   CreateRoomPayload,
   ListQueryParams,
+  MonthlyReportQueryParams,
   UpdateMaintenanceStatusPayload,
   UpdateRoomStatusPayload,
 } from '@/types/api.types'
@@ -56,6 +58,17 @@ export function useRoomsByBuilding(
   return useQuery({
     queryKey: QUERY_KEYS.ROOMS.BY_BUILDING(buildingId, params),
     queryFn: () => dormitoryService.listRoomsByBuilding(buildingId, params),
+    enabled,
+  })
+}
+
+export function useAvailableRooms(
+  params: AvailableRoomQueryParams = LARGE_COLLECTION_PARAMS,
+  enabled = true,
+) {
+  return useQuery({
+    queryKey: QUERY_KEYS.ROOMS.AVAILABLE(params),
+    queryFn: () => dormitoryService.listAvailableRooms(params),
     enabled,
   })
 }
@@ -270,5 +283,12 @@ export function useCreateNotification() {
         queryKey: QUERY_KEYS.NOTIFICATIONS.ROOT,
       })
     },
+  })
+}
+
+export function useMonthlyReport(params: MonthlyReportQueryParams) {
+  return useQuery({
+    queryKey: QUERY_KEYS.REPORTS.MONTHLY(params),
+    queryFn: () => dormitoryService.getMonthlyReport(params),
   })
 }

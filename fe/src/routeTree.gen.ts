@@ -26,6 +26,7 @@ import { Route as StaffInvoicesRouteImport } from './routes/staff/invoices'
 import { Route as StaffDashboardRouteImport } from './routes/staff/dashboard'
 import { Route as AdminStudentsRouteImport } from './routes/admin/students'
 import { Route as AdminRoomsRouteImport } from './routes/admin/rooms'
+import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminNotificationsRouteImport } from './routes/admin/notifications'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminBuildingsRouteImport } from './routes/admin/buildings'
@@ -115,6 +116,11 @@ const AdminRoomsRoute = AdminRoomsRouteImport.update({
   path: '/rooms',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/admin/buildings': typeof AdminBuildingsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/rooms': typeof AdminRoomsRoute
   '/admin/students': typeof AdminStudentsRoute
   '/staff/dashboard': typeof StaffDashboardRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/admin/buildings': typeof AdminBuildingsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/rooms': typeof AdminRoomsRoute
   '/admin/students': typeof AdminStudentsRoute
   '/staff/dashboard': typeof StaffDashboardRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/admin/buildings': typeof AdminBuildingsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/rooms': typeof AdminRoomsRoute
   '/admin/students': typeof AdminStudentsRoute
   '/staff/dashboard': typeof StaffDashboardRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/admin/buildings'
     | '/admin/dashboard'
     | '/admin/notifications'
+    | '/admin/reports'
     | '/admin/rooms'
     | '/admin/students'
     | '/staff/dashboard'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/admin/buildings'
     | '/admin/dashboard'
     | '/admin/notifications'
+    | '/admin/reports'
     | '/admin/rooms'
     | '/admin/students'
     | '/staff/dashboard'
@@ -254,6 +265,7 @@ export interface FileRouteTypes {
     | '/admin/buildings'
     | '/admin/dashboard'
     | '/admin/notifications'
+    | '/admin/reports'
     | '/admin/rooms'
     | '/admin/students'
     | '/staff/dashboard'
@@ -397,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRoomsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/notifications': {
       id: '/admin/notifications'
       path: '/notifications'
@@ -425,6 +444,7 @@ interface AdminRouteChildren {
   AdminBuildingsRoute: typeof AdminBuildingsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminNotificationsRoute: typeof AdminNotificationsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminRoomsRoute: typeof AdminRoomsRoute
   AdminStudentsRoute: typeof AdminStudentsRoute
 }
@@ -433,6 +453,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminBuildingsRoute: AdminBuildingsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminNotificationsRoute: AdminNotificationsRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminRoomsRoute: AdminRoomsRoute,
   AdminStudentsRoute: AdminStudentsRoute,
 }

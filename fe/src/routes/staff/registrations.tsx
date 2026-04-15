@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ConfirmDialog } from '@/features/dormitory/components/confirm-dialog'
 import {
     DataTable,
+    ErrorState,
     LoadingState,
     PageHeader,
     PaginationControls,
@@ -30,14 +31,14 @@ export const Route = createFileRoute('/staff/registrations')({
 
 function StaffRegistrations() {
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+    const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
     const [statusFilter, setStatusFilter] = useState<string>('all')
     const [confirmAction, setConfirmAction] = useState<{
         type: 'approve' | 'reject'
         registration: Registration
     } | null>(null)
 
-    const { data, isPending } = useRegistrations({ page, limit })
+    const { data, isPending, error } = useRegistrations({ page, limit })
     const { mutate: approve, isPending: isApproving } = useApproveRegistration()
     const { mutate: reject, isPending: isRejecting } = useRejectRegistration()
     const toast = useToast()
@@ -156,7 +157,9 @@ function StaffRegistrations() {
                     </Select>
                 }
             >
-                {isPending ? (
+                {error ? (
+                    <ErrorState description={error.message} />
+                ) : isPending ? (
                     <LoadingState />
                 ) : (
                     <div className="space-y-4">

@@ -13,6 +13,11 @@ class Gender(str, Enum):
     OTHER = "other"
 
 
+class Nationality(str, Enum):
+    VIETNAM = "vietnam"
+    LAOS = "laos"
+
+
 class BuildingCode(str, Enum):
     K1 = "K1"
     K2 = "K2"

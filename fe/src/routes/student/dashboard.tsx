@@ -3,6 +3,7 @@ import { BedDouble, Bell, Receipt } from 'lucide-react'
 
 import {
   EmptyState,
+  ErrorState,
   LoadingState,
   MetricCard,
   PageHeader,
@@ -17,7 +18,6 @@ import {
 } from '@/hooks/useDormitory'
 import {
   INVOICE_STATUS_LABELS,
-  MAINTENANCE_STATUS_LABELS,
   REGISTRATION_STATUS_LABELS,
   getCurrentRegistration,
   getRoomDisplayName,
@@ -29,15 +29,19 @@ export const Route = createFileRoute('/student/dashboard')({
 })
 
 function StudentDashboard() {
-  const { data: registrationsData, isPending: isLoadingRegistrations } = useRegistrations({ page: 1, limit: 100 })
-  const { data: invoicesData, isPending: isLoadingInvoices } = useInvoices({ page: 1, limit: 5 })
-  const { data: maintenanceData, isPending: isLoadingMaintenance } = useMaintenance({ page: 1, limit: 5 })
-  const { data: notificationsData, isPending: isLoadingNotifications } = useNotifications({ page: 1, limit: 5 })
+  const { data: registrationsData, isPending: isLoadingRegistrations, error: registrationsError } = useRegistrations({ page: 1, limit: 100 })
+  const { data: invoicesData, isPending: isLoadingInvoices, error: invoicesError } = useInvoices({ page: 1, limit: 5 })
+  const { data: maintenanceData, error: maintenanceError } = useMaintenance({ page: 1, limit: 5 })
+  const { data: notificationsData, isPending: isLoadingNotifications, error: notificationsError } = useNotifications({ page: 1, limit: 5 })
 
   const registrations = registrationsData?.items ?? []
   const currentRegistration = getCurrentRegistration(registrations)
   const unpaidInvoices = (invoicesData?.items ?? []).filter((inv) => inv.status === 'unpaid')
   const pendingMaintenance = (maintenanceData?.items ?? []).filter((m) => m.status === 'pending')
+
+  if (registrationsError || invoicesError || maintenanceError || notificationsError) {
+    return <ErrorState description={(registrationsError ?? invoicesError ?? maintenanceError ?? notificationsError)?.message} />
+  }
 
   if (isLoadingRegistrations) {
     return <LoadingState />

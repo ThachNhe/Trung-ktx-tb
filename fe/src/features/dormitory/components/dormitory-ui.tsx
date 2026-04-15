@@ -139,17 +139,50 @@ export function EmptyState({ title, description, action }: EmptyStateProps) {
 
 interface LoadingStateProps {
     label?: string
+    rows?: number
 }
 
 export function LoadingState({
     label = 'Đang tải dữ liệu từ hệ thống...',
+    rows = 4,
 }: LoadingStateProps) {
     return (
-        <Card className="border-white/70 bg-white/90">
-            <CardContent className="py-10 text-center text-sm text-slate-600">
-                {label}
-            </CardContent>
-        </Card>
+        <div className="space-y-4 rounded-[1.5rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.18)]">
+            <div className="animate-pulse space-y-3">
+                <div className="h-4 w-40 rounded-full bg-slate-200/90" />
+                <div className="h-3 w-2/3 rounded-full bg-slate-100" />
+                <div className="space-y-3 pt-2">
+                    {Array.from({ length: rows }).map((_, index) => (
+                        <div key={index} className="flex items-center gap-3">
+                            <div className="h-10 flex-1 rounded-2xl bg-slate-100" />
+                            <div className="h-10 w-24 rounded-2xl bg-slate-100" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <p className="text-sm text-slate-500">{label}</p>
+        </div>
+    )
+}
+
+interface ErrorStateProps {
+    title?: string
+    description?: string
+    action?: ReactNode
+}
+
+export function ErrorState({
+    title = 'Không thể tải dữ liệu',
+    description = 'Đã xảy ra lỗi khi lấy dữ liệu từ hệ thống. Vui lòng thử lại sau.',
+    action,
+}: ErrorStateProps) {
+    return (
+        <div className="rounded-[1.5rem] border border-rose-200 bg-rose-50/80 px-6 py-10 text-center">
+            <p className="text-lg font-semibold text-rose-900">{title}</p>
+            <p className="mt-2 text-sm leading-6 text-rose-700">{description}</p>
+            {action ? <div className="mt-4 flex justify-center">{action}</div> : null}
+        </div>
     )
 }
 

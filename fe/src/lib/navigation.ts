@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react'
 import {
   BedDouble,
   BellRing,
+  BarChart3,
   Building2,
   ClipboardList,
   LayoutDashboard,
@@ -37,6 +38,7 @@ const navigationByRole: Record<UserRole, NavigationItem[]> = {
     { label: 'Tổng quan', path: ROUTES.ADMIN_DASHBOARD, icon: LayoutDashboard },
     { label: 'Tòa nhà', path: ROUTES.ADMIN_BUILDINGS, icon: Building2 },
     { label: 'Phòng', path: ROUTES.ADMIN_ROOMS, icon: BedDouble },
+    { label: 'Báo cáo tháng', path: ROUTES.ADMIN_REPORTS, icon: BarChart3 },
     { label: 'Sinh viên nội trú', path: ROUTES.ADMIN_STUDENTS, icon: Users },
     { label: 'Thông báo', path: ROUTES.ADMIN_NOTIFICATIONS, icon: BellRing },
   ],

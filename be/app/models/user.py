@@ -5,7 +5,7 @@ from sqlalchemy import DateTime, Enum as SAEnum, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.constants.enums import Gender, UserRole
+from app.constants.enums import Gender, Nationality, UserRole
 from app.core.database import Base, enum_values
 
 
@@ -26,6 +26,12 @@ class User(Base):
     gender: Mapped[Gender] = mapped_column(
         SAEnum(Gender, name="gender", values_callable=enum_values),
         nullable=False,
+    )
+    nationality: Mapped[Nationality] = mapped_column(
+        SAEnum(Nationality, name="nationality", values_callable=enum_values),
+        nullable=False,
+        default=Nationality.VIETNAM,
+        server_default=Nationality.VIETNAM.value,
     )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 

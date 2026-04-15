@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import {
     DataTable,
+    ErrorState,
     LoadingState,
     PageHeader,
     PaginationControls,
@@ -83,8 +84,8 @@ const columns: TableColumn<Invoice>[] = [
 
 function StudentInvoices() {
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
-    const { data, isPending } = useInvoices({ page, limit })
+    const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
+    const { data, isPending, error } = useInvoices({ page, limit })
 
     return (
         <div className="space-y-6">
@@ -95,7 +96,9 @@ function StudentInvoices() {
             />
 
             <SectionCard title="Danh sách hóa đơn">
-                {isPending ? (
+                {error ? (
+                    <ErrorState description={error.message} />
+                ) : isPending ? (
                     <LoadingState />
                 ) : (
                     <div className="space-y-4">

@@ -3,7 +3,7 @@ import uuid
 
 from pydantic import BaseModel, ConfigDict, EmailStr, field_validator
 
-from app.constants.enums import Gender, UserRole
+from app.constants.enums import Gender, Nationality, UserRole
 
 
 class RegisterRequest(BaseModel):
@@ -13,6 +13,7 @@ class RegisterRequest(BaseModel):
     password: str
     phone: str | None = None
     gender: Gender
+    nationality: Nationality = Nationality.VIETNAM
 
     @field_validator("full_name")
     @classmethod
@@ -67,6 +68,7 @@ class UserResponse(BaseModel):
     phone: str | None
     role: UserRole
     gender: Gender
+    nationality: Nationality
     created_at: datetime
 
 

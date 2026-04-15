@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.constants.enums import Gender, Nationality
 from app.core.database import get_db
 from app.dependencies import AdminOrStaffUser, AdminUser, CurrentUser, PaginationQuery
 from app.schemas.base_response import BaseResponse
@@ -50,6 +51,26 @@ async def list_building_rooms(
 ):
     data = await service.list_rooms_by_building(building_id, pagination)
     return BaseResponse.ok(data=data, message="Lấy danh sách phòng thành công")
+
+
+@router.get(
+    "/rooms/available",
+    response_model=BaseResponse[PaginatedData[RoomResponse]],
+    summary="Lấy danh sách phòng còn chỗ",
+)
+async def list_available_rooms(
+    pagination: PaginationQuery,
+    current_user: CurrentUser,
+    gender: Gender | None = None,
+    nationality: Nationality | None = None,
+    service: BuildingRoomService = Depends(get_building_room_service),
+):
+    data = await service.list_available_rooms(
+        pagination,
+        gender=gender or current_user.gender,
+        nationality=nationality or current_user.nationality,
+    )
+    return BaseResponse.ok(data=data, message="Lấy danh sách phòng còn chỗ thành công")
 
 
 @router.post(

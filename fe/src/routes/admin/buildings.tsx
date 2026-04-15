@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import {
   DataTable,
+  ErrorState,
   LoadingState,
   PageHeader,
   PaginationControls,
@@ -37,15 +38,15 @@ const BUILDING_CODES = ['K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8'] as const
 
 function AdminBuildings() {
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+  const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
   const [isOpen, setIsOpen] = useState(false)
 
-  const { data, isPending } = useBuildings({ page, limit })
+  const { data, isPending, error } = useBuildings({ page, limit })
   const { mutate: createBuilding, isPending: isCreating } = useCreateBuilding()
   const toast = useToast()
 
   const form = useForm<CreateBuildingFormValues>({
-    resolver: zodResolver(createBuildingSchema),
+    resolver: zodResolver(createBuildingSchema) as any,
     defaultValues: {
       name: 'K1',
       total_floors: 1,
@@ -105,7 +106,9 @@ function AdminBuildings() {
       />
 
       <SectionCard title="Danh sách tòa nhà">
-        {isPending ? (
+        {error ? (
+          <ErrorState description={error.message} />
+        ) : isPending ? (
           <LoadingState />
         ) : (
           <div className="space-y-4">

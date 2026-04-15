@@ -1,5 +1,5 @@
 
-import type { Gender, User } from '@/types/common.types'
+import type { Gender, Nationality, User } from '@/types/common.types'
 import type { AuthResponse, LoginRequest, TokenResponse } from '@/types/api.types'
 
 // ─── Auth State ────────────────────────────────────────────────────────────
@@ -29,6 +29,7 @@ export interface RegisterFormValues {
   password: string
   phone: string
   gender: Gender
+  nationality: Nationality
   confirmPassword: string
 }
 

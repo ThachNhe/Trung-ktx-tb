@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { ConfirmDialog } from '@/features/dormitory/components/confirm-dialog'
 import {
   DataTable,
+  ErrorState,
   LoadingState,
   PageHeader,
   PaginationControls,
@@ -41,12 +42,12 @@ export const Route = createFileRoute('/staff/invoices')({
 
 function StaffInvoices() {
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+  const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [payTarget, setPayTarget] = useState<Invoice | null>(null)
 
-  const { data, isPending } = useInvoices({ page, limit })
-  const { data: registrationsData } = useRegistrations({ page: 1, limit: 100 })
+  const { data, isPending, error: invoicesError } = useInvoices({ page, limit })
+  const { data: registrationsData, error: registrationsError } = useRegistrations({ page: 1, limit: 100 })
   const { mutate: createInvoice, isPending: isCreating } = useCreateInvoice()
   const { mutate: payInvoice, isPending: isPaying } = usePayInvoice()
   const toast = useToast()
@@ -57,7 +58,7 @@ function StaffInvoices() {
   const currentYear = new Date().getFullYear()
 
   const form = useForm<CreateInvoiceFormValues>({
-    resolver: zodResolver(createInvoiceSchema),
+    resolver: zodResolver(createInvoiceSchema) as any,
     defaultValues: {
       student_id: '',
       room_id: 0,
@@ -168,7 +169,9 @@ function StaffInvoices() {
       />
 
       <SectionCard title="Danh sách hóa đơn">
-        {isPending ? (
+        {invoicesError || registrationsError ? (
+          <ErrorState description={(invoicesError ?? registrationsError)?.message} />
+        ) : isPending ? (
           <LoadingState />
         ) : (
           <div className="space-y-4">

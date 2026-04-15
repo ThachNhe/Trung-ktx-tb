@@ -8,6 +8,7 @@ import type {
   MaintenanceRequestStatus,
   NotificationItem,
   NotificationTargetRole,
+  Nationality,
   PaginationMeta,
   Registration,
   Room,
@@ -56,6 +57,7 @@ export interface RegisterRequest {
   password: string
   phone?: string | null
   gender: Gender
+  nationality?: Nationality
 }
 
 export interface RefreshTokenRequest {
@@ -100,6 +102,16 @@ export interface CreateRegistrationPayload {
   end_date: string
 }
 
+export interface AvailableRoomQueryParams extends ListQueryParams {
+  gender?: Gender
+  nationality?: Nationality
+}
+
+export interface MonthlyReportQueryParams {
+  month: number
+  year: number
+}
+
 export interface CreateInvoicePayload {
   student_id: string
   room_id: number
@@ -124,6 +136,28 @@ export interface CreateNotificationPayload {
   title: string
   content: string
   target_role: NotificationTargetRole
+}
+
+export interface MonthlyReportBuildingItem {
+  building_id: number
+  building_name: BuildingCode
+  total_rooms: number
+  total_capacity: number
+  occupied_beds: number
+  occupancy_rate: number
+}
+
+export interface MonthlyReport {
+  month: number
+  year: number
+  total_revenue: number | string
+  paid_invoices: number
+  unpaid_invoices: number
+  total_rooms: number
+  total_capacity: number
+  occupied_beds: number
+  occupancy_rate: number
+  building_reports: MonthlyReportBuildingItem[]
 }
 
 export type BuildingsPage = PaginatedData<Building>

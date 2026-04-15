@@ -6,14 +6,14 @@ import { useForm } from 'react-hook-form'
 
 import {
     DataTable,
-    EmptyState,
+    ErrorState,
     LoadingState,
     PageHeader,
     SectionCard,
     StatusBadge,
     type TableColumn,
 } from '@/features/dormitory/components/dormitory-ui'
-import { useAllRooms, useBuildings, useCreateRegistration } from '@/hooks/useDormitory'
+import { useAvailableRooms, useBuildings, useCreateRegistration } from '@/hooks/useDormitory'
 import { useToast } from '@/hooks/useToast'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -34,25 +34,41 @@ export const Route = createFileRoute('/student/rooms')({
 
 function StudentRooms() {
     const [selectedBuildingId, setSelectedBuildingId] = useState<number | 'all'>('all')
-    const [selectedRoomType, setSelectedRoomType] = useState<string>('all')
     const [registerRoom, setRegisterRoom] = useState<Room | null>(null)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const { buildingsQuery, rooms, isLoading } = useAllRooms(selectedBuildingId)
-    const buildings = buildingsQuery.data?.items ?? []
+    const { data: availableRoomsData, isPending: isLoadingRooms, error: roomsError } =
+        useAvailableRooms({ page: 1, limit: 100 })
+    const { data: buildingsData, isPending: isLoadingBuildings, error: buildingsError } = useBuildings({
+        page: 1,
+        limit: 100,
+    })
+    const rooms = availableRoomsData?.items ?? []
+    const buildings = buildingsData?.items ?? []
     const { mutate: createRegistration, isPending } = useCreateRegistration()
     const toast = useToast()
 
     const form = useForm<CreateRegistrationFormValues>({
-        resolver: zodResolver(createRegistrationSchema),
+        resolver: zodResolver(createRegistrationSchema) as any,
         defaultValues: { room_id: 0, start_date: '', end_date: '' },
     })
 
-    const filteredRooms = rooms.filter((room) => {
-        const statusOk = room.status === 'available'
-        const typeOk = selectedRoomType === 'all' || room.room_type === selectedRoomType
-        return statusOk && typeOk
-    })
+    const filteredRooms = rooms.filter((room) =>
+        selectedBuildingId === 'all' ? true : room.building_id === selectedBuildingId,
+    )
+
+    if (roomsError || buildingsError) {
+        return (
+            <div className="space-y-6">
+                <PageHeader
+                    eyebrow="Sinh viên"
+                    title="Danh sách phòng còn trống"
+                    description="Chọn phòng phù hợp và gửi đơn đăng ký. Hệ thống chỉ hiển thị phòng hợp lệ với giới tính và quốc tịch của bạn."
+                />
+                <ErrorState description={roomsError?.message ?? buildingsError?.message} />
+            </div>
+        )
+    }
 
     const handleRegister = (room: Room) => {
         setRegisterRoom(room)
@@ -124,7 +140,7 @@ function StudentRooms() {
             <PageHeader
                 eyebrow="Sinh viên"
                 title="Danh sách phòng còn trống"
-                description="Chọn phòng phù hợp và gửi đơn đăng ký."
+                description="Chọn phòng phù hợp và gửi đơn đăng ký. Hệ thống chỉ hiển thị phòng hợp lệ với giới tính và quốc tịch của bạn."
             />
 
             <SectionCard
@@ -155,26 +171,11 @@ function StudentRooms() {
                         </Select>
                     </div>
 
-                    <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Loại phòng</label>
-                        <Select
-                            className="h-9 w-44"
-                            value={selectedRoomType}
-                            onChange={(e) => setSelectedRoomType(e.target.value)}
-                        >
-                            <option value="all">Tất cả loại</option>
-                            {Object.entries(ROOM_TYPE_LABELS).map(([k, v]) => (
-                                <option key={k} value={k}>
-                                    {v}
-                                </option>
-                            ))}
-                        </Select>
-                    </div>
                 </div>
             </SectionCard>
 
             <SectionCard title="Phòng còn trống">
-                {isLoading ? (
+                {isLoadingRooms || isLoadingBuildings ? (
                     <LoadingState />
                 ) : (
                     <DataTable

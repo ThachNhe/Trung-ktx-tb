@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import {
   DataTable,
+  ErrorState,
   LoadingState,
   PageHeader,
   PaginationControls,
@@ -11,7 +12,13 @@ import {
   type TableColumn,
 } from '@/features/dormitory/components/dormitory-ui'
 import { useRegistrations } from '@/hooks/useDormitory'
-import { GENDER_LABELS, REGISTRATION_STATUS_LABELS, getRoomDisplayName, uniqueApprovedRegistrations } from '@/lib/dormitory'
+import {
+  GENDER_LABELS,
+  NATIONALITY_LABELS,
+  REGISTRATION_STATUS_LABELS,
+  getRoomDisplayName,
+  uniqueApprovedRegistrations,
+} from '@/lib/dormitory'
 import { PAGINATION } from '@/lib/constants'
 import { formatDate } from '@/lib/utils'
 import type { Registration } from '@/types/common.types'
@@ -22,10 +29,10 @@ export const Route = createFileRoute('/admin/students')({
 
 function AdminStudents() {
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+  const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
   const [search, setSearch] = useState('')
 
-  const { data, isPending } = useRegistrations({ page: 1, limit: 100 })
+  const { data, isPending, error } = useRegistrations({ page: 1, limit: 100 })
 
   const approved = uniqueApprovedRegistrations(data?.items ?? [])
   const filtered = approved.filter((reg) => {
@@ -62,6 +69,16 @@ function AdminStudents() {
       key: 'email',
       header: 'Email',
       render: (reg) => <span className="text-slate-600">{reg.student.email}</span>,
+    },
+    {
+      key: 'gender',
+      header: 'Giới tính',
+      render: (reg) => <span>{GENDER_LABELS[reg.student.gender]}</span>,
+    },
+    {
+      key: 'nationality',
+      header: 'Quốc tịch',
+      render: (reg) => <span>{NATIONALITY_LABELS[reg.student.nationality]}</span>,
     },
     {
       key: 'room',
@@ -103,7 +120,9 @@ function AdminStudents() {
             onChange={(e) => { setSearch(e.target.value); setPage(1) }}
           />
         </div>
-        {isPending ? (
+        {error ? (
+          <ErrorState description={error.message} />
+        ) : isPending ? (
           <LoadingState />
         ) : (
           <div className="space-y-4">

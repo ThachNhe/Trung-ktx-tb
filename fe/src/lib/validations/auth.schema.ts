@@ -35,6 +35,7 @@ const passwordField = z
   .regex(/[0-9]/, 'Mật khẩu phải có ít nhất 1 số')
 
 const genderField = z.enum(['male', 'female', 'other'])
+const nationalityField = z.enum(['vietnam', 'laos'])
 
 // ─── Schemas ───────────────────────────────────────────────────────────────
 
@@ -50,6 +51,7 @@ export const registerSchema = z
     email: emailField,
     phone: phoneField,
     gender: genderField,
+    nationality: nationalityField,
     password: passwordField,
     confirmPassword: z.string().min(1, 'Vui lòng xác nhận mật khẩu'),
   })

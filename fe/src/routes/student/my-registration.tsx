@@ -3,6 +3,7 @@ import { ClipboardList } from 'lucide-react'
 
 import {
     EmptyState,
+    ErrorState,
     LoadingState,
     PageHeader,
     SectionCard,
@@ -17,8 +18,10 @@ export const Route = createFileRoute('/student/my-registration')({
 })
 
 function StudentMyRegistration() {
-    const { data, isPending } = useRegistrations({ page: 1, limit: 100 })
+    const { data, isPending, error } = useRegistrations({ page: 1, limit: 100 })
     const registrations = data?.items ?? []
+
+    if (error) return <ErrorState description={error.message} />
 
     if (isPending) return <LoadingState />
 

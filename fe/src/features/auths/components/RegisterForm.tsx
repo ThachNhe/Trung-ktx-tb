@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { getDefaultRouteForRole } from '@/lib/dormitory'
+import { getDefaultRouteForRole, NATIONALITY_LABELS } from '@/lib/dormitory'
 import { registerSchema } from '@/lib/validations/auth.schema'
 import { useToast } from '@/hooks/useToast'
 import { useRegister } from '../hooks/useLogin'
@@ -33,6 +33,7 @@ export function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
       email: '',
       phone: '',
       gender: 'male',
+      nationality: 'vietnam',
       password: '',
       confirmPassword: '',
     },
@@ -138,6 +139,30 @@ export function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                       <option value="male">Nam</option>
                       <option value="female">Nữ</option>
                       <option value="other">Khác</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="nationality"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quốc tịch</FormLabel>
+                  <FormControl>
+                    <select
+                      className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+                      disabled={isPending}
+                      {...field}
+                    >
+                      {Object.entries(NATIONALITY_LABELS).map(([value, label]) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
                     </select>
                   </FormControl>
                   <FormMessage />

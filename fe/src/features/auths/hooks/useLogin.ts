@@ -30,6 +30,7 @@ export function useRegister() {
         password: values.password,
         phone: values.phone,
         gender: values.gender,
+        nationality: values.nationality,
       }),
 
     onSuccess: (data) => {

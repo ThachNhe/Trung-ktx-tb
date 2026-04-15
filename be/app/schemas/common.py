@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.constants.enums import BuildingCode, RoomType, UserRole
+from app.constants.enums import BuildingCode, Gender, Nationality, RoomType, UserRole
 
 T = TypeVar("T")
 
@@ -39,6 +39,8 @@ class UserSummaryResponse(BaseModel):
     student_code: str
     email: str
     role: UserRole
+    gender: Gender
+    nationality: Nationality
 
 
 class RoomSummaryResponse(BaseModel):

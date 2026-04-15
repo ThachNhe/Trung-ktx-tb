@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { ConfirmDialog } from '@/features/dormitory/components/confirm-dialog'
 import {
   DataTable,
+  ErrorState,
   LoadingState,
   PageHeader,
   PaginationControls,
@@ -16,7 +17,6 @@ import {
 } from '@/features/dormitory/components/dormitory-ui'
 import {
   useAllRooms,
-  useBuildings,
   useCreateRoom,
   useUpdateRoomStatus,
 } from '@/hooks/useDormitory'
@@ -48,7 +48,7 @@ function AdminRooms() {
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [statusTarget, setStatusTarget] = useState<{ room: Room; status: RoomStatus } | null>(null)
 
-  const { buildingsQuery, rooms, isLoading } = useAllRooms(selectedBuildingId)
+  const { buildingsQuery, rooms, isLoading, error } = useAllRooms(selectedBuildingId)
   const buildings = buildingsQuery.data?.items ?? []
   const { mutate: createRoom, isPending: isCreating } = useCreateRoom()
   const { mutate: updateStatus, isPending: isUpdating } = useUpdateRoomStatus()
@@ -66,7 +66,7 @@ function AdminRooms() {
   }
 
   const form = useForm<CreateRoomFormValues>({
-    resolver: zodResolver(createRoomSchema),
+    resolver: zodResolver(createRoomSchema) as any,
     defaultValues: {
       building_id: 0,
       room_number: '',
@@ -186,7 +186,9 @@ function AdminRooms() {
           </Select>
         }
       >
-        {isLoading ? (
+        {error ? (
+          <ErrorState description={error.message} />
+        ) : isLoading ? (
           <LoadingState />
         ) : (
           <div className="space-y-4">

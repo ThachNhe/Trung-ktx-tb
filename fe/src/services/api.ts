@@ -3,7 +3,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios'
 
-import { API_BASE_URL, ROUTES } from '@/lib/constants'
+import { ROUTES } from '@/lib/constants'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { ApiErrorResponse } from '@/types/api.types'
 import { API_ENDPOINTS } from './endpoints'

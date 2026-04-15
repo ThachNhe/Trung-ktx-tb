@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.constants.enums import BuildingCode, BuildingStatus, Gender, RoomStatus, RoomType, UserRole
+from app.constants.enums import BuildingCode, BuildingStatus, Gender, Nationality, RoomStatus, RoomType, UserRole
 from app.core.database import AsyncSessionLocal
 from app.models import Building, Room, User
 from app.utils.security import hash_password
@@ -52,6 +52,7 @@ SEED_USERS = [
         "phone": "0901000004",
         "role": UserRole.STUDENT,
         "gender": Gender.MALE,
+        "nationality": Nationality.VIETNAM,
     },
     {
         "email": "sv2@utb.edu.vn",
@@ -61,6 +62,7 @@ SEED_USERS = [
         "phone": "0901000005",
         "role": UserRole.STUDENT,
         "gender": Gender.FEMALE,
+        "nationality": Nationality.VIETNAM,
     },
     {
         "email": "sv3@utb.edu.vn",
@@ -70,6 +72,7 @@ SEED_USERS = [
         "phone": "0901000006",
         "role": UserRole.STUDENT,
         "gender": Gender.MALE,
+        "nationality": Nationality.LAOS,
     },
     {
         "email": "sv4@utb.edu.vn",
@@ -79,6 +82,7 @@ SEED_USERS = [
         "phone": "0901000007",
         "role": UserRole.STUDENT,
         "gender": Gender.FEMALE,
+        "nationality": Nationality.LAOS,
     },
     {
         "email": "sv5@utb.edu.vn",
@@ -88,12 +92,14 @@ SEED_USERS = [
         "phone": "0901000008",
         "role": UserRole.STUDENT,
         "gender": Gender.MALE,
+        "nationality": Nationality.VIETNAM,
     },
 ]
 
 BUILDING_SEEDS = [
     {"name": BuildingCode.K1, "total_floors": 5, "description": "Khu K1 dành cho sinh viên nam", "room_type": RoomType.MALE, "price": Decimal("450000")},
     {"name": BuildingCode.K2, "total_floors": 5, "description": "Khu K2 dành cho sinh viên nữ", "room_type": RoomType.FEMALE, "price": Decimal("470000")},
+    {"name": BuildingCode.K3, "total_floors": 5, "description": "Khu K3 dành cho lưu học sinh Lào", "room_type": RoomType.LAOS_STUDENT, "price": Decimal("460000")},
 ]
 
 
@@ -112,6 +118,7 @@ async def seed_users(db: AsyncSession) -> None:
             phone=data["phone"],
             role=data["role"],
             gender=data["gender"],
+            nationality=data["nationality"],
         )
         db.add(user)
         print(f"  ✅ Tạo user: {data['email']} [{data['role'].value}]")

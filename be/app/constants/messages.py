@@ -13,6 +13,9 @@ class ErrorMessage:
     NOT_FOUND = "Không tìm thấy dữ liệu"
     INTERNAL_ERROR = "Lỗi hệ thống, vui lòng thử lại sau"
     VALIDATION_ERROR = "Dữ liệu không hợp lệ"
+    ROOM_FULL = "Phòng đã đầy, không thể đăng ký"
+    STUDENT_ALREADY_HAS_ROOM = "Sinh viên đã có phòng hoặc đơn đăng ký đang chờ xử lý"
+    ROOM_NOT_MATCH_STUDENT = "Phòng không phù hợp với giới tính hoặc quốc tịch của sinh viên"
 
 
 class SuccessMessage:

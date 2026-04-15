@@ -31,6 +31,7 @@ class AuthService:
             phone=payload.phone,
             role=UserRole.STUDENT,
             gender=payload.gender,
+            nationality=payload.nationality,
         )
         user = await self.user_repo.create(user)
         tokens = self._generate_tokens(user)

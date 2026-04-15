@@ -102,7 +102,7 @@ export function formatRelativeTime(date: string | Date): string {
 // ─── Object helpers ────────────────────────────────────────────────────────
 
 // Remove undefined/null fields before sending to API
-export function cleanObject<T extends Record<string, unknown>>(obj: T): Partial<T> {
+export function cleanObject<T extends object>(obj: T): Partial<T> {
   return Object.fromEntries(
     Object.entries(obj).filter(([, v]) => v !== undefined && v !== null),
   ) as Partial<T>

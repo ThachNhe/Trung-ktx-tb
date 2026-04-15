@@ -1,11 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Plus, Send } from 'lucide-react'
+import { Send } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
   DataTable,
+  ErrorState,
   LoadingState,
   PageHeader,
   PaginationControls,
@@ -36,10 +37,10 @@ export const Route = createFileRoute('/admin/notifications')({
 
 function AdminNotifications() {
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+  const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
   const [isOpen, setIsOpen] = useState(false)
 
-  const { data, isPending } = useNotifications({ page, limit })
+  const { data, isPending, error } = useNotifications({ page, limit })
   const { mutate: createNotification, isPending: isSending } = useCreateNotification()
   const toast = useToast()
 
@@ -108,7 +109,9 @@ function AdminNotifications() {
       />
 
       <SectionCard title="Danh sách thông báo đã gửi">
-        {isPending ? (
+        {error ? (
+          <ErrorState description={error.message} />
+        ) : isPending ? (
           <LoadingState />
         ) : (
           <div className="space-y-4">

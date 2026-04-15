@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import {
   DataTable,
+  ErrorState,
   LoadingState,
   PageHeader,
   PaginationControls,
@@ -69,17 +70,17 @@ const columns: TableColumn<MaintenanceRequest>[] = [
 function StudentMaintenance() {
   const [isOpen, setIsOpen] = useState(false)
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(PAGINATION.DEFAULT_LIMIT)
+  const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
 
-  const { data: registrationsData } = useRegistrations({ page: 1, limit: 100 })
-  const { data, isPending } = useMaintenance({ page, limit })
+  const { data: registrationsData, error: registrationsError } = useRegistrations({ page: 1, limit: 100 })
+  const { data, isPending, error } = useMaintenance({ page, limit })
   const { mutate: createMaintenance, isPending: isCreating } = useCreateMaintenance()
   const toast = useToast()
 
   const currentRegistration = getCurrentRegistration(registrationsData?.items ?? [])
 
   const form = useForm<CreateMaintenanceFormValues>({
-    resolver: zodResolver(createMaintenanceSchema),
+    resolver: zodResolver(createMaintenanceSchema) as any,
     defaultValues: {
       room_id: currentRegistration?.room.id ?? 0,
       title: '',
@@ -124,7 +125,9 @@ function StudentMaintenance() {
       />
 
       <SectionCard title="Danh sách yêu cầu">
-        {isPending ? (
+        {error || registrationsError ? (
+          <ErrorState description={(error ?? registrationsError)?.message} />
+        ) : isPending ? (
           <LoadingState />
         ) : (
           <div className="space-y-4">

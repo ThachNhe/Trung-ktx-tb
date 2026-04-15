@@ -1,6 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
+from app.constants.enums import Gender, Nationality, RoomStatus, RoomType
 from app.core.exception import BadRequestException, ConflictException, NotFoundException
 from app.models.building import Building
 from app.models.room import Room
@@ -45,6 +47,42 @@ class BuildingRoomService:
             .where(Room.building_id == building_id)
             .order_by(Room.floor, Room.room_number)
         )
+        items, total = await paginate_scalars(
+            self.db,
+            statement,
+            pagination.page,
+            pagination.limit,
+        )
+        data = [RoomResponse.model_validate(item) for item in items]
+        return build_paginated_data(data, pagination.page, pagination.limit, total)
+
+    async def list_available_rooms(
+        self,
+        pagination: PaginationParams,
+        gender: Gender | None = None,
+        nationality: Nationality | None = None,
+    ) -> PaginatedData[RoomResponse]:
+        statement = (
+            select(Room)
+            .options(selectinload(Room.building))
+            .where(
+                Room.status == RoomStatus.AVAILABLE,
+                Room.current_occupancy < Room.capacity,
+            )
+            .order_by(Room.building_id, Room.floor, Room.room_number)
+        )
+
+        allowed_room_types: list[RoomType] = []
+        if nationality == Nationality.LAOS:
+            allowed_room_types = [RoomType.LAOS_STUDENT]
+        elif gender == Gender.MALE:
+            allowed_room_types = [RoomType.MALE]
+        elif gender == Gender.FEMALE:
+            allowed_room_types = [RoomType.FEMALE]
+
+        if allowed_room_types:
+            statement = statement.where(Room.room_type.in_(allowed_room_types))
+
         items, total = await paginate_scalars(
             self.db,
             statement,

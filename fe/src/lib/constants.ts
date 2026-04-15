@@ -1,5 +1,5 @@
 import type { ListQueryParams } from '@/types/api.types'
-import type { UserRole } from '@/types/common.types'
+import type { Gender, Nationality, UserRole } from '@/types/common.types'
 
 export const APP_NAME =
   import.meta.env.VITE_APP_NAME ?? 'Quản lý Ký túc xá - Đại học Tây Bắc'
@@ -25,6 +25,7 @@ export const ROUTES = {
   ADMIN_ROOMS: '/admin/rooms',
   ADMIN_STUDENTS: '/admin/students',
   ADMIN_NOTIFICATIONS: '/admin/notifications',
+  ADMIN_REPORTS: '/admin/reports',
 } as const
 
 export const ROLE_HOME_ROUTES: Record<UserRole, string> = {
@@ -59,6 +60,17 @@ export const QUERY_KEYS = {
     ROOT: ['rooms'] as const,
     BY_BUILDING: (buildingId: number, params?: ListQueryParams) =>
       ['rooms', 'building', buildingId, normalizePagination(params)] as const,
+    AVAILABLE: (params?: { page?: number; limit?: number; gender?: Gender; nationality?: Nationality }) =>
+      [
+        'rooms',
+        'available',
+        {
+          page: params?.page ?? PAGINATION.DEFAULT_PAGE,
+          limit: params?.limit ?? PAGINATION.DEFAULT_LIMIT,
+          gender: params?.gender ?? null,
+          nationality: params?.nationality ?? null,
+        },
+      ] as const,
   },
   REGISTRATIONS: {
     ROOT: ['registrations'] as const,
@@ -79,6 +91,11 @@ export const QUERY_KEYS = {
     ROOT: ['notifications'] as const,
     LIST: (params?: ListQueryParams) =>
       ['notifications', 'list', normalizePagination(params)] as const,
+  },
+  REPORTS: {
+    ROOT: ['reports'] as const,
+    MONTHLY: (params?: { month: number; year: number }) =>
+      ['reports', 'monthly', params?.month ?? null, params?.year ?? null] as const,
   },
 } as const
 

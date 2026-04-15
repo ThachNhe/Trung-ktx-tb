@@ -6,6 +6,7 @@ import type {
   InvoiceStatus,
   MaintenanceRequestStatus,
   NotificationTargetRole,
+  Nationality,
   NumericValue,
   PaginationMeta,
   Registration,
@@ -27,6 +28,11 @@ export const GENDER_LABELS: Record<Gender, string> = {
   male: 'Nam',
   female: 'Nữ',
   other: 'Khác',
+}
+
+export const NATIONALITY_LABELS: Record<Nationality, string> = {
+  vietnam: 'Việt Nam',
+  laos: 'Lào',
 }
 
 export const ROOM_TYPE_LABELS: Record<RoomType, string> = {
@@ -93,7 +99,7 @@ export const toNumber = (value: NumericValue): number => Number(value)
 export const getDefaultRouteForRole = (role: UserRole) => ROLE_HOME_ROUTES[role]
 
 export const getRoomLabel = (room: Room | RoomSummary) =>
-  `${room.building_name ?? ''}${'building_name' in room ? '-' : ''}${room.room_number}`.replace(/^-/, '')
+  'building_name' in room ? `${room.building_name} - ${room.room_number}` : `KTX - ${room.room_number}`
 
 export const getRoomDisplayName = (room: Room | RoomSummary, buildings?: Building[]) => {
   if ('building_name' in room) {

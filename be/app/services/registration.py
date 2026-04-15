@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.constants.enums import RoomRegistrationStatus, RoomStatus, UserRole
+from app.constants.enums import Gender, Nationality, RoomRegistrationStatus, RoomStatus, RoomType, UserRole
 from app.core.exception import BadRequestException, ConflictException, NotFoundException
 from app.models.building import Building
 from app.models.room import Room
@@ -29,8 +29,10 @@ class RegistrationService:
     ) -> RegistrationResponse:
         room = await self._get_room(payload.room_id)
 
+        self._validate_room_for_student(room, student)
+
         if room.status in {RoomStatus.FULL, RoomStatus.MAINTENANCE} or room.current_occupancy >= room.capacity:
-            raise BadRequestException("Phòng hiện không thể đăng ký")
+            raise BadRequestException("Phòng đã đầy, không thể đăng ký")
 
         existing = await self.db.execute(
             select(RoomRegistration.id).where(
@@ -41,7 +43,7 @@ class RegistrationService:
             )
         )
         if existing.scalar_one_or_none() is not None:
-            raise ConflictException("Bạn đã có đơn đăng ký hoặc đang ở phòng")
+            raise ConflictException("Sinh viên đã có phòng hoặc đơn đăng ký đang chờ xử lý")
 
         registration = RoomRegistration(
             student_id=student.id,
@@ -87,11 +89,13 @@ class RegistrationService:
         if registration.status != RoomRegistrationStatus.PENDING:
             raise BadRequestException("Chỉ có thể duyệt đơn ở trạng thái chờ xử lý")
 
+        self._validate_room_for_student(registration.room, registration.student)
+
         if registration.room.status == RoomStatus.MAINTENANCE:
             raise BadRequestException("Phòng đang bảo trì, không thể duyệt")
 
         if registration.room.current_occupancy >= registration.room.capacity:
-            raise BadRequestException("Phòng đã đủ người")
+            raise BadRequestException("Phòng đã đầy, không thể duyệt đơn")
 
         existing_approved = await self.db.execute(
             select(RoomRegistration.id).where(
@@ -182,3 +186,20 @@ class RegistrationService:
             status=registration.status,
             created_at=registration.created_at,
         )
+
+    def _validate_room_for_student(self, room: Room, student: User) -> None:
+        allowed_room_types = self._allowed_room_types(student.gender, student.nationality)
+        if room.room_type not in allowed_room_types:
+            raise BadRequestException("Phòng không phù hợp với giới tính hoặc quốc tịch của sinh viên")
+
+    def _allowed_room_types(self, gender: Gender, nationality: Nationality) -> set[RoomType]:
+        if nationality == Nationality.LAOS:
+            return {RoomType.LAOS_STUDENT}
+
+        if gender == Gender.MALE:
+            return {RoomType.MALE}
+
+        if gender == Gender.FEMALE:
+            return {RoomType.FEMALE}
+
+        return set()

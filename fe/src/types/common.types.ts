@@ -1,5 +1,6 @@
 export type UserRole = 'admin' | 'staff' | 'student'
 export type Gender = 'male' | 'female' | 'other'
+export type Nationality = 'vietnam' | 'laos'
 export type BuildingCode =
   | 'K1'
   | 'K2'
@@ -31,6 +32,7 @@ export interface User {
   phone: string | null
   role: UserRole
   gender: Gender
+  nationality: Nationality
   created_at: string
 }
 
@@ -40,6 +42,8 @@ export interface UserSummary {
   student_code: string
   email: string
   role: UserRole
+  gender: Gender
+  nationality: Nationality
 }
 
 export interface Building {
