@@ -1,43 +1,51 @@
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { createJSONStorage, devtools, persist } from 'zustand/middleware'
+
+import { STORAGE_KEYS } from '@/lib/constants'
 import type { User } from '@/types/common.types'
 
 interface AuthState {
-  // State
   user: User | null
   isAuthenticated: boolean
+  hasHydrated: boolean
 
-  // Actions
   setUser: (user: User | null) => void
   setAuthenticated: (value: boolean) => void
+  setSession: (user: User) => void
   login: (user: User) => void
   logout: () => void
   updateUser: (partial: Partial<User>) => void
+  setHydrated: (value: boolean) => void
 }
 
 export const useAuthStore = create<AuthState>()(
   devtools(
     persist(
       (set) => ({
-        // Initial state
         user: null,
         isAuthenticated: false,
+        hasHydrated: false,
 
-        // Actions
         setUser: (user) => set({ user }, false, 'auth/setUser'),
 
         setAuthenticated: (value) =>
           set({ isAuthenticated: value }, false, 'auth/setAuthenticated'),
 
-        login: (user) =>
-          set({ user, isAuthenticated: true }, false, 'auth/login'),
+        setSession: (user) => set({ user, isAuthenticated: true }, false, 'auth/setSession'),
 
-        logout: () =>
+        login: (user) =>
           set(
-            { user: null, isAuthenticated: false },
+            () => ({
+              user,
+              isAuthenticated: true,
+            }),
             false,
-            'auth/logout',
+            'auth/login',
           ),
+
+        logout: () => {
+          set({ user: null, isAuthenticated: false }, false, 'auth/logout')
+        },
 
         updateUser: (partial) =>
           set(
@@ -47,14 +55,20 @@ export const useAuthStore = create<AuthState>()(
             false,
             'auth/updateUser',
           ),
+
+        setHydrated: (value) =>
+          set({ hasHydrated: value }, false, 'auth/setHydrated'),
       }),
       {
-        name: 'auth-storage',
-        // Chỉ persist trạng thái phiên, không lưu token
+        name: STORAGE_KEYS.AUTH,
+        storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
           user: state.user,
           isAuthenticated: state.isAuthenticated,
         }),
+        onRehydrateStorage: () => (state) => {
+          state?.setHydrated(true)
+        },
       },
     ),
     { name: 'AuthStore' },

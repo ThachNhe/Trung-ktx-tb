@@ -1,6 +1,12 @@
 export { LoginForm } from './components/LoginForm'
 export { RegisterForm } from './components/RegisterForm'
-export { useLogin, useRegister, useLogout, useMe } from './hooks/useLogin'
+export {
+  useBootstrapAuth,
+  useLogin,
+  useRegister,
+  useLogout,
+  useMe,
+} from './hooks/useLogin'
 export { authService } from './services/auth.service'
 export type {
   AuthSession,

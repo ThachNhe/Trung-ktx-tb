@@ -1,6 +1,20 @@
-import type { Gender, PaginationMeta, User } from './common.types'
-
-// ─── Base API Response ─────────────────────────────────────────────────────
+import type {
+  Building,
+  BuildingCode,
+  BuildingStatus,
+  Gender,
+  Invoice,
+  MaintenanceRequest,
+  MaintenanceRequestStatus,
+  NotificationItem,
+  NotificationTargetRole,
+  PaginationMeta,
+  Registration,
+  Room,
+  RoomStatus,
+  RoomType,
+  User,
+} from './common.types'
 
 export interface ApiResponse<T = unknown> {
   success: boolean
@@ -8,32 +22,31 @@ export interface ApiResponse<T = unknown> {
   data: T
 }
 
+export interface ApiValidationError {
+  field: string
+  message: string
+}
+
 export interface ApiErrorResponse {
-  message: string
   success: false
-  errors?: Record<string, string[]> // field-level validation errors
-  code?: string                      // error code (e.g. "UNAUTHORIZED")
-}
-
-// ─── Paginated Response ────────────────────────────────────────────────────
-
-export interface PaginatedResponse<T = unknown> {
-  success: boolean
   message: string
-  data: T[]
-  meta: PaginationMeta
+  error_code?: string | null
+  errors?: ApiValidationError[]
 }
 
-// ─── Auth ──────────────────────────────────────────────────────────────────
+export interface PaginatedData<T> {
+  items: T[]
+  pagination: PaginationMeta
+}
+
+export interface ListQueryParams {
+  page?: number
+  limit?: number
+}
 
 export interface LoginRequest {
   email: string
   password: string
-}
-
-export interface LoginResponse {
-  user: User
-  tokens: TokenResponse
 }
 
 export interface RegisterRequest {
@@ -49,12 +62,6 @@ export interface RefreshTokenRequest {
   refresh_token?: string
 }
 
-export interface RefreshTokenResponse {
-  access_token: string
-  refresh_token: string
-  token_type: string
-}
-
 export interface TokenResponse {
   access_token: string
   refresh_token: string
@@ -66,12 +73,62 @@ export interface AuthResponse {
   tokens: TokenResponse
 }
 
-// ─── Query Params helper ───────────────────────────────────────────────────
-
-export interface ListQueryParams {
-  page?: number
-  limit?: number
-  search?: string
-  sortBy?: string
-  sortOrder?: 'asc' | 'desc'
+export interface CreateBuildingPayload {
+  name: BuildingCode
+  total_floors: number
+  description?: string | null
+  status?: BuildingStatus
 }
+
+export interface CreateRoomPayload {
+  building_id: number
+  room_number: string
+  floor: number
+  capacity: number
+  room_type: RoomType
+  price_per_month: number
+  status?: RoomStatus
+}
+
+export interface UpdateRoomStatusPayload {
+  status: RoomStatus
+}
+
+export interface CreateRegistrationPayload {
+  room_id: number
+  start_date: string
+  end_date: string
+}
+
+export interface CreateInvoicePayload {
+  student_id: string
+  room_id: number
+  month: number
+  year: number
+  electricity_used_kwh: number
+  water_used_m3: number
+  due_date: string
+}
+
+export interface CreateMaintenancePayload {
+  room_id: number
+  title: string
+  description: string
+}
+
+export interface UpdateMaintenanceStatusPayload {
+  status: MaintenanceRequestStatus
+}
+
+export interface CreateNotificationPayload {
+  title: string
+  content: string
+  target_role: NotificationTargetRole
+}
+
+export type BuildingsPage = PaginatedData<Building>
+export type RoomsPage = PaginatedData<Room>
+export type RegistrationsPage = PaginatedData<Registration>
+export type InvoicesPage = PaginatedData<Invoice>
+export type MaintenancePage = PaginatedData<MaintenanceRequest>
+export type NotificationsPage = PaginatedData<NotificationItem>

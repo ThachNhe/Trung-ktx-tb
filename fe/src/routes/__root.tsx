@@ -1,11 +1,18 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
-export const Route = createRootRoute({
-  component: () => (
+import { ToastViewport } from '@/components/shared/toast-viewport'
+
+function RootComponent() {
+  return (
     <>
       <Outlet />
+      <ToastViewport />
       <TanStackRouterDevtools />
     </>
-  ),
+  )
+}
+
+export const Route = createRootRoute({
+  component: RootComponent,
 })

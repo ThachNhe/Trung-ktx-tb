@@ -9,38 +9,310 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudentRouteImport } from './routes/student'
+import { Route as StaffRouteImport } from './routes/staff'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StudentRoomsRouteImport } from './routes/student/rooms'
+import { Route as StudentMyRegistrationRouteImport } from './routes/student/my-registration'
+import { Route as StudentMaintenanceRouteImport } from './routes/student/maintenance'
+import { Route as StudentInvoicesRouteImport } from './routes/student/invoices'
+import { Route as StudentDashboardRouteImport } from './routes/student/dashboard'
+import { Route as StaffRegistrationsRouteImport } from './routes/staff/registrations'
+import { Route as StaffMaintenanceRouteImport } from './routes/staff/maintenance'
+import { Route as StaffInvoicesRouteImport } from './routes/staff/invoices'
+import { Route as StaffDashboardRouteImport } from './routes/staff/dashboard'
+import { Route as AdminStudentsRouteImport } from './routes/admin/students'
+import { Route as AdminRoomsRouteImport } from './routes/admin/rooms'
+import { Route as AdminNotificationsRouteImport } from './routes/admin/notifications'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
+import { Route as AdminBuildingsRouteImport } from './routes/admin/buildings'
 
+const StudentRoute = StudentRouteImport.update({
+  id: '/student',
+  path: '/student',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffRoute = StaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentRoomsRoute = StudentRoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentMyRegistrationRoute = StudentMyRegistrationRouteImport.update({
+  id: '/my-registration',
+  path: '/my-registration',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentMaintenanceRoute = StudentMaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentInvoicesRoute = StudentInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentDashboardRoute = StudentDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StaffRegistrationsRoute = StaffRegistrationsRouteImport.update({
+  id: '/registrations',
+  path: '/registrations',
+  getParentRoute: () => StaffRoute,
+} as any)
+const StaffMaintenanceRoute = StaffMaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => StaffRoute,
+} as any)
+const StaffInvoicesRoute = StaffInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => StaffRoute,
+} as any)
+const StaffDashboardRoute = StaffDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => StaffRoute,
+} as any)
+const AdminStudentsRoute = AdminStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRoomsRoute = AdminRoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBuildingsRoute = AdminBuildingsRouteImport.update({
+  id: '/buildings',
+  path: '/buildings',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/staff': typeof StaffRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/admin/buildings': typeof AdminBuildingsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/rooms': typeof AdminRoomsRoute
+  '/admin/students': typeof AdminStudentsRoute
+  '/staff/dashboard': typeof StaffDashboardRoute
+  '/staff/invoices': typeof StaffInvoicesRoute
+  '/staff/maintenance': typeof StaffMaintenanceRoute
+  '/staff/registrations': typeof StaffRegistrationsRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/invoices': typeof StudentInvoicesRoute
+  '/student/maintenance': typeof StudentMaintenanceRoute
+  '/student/my-registration': typeof StudentMyRegistrationRoute
+  '/student/rooms': typeof StudentRoomsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/staff': typeof StaffRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/admin/buildings': typeof AdminBuildingsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/rooms': typeof AdminRoomsRoute
+  '/admin/students': typeof AdminStudentsRoute
+  '/staff/dashboard': typeof StaffDashboardRoute
+  '/staff/invoices': typeof StaffInvoicesRoute
+  '/staff/maintenance': typeof StaffMaintenanceRoute
+  '/staff/registrations': typeof StaffRegistrationsRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/invoices': typeof StudentInvoicesRoute
+  '/student/maintenance': typeof StudentMaintenanceRoute
+  '/student/my-registration': typeof StudentMyRegistrationRoute
+  '/student/rooms': typeof StudentRoomsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/staff': typeof StaffRouteWithChildren
+  '/student': typeof StudentRouteWithChildren
+  '/admin/buildings': typeof AdminBuildingsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/rooms': typeof AdminRoomsRoute
+  '/admin/students': typeof AdminStudentsRoute
+  '/staff/dashboard': typeof StaffDashboardRoute
+  '/staff/invoices': typeof StaffInvoicesRoute
+  '/staff/maintenance': typeof StaffMaintenanceRoute
+  '/staff/registrations': typeof StaffRegistrationsRoute
+  '/student/dashboard': typeof StudentDashboardRoute
+  '/student/invoices': typeof StudentInvoicesRoute
+  '/student/maintenance': typeof StudentMaintenanceRoute
+  '/student/my-registration': typeof StudentMyRegistrationRoute
+  '/student/rooms': typeof StudentRoomsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/register'
+    | '/staff'
+    | '/student'
+    | '/admin/buildings'
+    | '/admin/dashboard'
+    | '/admin/notifications'
+    | '/admin/rooms'
+    | '/admin/students'
+    | '/staff/dashboard'
+    | '/staff/invoices'
+    | '/staff/maintenance'
+    | '/staff/registrations'
+    | '/student/dashboard'
+    | '/student/invoices'
+    | '/student/maintenance'
+    | '/student/my-registration'
+    | '/student/rooms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/register'
+    | '/staff'
+    | '/student'
+    | '/admin/buildings'
+    | '/admin/dashboard'
+    | '/admin/notifications'
+    | '/admin/rooms'
+    | '/admin/students'
+    | '/staff/dashboard'
+    | '/staff/invoices'
+    | '/staff/maintenance'
+    | '/staff/registrations'
+    | '/student/dashboard'
+    | '/student/invoices'
+    | '/student/maintenance'
+    | '/student/my-registration'
+    | '/student/rooms'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/register'
+    | '/staff'
+    | '/student'
+    | '/admin/buildings'
+    | '/admin/dashboard'
+    | '/admin/notifications'
+    | '/admin/rooms'
+    | '/admin/students'
+    | '/staff/dashboard'
+    | '/staff/invoices'
+    | '/staff/maintenance'
+    | '/staff/registrations'
+    | '/student/dashboard'
+    | '/student/invoices'
+    | '/student/maintenance'
+    | '/student/my-registration'
+    | '/student/rooms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  StaffRoute: typeof StaffRouteWithChildren
+  StudentRoute: typeof StudentRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/student': {
+      id: '/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staff': {
+      id: '/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof StaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +320,167 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/rooms': {
+      id: '/student/rooms'
+      path: '/rooms'
+      fullPath: '/student/rooms'
+      preLoaderRoute: typeof StudentRoomsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/my-registration': {
+      id: '/student/my-registration'
+      path: '/my-registration'
+      fullPath: '/student/my-registration'
+      preLoaderRoute: typeof StudentMyRegistrationRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/maintenance': {
+      id: '/student/maintenance'
+      path: '/maintenance'
+      fullPath: '/student/maintenance'
+      preLoaderRoute: typeof StudentMaintenanceRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/invoices': {
+      id: '/student/invoices'
+      path: '/invoices'
+      fullPath: '/student/invoices'
+      preLoaderRoute: typeof StudentInvoicesRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/dashboard': {
+      id: '/student/dashboard'
+      path: '/dashboard'
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof StudentDashboardRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/staff/registrations': {
+      id: '/staff/registrations'
+      path: '/registrations'
+      fullPath: '/staff/registrations'
+      preLoaderRoute: typeof StaffRegistrationsRouteImport
+      parentRoute: typeof StaffRoute
+    }
+    '/staff/maintenance': {
+      id: '/staff/maintenance'
+      path: '/maintenance'
+      fullPath: '/staff/maintenance'
+      preLoaderRoute: typeof StaffMaintenanceRouteImport
+      parentRoute: typeof StaffRoute
+    }
+    '/staff/invoices': {
+      id: '/staff/invoices'
+      path: '/invoices'
+      fullPath: '/staff/invoices'
+      preLoaderRoute: typeof StaffInvoicesRouteImport
+      parentRoute: typeof StaffRoute
+    }
+    '/staff/dashboard': {
+      id: '/staff/dashboard'
+      path: '/dashboard'
+      fullPath: '/staff/dashboard'
+      preLoaderRoute: typeof StaffDashboardRouteImport
+      parentRoute: typeof StaffRoute
+    }
+    '/admin/students': {
+      id: '/admin/students'
+      path: '/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof AdminStudentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/rooms': {
+      id: '/admin/rooms'
+      path: '/rooms'
+      fullPath: '/admin/rooms'
+      preLoaderRoute: typeof AdminRoomsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/notifications': {
+      id: '/admin/notifications'
+      path: '/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminNotificationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/buildings': {
+      id: '/admin/buildings'
+      path: '/buildings'
+      fullPath: '/admin/buildings'
+      preLoaderRoute: typeof AdminBuildingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminBuildingsRoute: typeof AdminBuildingsRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminNotificationsRoute: typeof AdminNotificationsRoute
+  AdminRoomsRoute: typeof AdminRoomsRoute
+  AdminStudentsRoute: typeof AdminStudentsRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminBuildingsRoute: AdminBuildingsRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminNotificationsRoute: AdminNotificationsRoute,
+  AdminRoomsRoute: AdminRoomsRoute,
+  AdminStudentsRoute: AdminStudentsRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface StaffRouteChildren {
+  StaffDashboardRoute: typeof StaffDashboardRoute
+  StaffInvoicesRoute: typeof StaffInvoicesRoute
+  StaffMaintenanceRoute: typeof StaffMaintenanceRoute
+  StaffRegistrationsRoute: typeof StaffRegistrationsRoute
+}
+
+const StaffRouteChildren: StaffRouteChildren = {
+  StaffDashboardRoute: StaffDashboardRoute,
+  StaffInvoicesRoute: StaffInvoicesRoute,
+  StaffMaintenanceRoute: StaffMaintenanceRoute,
+  StaffRegistrationsRoute: StaffRegistrationsRoute,
+}
+
+const StaffRouteWithChildren = StaffRoute._addFileChildren(StaffRouteChildren)
+
+interface StudentRouteChildren {
+  StudentDashboardRoute: typeof StudentDashboardRoute
+  StudentInvoicesRoute: typeof StudentInvoicesRoute
+  StudentMaintenanceRoute: typeof StudentMaintenanceRoute
+  StudentMyRegistrationRoute: typeof StudentMyRegistrationRoute
+  StudentRoomsRoute: typeof StudentRoomsRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentDashboardRoute: StudentDashboardRoute,
+  StudentInvoicesRoute: StudentInvoicesRoute,
+  StudentMaintenanceRoute: StudentMaintenanceRoute,
+  StudentMyRegistrationRoute: StudentMyRegistrationRoute,
+  StudentRoomsRoute: StudentRoomsRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  StaffRoute: StaffRouteWithChildren,
+  StudentRoute: StudentRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

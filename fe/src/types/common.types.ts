@@ -1,7 +1,27 @@
-// ─── User ─────────────────────────────────────────────────────────────────
-
 export type UserRole = 'admin' | 'staff' | 'student'
 export type Gender = 'male' | 'female' | 'other'
+export type BuildingCode =
+  | 'K1'
+  | 'K2'
+  | 'K3'
+  | 'K4'
+  | 'K5'
+  | 'K6'
+  | 'K7'
+  | 'K8'
+export type BuildingStatus = 'active' | 'maintenance'
+export type RoomType = 'male' | 'female' | 'laos_student'
+export type RoomStatus = 'available' | 'full' | 'maintenance'
+export type RoomRegistrationStatus =
+  | 'pending'
+  | 'approved'
+  | 'rejected'
+  | 'checked_out'
+export type InvoiceStatus = 'unpaid' | 'paid'
+export type MaintenanceRequestStatus = 'pending' | 'in_progress' | 'resolved'
+export type NotificationTargetRole = 'all' | 'student' | 'staff'
+
+export type NumericValue = number | string
 
 export interface User {
   id: string
@@ -14,7 +34,95 @@ export interface User {
   created_at: string
 }
 
-// ─── Pagination ────────────────────────────────────────────────────────────
+export interface UserSummary {
+  id: string
+  full_name: string
+  student_code: string
+  email: string
+  role: UserRole
+}
+
+export interface Building {
+  id: number
+  name: BuildingCode
+  total_floors: number
+  description: string | null
+  status: BuildingStatus
+}
+
+export interface BuildingSummary {
+  id: number
+  name: BuildingCode
+}
+
+export interface Room {
+  id: number
+  building_id: number
+  room_number: string
+  floor: number
+  capacity: number
+  current_occupancy: number
+  room_type: RoomType
+  price_per_month: NumericValue
+  status: RoomStatus
+}
+
+export interface RoomSummary {
+  id: number
+  building_id: number
+  building_name: BuildingCode
+  room_number: string
+  floor: number
+  room_type: RoomType
+}
+
+export interface Registration {
+  id: number
+  student: UserSummary
+  room: RoomSummary
+  start_date: string
+  end_date: string
+  status: RoomRegistrationStatus
+  created_at: string
+}
+
+export interface Invoice {
+  id: number
+  student: UserSummary
+  room: RoomSummary
+  month: number
+  year: number
+  electricity_used_kwh: NumericValue
+  water_used_m3: NumericValue
+  room_fee: NumericValue
+  electricity_fee: NumericValue
+  water_fee: NumericValue
+  total_amount: NumericValue
+  status: InvoiceStatus
+  due_date: string
+  paid_at: string | null
+}
+
+export interface MaintenanceRequest {
+  id: number
+  student: UserSummary
+  room: RoomSummary
+  title: string
+  description: string
+  status: MaintenanceRequestStatus
+  created_at: string
+  resolved_at: string | null
+}
+
+export interface NotificationItem {
+  id: number
+  title: string
+  content: string
+  target_role: NotificationTargetRole
+  created_by: string
+  creator_name: string
+  created_at: string
+}
 
 export interface PaginationParams {
   page: number
@@ -25,21 +133,8 @@ export interface PaginationMeta {
   page: number
   limit: number
   total: number
-  totalPages: number
-  hasNextPage: boolean
-  hasPrevPage: boolean
+  total_pages: number
 }
-
-// ─── Sort & Filter ─────────────────────────────────────────────────────────
-
-export type SortOrder = 'asc' | 'desc'
-
-export interface SortParams {
-  sortBy: string
-  sortOrder: SortOrder
-}
-
-// ─── Select Option ─────────────────────────────────────────────────────────
 
 export interface SelectOption<T = string> {
   label: string
@@ -47,12 +142,5 @@ export interface SelectOption<T = string> {
   disabled?: boolean
 }
 
-// ─── Key-Value ─────────────────────────────────────────────────────────────
-
-export type KeyValue<T = string> = Record<string, T>
-
-// ─── Nullable helpers ──────────────────────────────────────────────────────
-
 export type Nullable<T> = T | null
-export type Optional<T> = T | undefined
 export type Maybe<T> = T | null | undefined

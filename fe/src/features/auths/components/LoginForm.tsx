@@ -2,12 +2,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff, Loader2, LogIn } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from '@tanstack/react-router'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { getDefaultRouteForRole } from '@/lib/dormitory'
 import { loginSchema } from '@/lib/validations/auth.schema'
+import { useToast } from '@/hooks/useToast'
 import { useLogin } from '../hooks/useLogin'
 import type { LoginFormValues } from '../types/auth.types'
 
@@ -18,6 +21,8 @@ interface LoginFormProps {
 export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const { mutate: login, isPending, error } = useLogin()
+  const navigate = useNavigate()
+  const toast = useToast()
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -28,13 +33,24 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   })
 
   const onSubmit = (values: LoginFormValues) => {
-    login(values)
+    login(values, {
+      onSuccess: (data) => {
+        toast.success('Đăng nhập thành công', 'Đang chuyển đến trang làm việc của bạn')
+        navigate({ to: getDefaultRouteForRole(data.user.role), replace: true })
+      },
+      onError: (submitError) => {
+        toast.error(
+          'Đăng nhập thất bại',
+          submitError instanceof Error ? submitError.message : 'Vui lòng thử lại',
+        )
+      },
+    })
   }
 
   const errorMessage = error instanceof Error ? error.message : null
 
   return (
-    <Card className="w-full border-emerald-200/70 bg-white/90 shadow-[0_24px_80px_-24px_rgba(15,23,42,0.35)] backdrop-blur">
+    <Card className="w-full border-green-200/70 bg-white/92 shadow-[0_24px_80px_-24px_rgba(20,83,45,0.35)] backdrop-blur">
       <CardHeader className="space-y-2 text-left">
         <CardTitle className="text-2xl font-bold text-slate-950">Đăng nhập</CardTitle>
         <CardDescription className="text-slate-600">
@@ -102,7 +118,7 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
               </p>
             ) : null}
 
-            <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800" disabled={isPending}>
+            <Button type="submit" className="w-full bg-green-700 text-white hover:bg-green-800" disabled={isPending}>
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" />

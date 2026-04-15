@@ -1,22 +1,21 @@
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
+import axios, {
+  type AxiosError,
+  type InternalAxiosRequestConfig,
+} from 'axios'
+
+import { API_BASE_URL, ROUTES } from '@/lib/constants'
 import { useAuthStore } from '@/stores/useAuthStore'
-import type { ApiErrorResponse, ApiResponse, TokenResponse } from '@/types/api.types'
+import type { ApiErrorResponse } from '@/types/api.types'
 import { API_ENDPOINTS } from './endpoints'
 
-// ─── Axios Instance ────────────────────────────────────────────────────────
-
-const baseURL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
-
 export const api = axios.create({
-  baseURL,
+  baseURL: '/api/v1',
   timeout: 15000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 })
-
-// ─── Token Refresh Logic ───────────────────────────────────────────────────
 
 let isRefreshing = false
 let failedQueue: Array<{
@@ -35,8 +34,6 @@ const processQueue = (error: unknown) => {
   failedQueue = []
 }
 
-// ─── Response Interceptor ──────────────────────────────────────────────────
-
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<ApiErrorResponse>) => {
@@ -44,11 +41,12 @@ api.interceptors.response.use(
       _retry?: boolean
     }
 
-    // Handle 401 - attempt token refresh bằng cookie
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH)
+      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH) &&
+      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.LOGIN) &&
+      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REGISTER)
     ) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -64,10 +62,15 @@ api.interceptors.response.use(
       isRefreshing = true
 
       try {
-        await axios.post<ApiResponse<TokenResponse>>(
-          `${baseURL}${API_ENDPOINTS.AUTH.REFRESH}`,
-          {},
-          { withCredentials: true },
+        await axios.post(
+          `/api${API_ENDPOINTS.AUTH.REFRESH}`,
+          undefined,
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
         )
 
         processQueue(null)
@@ -75,6 +78,13 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError)
         useAuthStore.getState().logout()
+        if (
+          typeof window !== 'undefined' &&
+          window.location.pathname !== ROUTES.LOGIN &&
+          window.location.pathname !== ROUTES.REGISTER
+        ) {
+          window.location.assign(ROUTES.LOGIN)
+        }
         return Promise.reject(refreshError)
       } finally {
         isRefreshing = false

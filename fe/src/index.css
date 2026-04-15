@@ -35,24 +35,24 @@
 
 :root {
     --radius: 1rem;
-    --background: oklch(0.985 0.01 95);
-    --foreground: oklch(0.18 0.03 240);
+    --background: oklch(0.983 0.014 132);
+    --foreground: oklch(0.22 0.02 145);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.18 0.03 240);
+    --card-foreground: oklch(0.22 0.02 145);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.18 0.03 240);
-    --primary: oklch(0.46 0.14 145);
-    --primary-foreground: oklch(0.985 0.01 95);
-    --secondary: oklch(0.95 0.03 85);
-    --secondary-foreground: oklch(0.23 0.03 240);
-    --muted: oklch(0.94 0.02 90);
-    --muted-foreground: oklch(0.46 0.03 240);
-    --accent: oklch(0.92 0.06 80);
-    --accent-foreground: oklch(0.23 0.03 240);
+    --popover-foreground: oklch(0.22 0.02 145);
+    --primary: oklch(0.5 0.15 145);
+    --primary-foreground: oklch(0.985 0.012 132);
+    --secondary: oklch(0.965 0.02 132);
+    --secondary-foreground: oklch(0.27 0.03 145);
+    --muted: oklch(0.95 0.015 132);
+    --muted-foreground: oklch(0.47 0.02 145);
+    --accent: oklch(0.93 0.03 132);
+    --accent-foreground: oklch(0.22 0.02 145);
     --destructive: oklch(0.62 0.2 28);
-    --border: oklch(0.9 0.02 90);
-    --input: oklch(0.9 0.02 90);
-    --ring: oklch(0.46 0.14 145);
+    --border: oklch(0.9 0.02 132);
+    --input: oklch(0.9 0.02 132);
+    --ring: oklch(0.5 0.15 145);
 }
 
 .dark {
@@ -88,7 +88,7 @@
     body {
         @apply bg-background text-foreground antialiased;
         min-height: 100vh;
-        background-image: radial-gradient(circle at top left, rgba(16, 185, 129, 0.08), transparent 30%), radial-gradient(circle at top right, rgba(251, 191, 36, 0.08), transparent 24%);
+        background-image: radial-gradient(circle at top left, rgba(21, 128, 61, 0.14), transparent 28%), radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 24%), linear-gradient(180deg, rgba(244, 250, 245, 0.9) 0%, rgba(239, 247, 241, 1) 100%);
         background-attachment: fixed;
     }
 
@@ -103,4 +103,54 @@
     #root {
         min-height: 100vh;
     }
+
+    button,
+    input,
+    select,
+    textarea {
+        @apply transition-colors duration-200;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translate3d(16px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@layer utilities {
+    .animate-fade-in-up {
+        animation: fade-in-up 420ms ease-out both;
+    }
+
+    .animate-slide-in-right {
+        animation: slide-in-right 280ms ease-out both;
+    }
+
+    .surface-grid {
+        background-image: linear-gradient(rgba(20, 83, 45, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 83, 45, 0.05) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    /* .page-shell {
+        @apply rounded-[1.75rem] border border-white/60 bg-white/85 shadow-[0_24px_80px_-40px_rgba(21, 128, 61, 0.35)] backdrop-blur;
+    } */
 }

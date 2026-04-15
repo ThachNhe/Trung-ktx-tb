@@ -6,24 +6,20 @@ import { QUERY_KEYS } from '@/lib/constants'
 import { authService } from '../services/auth.service'
 import type { LoginFormValues, RegisterFormValues } from '../types/auth.types'
 
-// ─── useLogin ──────────────────────────────────────────────────────────────
-
 export function useLogin() {
-  const login = useAuthStore((state) => state.login)
+  const setSession = useAuthStore((state) => state.setSession)
 
   return useMutation({
     mutationFn: (values: LoginFormValues) => authService.login(values),
 
     onSuccess: (data) => {
-      login(data.user)
+      setSession(data.user)
     },
   })
 }
 
-// ─── useRegister ───────────────────────────────────────────────────────────
-
 export function useRegister() {
-  const login = useAuthStore((state) => state.login)
+  const setSession = useAuthStore((state) => state.setSession)
 
   return useMutation({
     mutationFn: (values: RegisterFormValues) =>
@@ -37,12 +33,10 @@ export function useRegister() {
       }),
 
     onSuccess: (data) => {
-      login(data.user)
+      setSession(data.user)
     },
   })
 }
-
-// ─── useLogout ─────────────────────────────────────────────────────────────
 
 export function useLogout() {
   const { logout } = useAuthStore()
@@ -58,28 +52,22 @@ export function useLogout() {
   })
 }
 
-// ─── useMe ─────────────────────────────────────────────────────────────────
-
 export function useMe() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const setUser = useAuthStore((state) => state.setUser)
-  const setAuthenticated = useAuthStore((state) => state.setAuthenticated)
+  const hasHydrated = useAuthStore((state) => state.hasHydrated)
+  const setSession = useAuthStore((state) => state.setSession)
   const logout = useAuthStore((state) => state.logout)
 
   const query = useQuery({
     queryKey: QUERY_KEYS.AUTH.ME,
-    queryFn: () => authService.getMe(),
-    enabled: isAuthenticated,
+    queryFn: async () => {
+      const user = await authService.getMe()
+      setSession(user)
+      return user
+    },
+    enabled: hasHydrated,
     retry: 0,
     staleTime: 1000 * 60 * 5,
   })
-
-  useEffect(() => {
-    if (query.data) {
-      setUser(query.data)
-      setAuthenticated(true)
-    }
-  }, [query.data, setAuthenticated, setUser])
 
   useEffect(() => {
     if (query.error) {
@@ -88,4 +76,15 @@ export function useMe() {
   }, [logout, query.error])
 
   return query
+}
+
+export function useBootstrapAuth() {
+  const hasHydrated = useAuthStore((state) => state.hasHydrated)
+  const meQuery = useMe()
+  const isLoading = hasHydrated && meQuery.isPending
+
+  return {
+    isReady: hasHydrated && !isLoading,
+    isLoading,
+  }
 }

@@ -1,15 +1,15 @@
 services:
-  app:
+  backend:
     build:
-      context: .
+      context: ./be
       target: development
-    container_name: fastapi_app
+    container_name: ktx_tb_backend
     ports:
-      - "8000:8000"
+      - "8080:8000"
     volumes:
-      - .:/app
+      - ./be:/app
     env_file:
-      - .env
+      - ./be/.env
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:password@db:5432/ktx_tb
       JWT_SECRET_KEY: dev-jwt-secret-key
@@ -25,13 +25,13 @@ services:
 
   db:
     image: postgres:16-alpine
-    container_name: fastapi_db
+    container_name: ktx_tb_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: ktx_tb
     ports:
-      - "5432:5432"
+      - "5437:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -42,6 +42,23 @@ services:
     networks:
       - app_network
 
+  fe:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    container_name: ktx_tb_fe
+    restart: unless-stopped
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./fe:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=
+    depends_on:
+      - backend
+    networks:
+      - app_network
 volumes:
   postgres_data:
 
