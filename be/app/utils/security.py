@@ -62,7 +62,7 @@ def decode_token(token: str) -> Optional[dict]:
 
 
 def set_auth_cookies(response: Response, access_token: str, refresh_token: str) -> None:
-    secure = settings.COOKIE_SECURE or settings.is_production
+    secure = settings.COOKIE_SECURE
 
     response.set_cookie(
         key=settings.ACCESS_TOKEN_COOKIE_NAME,

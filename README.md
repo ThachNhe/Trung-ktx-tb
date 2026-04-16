@@ -28,6 +28,43 @@ docker compose up --build
 
 Backend sẽ chạy tại `http://localhost:8000`.
 
+## Deploy production trên EC2
+
+1. Tạo file biến môi trường cho production:
+
+```bash
+cp .env.prod.example .env.prod
+```
+
+2. Chỉnh ít nhất các giá trị sau trong `.env.prod`:
+
+- `DATABASE_URL`
+- `POSTGRES_PASSWORD`
+- `SECRET_KEY`
+- `JWT_SECRET_KEY`
+- `ALLOWED_ORIGINS`
+- `COOKIE_SECURE`
+
+3. Build và chạy production stack:
+
+```bash
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+```
+
+4. Chạy migration database:
+
+```bash
+docker compose --env-file .env.prod -f docker-compose.prod.yml exec backend alembic upgrade head
+```
+
+5. Nếu cần seed dữ liệu mặc định:
+
+```bash
+docker compose --env-file .env.prod -f docker-compose.prod.yml exec backend python alembic/seed_data.py
+```
+
+Frontend sẽ được phục vụ qua Nginx ở cổng `80`, còn backend chỉ lộ ra nội bộ trong network Docker. Nếu bạn đã bật HTTPS ở ngoài EC2, hãy đổi `COOKIE_SECURE=true`.
+
 ## Chạy frontend
 
 ```bash
