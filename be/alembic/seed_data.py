@@ -25,6 +25,7 @@ SEED_USERS = [
         "phone": "0901000001",
         "role": UserRole.ADMIN,
         "gender": Gender.OTHER,
+        "nationality": Nationality.VIETNAM,
     },
     {
         "email": "staff1@utb.edu.vn",
@@ -34,6 +35,8 @@ SEED_USERS = [
         "phone": "0901000002",
         "role": UserRole.STAFF,
         "gender": Gender.MALE,
+        "nationality": Nationality.VIETNAM,
+
     },
     {
         "email": "staff2@utb.edu.vn",
@@ -43,6 +46,8 @@ SEED_USERS = [
         "phone": "0901000003",
         "role": UserRole.STAFF,
         "gender": Gender.FEMALE,
+        "nationality": Nationality.VIETNAM,
+
     },
     {
         "email": "sv1@utb.edu.vn",
