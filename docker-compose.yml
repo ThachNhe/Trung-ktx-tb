@@ -46,6 +46,7 @@ services:
     build:
       context: ./fe
       dockerfile: Dockerfile
+      target: development
     container_name: ktx_tb_fe
     restart: unless-stopped
     ports:
