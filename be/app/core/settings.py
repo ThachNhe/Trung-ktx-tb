@@ -30,7 +30,7 @@ class Settings(BaseSettings):
 
     # Email (MailHog)
     SMTP_HOST: str = "mailhog"
-    SMTP_PORT: int = 1025
+    SMTP_PORT: int = 1027
     SMTP_USE_TLS: bool = False
     SMTP_USERNAME: str = ""
     SMTP_PASSWORD: str = ""

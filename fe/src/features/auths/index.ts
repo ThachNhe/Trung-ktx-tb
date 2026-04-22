@@ -1,9 +1,7 @@
 export { LoginForm } from './components/LoginForm'
-export { RegisterForm } from './components/RegisterForm'
 export {
   useBootstrapAuth,
   useLogin,
-  useRegister,
   useLogout,
   useMe,
 } from './hooks/useLogin'

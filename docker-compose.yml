@@ -17,7 +17,7 @@ services:
       APP_ENV: development
       DEBUG: "true"
       SMTP_HOST: mailhog
-      SMTP_PORT: "1025"
+      SMTP_PORT: "1027"
     depends_on:
       db:
         condition: service_healthy
@@ -50,8 +50,8 @@ services:
     image: mailhog/mailhog:latest
     container_name: ktx_tb_mailhog
     ports:
-      - "1025:1025" # SMTP
-      - "8025:8025" # Web UI
+      - "1027:1025" # SMTP
+      - "8027:8025" # Web UI
     networks:
       - app_network
 

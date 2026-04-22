@@ -106,13 +106,6 @@ class AuthService:
         refresh_token = create_refresh_token(subject=str(user.id))
         return TokenResponse(access_token=access_token, refresh_token=refresh_token)
 
-        user = await self.user_repo.get_by_email(payload.email)
-        if not user or not verify_password(payload.password, user.password_hash):
-            raise UnauthorizedException(ErrorMessage.INVALID_CREDENTIALS)
-
-        tokens = self._generate_tokens(user)
-        return AuthResponse(user=UserResponse.model_validate(user), tokens=tokens)
-
     async def refresh_token(self, payload: RefreshTokenRequest) -> TokenResponse:
         token_value = payload.refresh_token
         if not token_value:
