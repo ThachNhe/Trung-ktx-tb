@@ -15,6 +15,7 @@ import type {
   CreateNotificationPayload,
   CreateRegistrationPayload,
   CreateRoomPayload,
+  CreateUserPayload,
   ListQueryParams,
   MonthlyReportQueryParams,
   UpdateMaintenanceStatusPayload,
@@ -290,5 +291,23 @@ export function useMonthlyReport(params: MonthlyReportQueryParams) {
   return useQuery({
     queryKey: QUERY_KEYS.REPORTS.MONTHLY(params),
     queryFn: () => dormitoryService.getMonthlyReport(params),
+  })
+}
+
+export function useUsers(params: ListQueryParams = { page: PAGINATION.DEFAULT_PAGE, limit: PAGINATION.DEFAULT_LIMIT }) {
+  return useQuery({
+    queryKey: QUERY_KEYS.USERS.LIST(params),
+    queryFn: () => dormitoryService.listUsers(params),
+  })
+}
+
+export function useCreateUser() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (payload: CreateUserPayload) => dormitoryService.createUser(payload),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USERS.ROOT })
+    },
   })
 }

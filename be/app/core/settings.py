@@ -28,6 +28,15 @@ class Settings(BaseSettings):
     COOKIE_SAMESITE: str = "lax"
     COOKIE_SECURE: bool = False
 
+    # Email (MailHog)
+    SMTP_HOST: str = "mailhog"
+    SMTP_PORT: int = 1025
+    SMTP_USE_TLS: bool = False
+    SMTP_USERNAME: str = ""
+    SMTP_PASSWORD: str = ""
+    EMAIL_FROM: str = "noreply@ktx-tbu.edu.vn"
+    EMAIL_FROM_NAME: str = "Quản lý Ký túc xá - Đại học Tây Bắc"
+
     def get_allowed_origins(self) -> List[str]:
         return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",") if origin.strip()]
 

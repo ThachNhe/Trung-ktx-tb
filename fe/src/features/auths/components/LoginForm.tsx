@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from '@tanstack/react-router'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { getDefaultRouteForRole } from '@/lib/dormitory'
@@ -15,10 +15,10 @@ import { useLogin } from '../hooks/useLogin'
 import type { LoginFormValues } from '../types/auth.types'
 
 interface LoginFormProps {
-  onSwitchToRegister: () => void
+  // no props needed
 }
 
-export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
+export function LoginForm(_: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const { mutate: login, isPending, error } = useLogin()
   const navigate = useNavigate()
@@ -54,7 +54,7 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
       <CardHeader className="space-y-2 text-left">
         <CardTitle className="text-2xl font-bold text-slate-950">Đăng nhập</CardTitle>
         <CardDescription className="text-slate-600">
-          Dùng email sinh viên để truy cập hệ thống quản lý ký túc xá.
+          Dùng email đã được cấp để truy cập hệ thống quản lý ký túc xá.
         </CardDescription>
       </CardHeader>
 
@@ -134,12 +134,6 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
           </form>
         </Form>
       </CardContent>
-
-      <CardFooter className="justify-center border-t border-slate-200/80 pt-6">
-        <Button type="button" variant="ghost" className="text-slate-600 hover:text-slate-950" onClick={onSwitchToRegister}>
-          Chưa có tài khoản? Đăng ký ngay
-        </Button>
-      </CardFooter>
     </Card>
   )
 }

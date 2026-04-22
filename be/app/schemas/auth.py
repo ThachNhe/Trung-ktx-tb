@@ -6,6 +6,45 @@ from pydantic import BaseModel, ConfigDict, EmailStr, field_validator
 from app.constants.enums import Gender, Nationality, UserRole
 
 
+class CreateUserRequest(BaseModel):
+    """Admin tạo tài khoản cho sinh viên hoặc nhân viên."""
+    full_name: str
+    student_code: str
+    email: EmailStr
+    phone: str | None = None
+    role: UserRole = UserRole.STUDENT
+    gender: Gender
+    nationality: Nationality = Nationality.VIETNAM
+
+    @field_validator("full_name")
+    @classmethod
+    def validate_full_name(cls, value: str) -> str:
+        value = value.strip()
+        if len(value) < 2:
+            raise ValueError("Họ và tên phải có ít nhất 2 ký tự")
+        return value
+
+    @field_validator("student_code")
+    @classmethod
+    def normalize_student_code(cls, value: str) -> str:
+        value = value.strip().upper()
+        if len(value) < 3:
+            raise ValueError("Mã sinh viên không hợp lệ")
+        return value
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, value: str) -> str:
+        return value.strip().lower()
+
+    @field_validator("role")
+    @classmethod
+    def validate_role(cls, value: UserRole) -> UserRole:
+        if value == UserRole.ADMIN:
+            raise ValueError("Không thể tạo tài khoản admin qua API này")
+        return value
+
+
 class RegisterRequest(BaseModel):
     full_name: str
     student_code: str

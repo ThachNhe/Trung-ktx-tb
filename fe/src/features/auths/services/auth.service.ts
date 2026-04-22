@@ -6,7 +6,6 @@ import type {
   AuthResponse,
   LoginRequest,
   RefreshTokenRequest,
-  RegisterRequest,
   TokenResponse,
 } from '@/types/api.types'
 import type { User } from '@/types/common.types'
@@ -21,15 +20,6 @@ export const authService = {
         payload,
       ),
       'Đăng nhập thất bại',
-    ),
-
-  register: async (payload: RegisterRequest): Promise<AuthResponse> =>
-    executeRequest(
-      apiPost<ApiResponse<AuthResponse>>(
-        API_ENDPOINTS.AUTH.REGISTER,
-        payload,
-      ),
-      'Đăng ký thất bại',
     ),
 
   logout: async (): Promise<void> => {

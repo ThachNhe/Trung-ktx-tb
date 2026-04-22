@@ -24,3 +24,5 @@ class SuccessMessage:
     LOGOUT_SUCCESS = "Đăng xuất thành công"
     TOKEN_REFRESHED = "Làm mới token thành công"
     PROFILE_LOADED = "Lấy thông tin người dùng thành công"
+    USER_CREATED = "Tạo tài khoản thành công và đã gửi thông tin qua email"
+    USER_LIST_LOADED = "Lấy danh sách người dùng thành công"

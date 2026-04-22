@@ -11,6 +11,7 @@ import type {
   CreateNotificationPayload,
   CreateRegistrationPayload,
   CreateRoomPayload,
+  CreateUserPayload,
   AvailableRoomQueryParams,
   InvoicesPage,
   ListQueryParams,
@@ -22,6 +23,7 @@ import type {
   RoomsPage,
   UpdateMaintenanceStatusPayload,
   UpdateRoomStatusPayload,
+  UsersPage,
 } from '@/types/api.types'
 import type {
   Building,
@@ -30,6 +32,7 @@ import type {
   NotificationItem,
   Registration,
   Room,
+  User,
 } from '@/types/common.types'
 
 export const dormitoryService = {
@@ -219,5 +222,17 @@ export const dormitoryService = {
         cleanObject(params),
       ),
       'Không thể tải báo cáo tháng',
+    ),
+
+  listUsers: async (params?: ListQueryParams): Promise<UsersPage> =>
+    executeRequest(
+      apiGet<ApiResponse<UsersPage>>(API_ENDPOINTS.USERS.LIST, cleanObject(params ?? {})),
+      'Không thể tải danh sách người dùng',
+    ),
+
+  createUser: async (payload: CreateUserPayload): Promise<User> =>
+    executeRequest(
+      apiPost<ApiResponse<User>>(API_ENDPOINTS.USERS.CREATE, payload),
+      'Không thể tạo tài khoản',
     ),
 }

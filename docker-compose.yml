@@ -16,9 +16,13 @@ services:
       SECRET_KEY: dev-secret-key
       APP_ENV: development
       DEBUG: "true"
+      SMTP_HOST: mailhog
+      SMTP_PORT: "1025"
     depends_on:
       db:
         condition: service_healthy
+      mailhog:
+        condition: service_started
     restart: unless-stopped
     networks:
       - app_network
@@ -42,6 +46,15 @@ services:
     networks:
       - app_network
 
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ktx_tb_mailhog
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    networks:
+      - app_network
+
   fe:
     build:
       context: ./fe
@@ -58,6 +71,7 @@ services:
       - VITE_API_URL=
     depends_on:
       - backend
+      - mailhog
     networks:
       - app_network
 volumes:

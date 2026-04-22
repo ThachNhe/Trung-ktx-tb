@@ -15,6 +15,7 @@ import type {
   RoomStatus,
   RoomType,
   User,
+  UserRole,
 } from './common.types'
 
 export interface ApiResponse<T = unknown> {
@@ -166,3 +167,14 @@ export type RegistrationsPage = PaginatedData<Registration>
 export type InvoicesPage = PaginatedData<Invoice>
 export type MaintenancePage = PaginatedData<MaintenanceRequest>
 export type NotificationsPage = PaginatedData<NotificationItem>
+export type UsersPage = PaginatedData<User>
+
+export interface CreateUserPayload {
+  full_name: string
+  student_code: string
+  email: string
+  phone?: string | null
+  role: UserRole
+  gender: Gender
+  nationality?: Nationality
+}

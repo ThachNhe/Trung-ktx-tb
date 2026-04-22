@@ -6,7 +6,7 @@ from app.core.database import get_db
 from app.core.exception import UnauthorizedException
 from app.core.settings import settings
 from app.dependencies.auth import CurrentUser
-from app.schemas.auth import AuthResponse, LoginRequest, RefreshTokenRequest, RegisterRequest, TokenResponse, UserResponse
+from app.schemas.auth import AuthResponse, LoginRequest, RefreshTokenRequest, TokenResponse, UserResponse
 from app.schemas.base_response import BaseResponse
 from app.services.auth import AuthService
 from app.utils.security import clear_auth_cookies, set_auth_cookies
@@ -16,22 +16,6 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 
 def get_auth_service(db: AsyncSession = Depends(get_db)) -> AuthService:
     return AuthService(db)
-
-
-@router.post(
-    "/register",
-    response_model=BaseResponse[AuthResponse],
-    status_code=status.HTTP_201_CREATED,
-    summary="Đăng ký tài khoản",
-)
-async def register(
-    payload: RegisterRequest,
-    response: Response,
-    service: AuthService = Depends(get_auth_service),
-):
-    data = await service.register(payload)
-    set_auth_cookies(response, data.tokens.access_token, data.tokens.refresh_token)
-    return BaseResponse.ok(data=data, message=SuccessMessage.REGISTER_SUCCESS)
 
 
 @router.post(

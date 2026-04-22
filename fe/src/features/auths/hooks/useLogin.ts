@@ -4,34 +4,13 @@ import { useEffect } from 'react'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { QUERY_KEYS } from '@/lib/constants'
 import { authService } from '../services/auth.service'
-import type { LoginFormValues, RegisterFormValues } from '../types/auth.types'
+import type { LoginFormValues } from '../types/auth.types'
 
 export function useLogin() {
   const setSession = useAuthStore((state) => state.setSession)
 
   return useMutation({
     mutationFn: (values: LoginFormValues) => authService.login(values),
-
-    onSuccess: (data) => {
-      setSession(data.user)
-    },
-  })
-}
-
-export function useRegister() {
-  const setSession = useAuthStore((state) => state.setSession)
-
-  return useMutation({
-    mutationFn: (values: RegisterFormValues) =>
-      authService.register({
-        full_name: values.full_name,
-        student_code: values.student_code,
-        email: values.email,
-        password: values.password,
-        phone: values.phone,
-        gender: values.gender,
-        nationality: values.nationality,
-      }),
 
     onSuccess: (data) => {
       setSession(data.user)

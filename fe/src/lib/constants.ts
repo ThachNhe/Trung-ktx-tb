@@ -51,6 +51,11 @@ export const QUERY_KEYS = {
     ROOT: ['auth'] as const,
     ME: ['auth', 'me'] as const,
   },
+  USERS: {
+    ROOT: ['users'] as const,
+    LIST: (params?: ListQueryParams) =>
+      ['users', 'list', normalizePagination(params)] as const,
+  },
   BUILDINGS: {
     ROOT: ['buildings'] as const,
     LIST: (params?: ListQueryParams) =>
