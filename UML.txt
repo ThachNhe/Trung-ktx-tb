@@ -1,759 +1,862 @@
-
-'===========================================================================
-' HỆ THỐNG QUẢN LÝ KÝ TÚC XÁ - ĐẠI HỌC TÂY BẮC
-' PlantUML Diagrams – Use Case / Activity / Sequence
-'===========================================================================
-' Hướng dẫn render: https://www.plantuml.com/plantuml/uml/
-'===========================================================================
+' ============================================================
+' HỆ THỐNG QUẢN LÝ KÝ TÚC XÁ – ĐẠI HỌC TÂY BẮC
+' Biểu đồ chi tiết theo từng Use Case
+' Mỗi UC gồm: Biểu đồ ca sử dụng | Biểu đồ hoạt động | Biểu đồ tuần tự
+' ============================================================
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [0] BIỂU ĐỒ USE CASE TỔNG THỂ
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC00 – TỔNG THỂ                                        ║
+' ╚══════════════════════════════════════════════════════════╝
 
-@startuml UC_Tong_The
-skinparam actorStyle awesome
+@startuml UC00_Tong_The
 left to right direction
-title Biểu đồ Use Case Tổng thể – Hệ thống Quản lý Ký túc xá
+title Biểu đồ Use Case Tổng thể – Hệ thống Quản lý Ký túc xá\nĐại học Tây Bắc
 
 actor "Sinh viên"     as SV
 actor "Nhân viên"     as NV
 actor "Quản trị viên" as ADMIN
 
 rectangle "Hệ thống Quản lý Ký túc xá" {
-
-  ' === UC1: Xác thực ===
-  package "Xác thực" {
-    usecase "Đăng ký tài khoản" as UC_REG
-    usecase "Đăng nhập"         as UC_LOGIN
-    usecase "Đăng xuất"         as UC_LOGOUT
-  }
-
-  ' === UC2: Quản lý tòa nhà & phòng ===
-  package "Quản lý Tòa nhà & Phòng" {
-    usecase "Thêm / xem tòa nhà"   as UC_BUILDING
-    usecase "Thêm / cập nhật phòng" as UC_ROOM
-    usecase "Xem danh sách phòng trống" as UC_AVAIL
-  }
-
-  ' === UC3: Đăng ký phòng ===
-  package "Đăng ký Phòng" {
-    usecase "Nộp đơn đăng ký phòng"     as UC_REG_ROOM
-    usecase "Xem trạng thái đơn"        as UC_VIEW_REG
-    usecase "Duyệt / Từ chối đơn"       as UC_APPROVE
-    usecase "Trả phòng (checkout)"      as UC_CHECKOUT
-  }
-
-  ' === UC4: Hóa đơn ===
-  package "Quản lý Hóa đơn" {
-    usecase "Tạo hóa đơn tháng"    as UC_CREATE_INV
-    usecase "Xem hóa đơn"          as UC_VIEW_INV
-    usecase "Thanh toán hóa đơn"   as UC_PAY_INV
-  }
-
-  ' === UC5: Bảo trì ===
-  package "Yêu cầu Bảo trì" {
-    usecase "Gửi yêu cầu bảo trì"         as UC_MAINT_CREATE
-    usecase "Cập nhật trạng thái bảo trì" as UC_MAINT_UPDATE
-    usecase "Xem yêu cầu bảo trì"         as UC_MAINT_VIEW
-  }
-
-  ' === UC6: Thông báo ===
-  package "Thông báo" {
-    usecase "Gửi thông báo"    as UC_NOTIF_SEND
-    usecase "Xem thông báo"    as UC_NOTIF_VIEW
-  }
-
-  ' === UC7: Báo cáo ===
-  package "Báo cáo & Thống kê" {
-    usecase "Xem báo cáo tháng" as UC_REPORT
-  }
+  usecase "Đăng nhập"               as UC2
+  usecase "Đăng ký phòng"           as UC5
+  usecase "Thanh toán hóa đơn"      as UC9
+  usecase "Yêu cầu bảo trì"         as UC10
+  usecase "Duyệt đơn đăng ký"       as UC6
+  usecase "Trả phòng"               as UC7
+  usecase "Tạo hóa đơn"             as UC8
+  usecase "Xử lý bảo trì"           as UC11
+  usecase "Gửi thông báo"           as UC12
+  usecase "Cấp tài khoản"           as UC1
+  usecase "Quản lý tòa nhà & phòng" as UC3
+  usecase "Xem báo cáo thống kê"    as UC13
 }
 
-' Sinh viên
-SV --> UC_REG
-SV --> UC_LOGIN
-SV --> UC_LOGOUT
-SV --> UC_AVAIL
-SV --> UC_REG_ROOM
-SV --> UC_VIEW_REG
-SV --> UC_VIEW_INV
-SV --> UC_PAY_INV
-SV --> UC_MAINT_CREATE
-SV --> UC_MAINT_VIEW
-SV --> UC_NOTIF_VIEW
+SV    --> UC2
+SV    --> UC5
+SV    --> UC9
+SV    --> UC10
 
-' Nhân viên
-NV --> UC_LOGIN
-NV --> UC_LOGOUT
-NV --> UC_APPROVE
-NV --> UC_CHECKOUT
-NV --> UC_CREATE_INV
-NV --> UC_VIEW_INV
-NV --> UC_MAINT_UPDATE
-NV --> UC_MAINT_VIEW
-NV --> UC_NOTIF_SEND
-NV --> UC_NOTIF_VIEW
+NV    --> UC2
+NV    --> UC6
+NV    --> UC7
+NV    --> UC8
+NV    --> UC11
+NV    --> UC12
 
-' Admin
-ADMIN --> UC_LOGIN
-ADMIN --> UC_LOGOUT
-ADMIN --> UC_BUILDING
-ADMIN --> UC_ROOM
-ADMIN --> UC_AVAIL
-ADMIN --> UC_APPROVE
-ADMIN --> UC_CREATE_INV
-ADMIN --> UC_VIEW_INV
-ADMIN --> UC_NOTIF_SEND
-ADMIN --> UC_REPORT
-ADMIN --> UC_MAINT_VIEW
-
+ADMIN --> UC2
+ADMIN --> UC1
+ADMIN --> UC3
+ADMIN --> UC12
+ADMIN --> UC13
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC1] XÁC THỰC – Đăng ký & Đăng nhập
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC1 – CẤP TÀI KHOẢN                                    ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC1] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC1_XacThuc
-skinparam actorStyle awesome
+' ── UC1 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC1_Cap_Tai_Khoan_UseCase
 left to right direction
-title [UC1] Use Case – Xác thực
+title UC1 – Cấp tài khoản 
 
-actor "Người dùng" as User
-actor "Hệ thống"   as Sys <<system>>
+actor "Quản trị viên" as ADMIN
 
-rectangle "Xác thực" {
-  usecase "Đăng ký tài khoản" as REG
-  usecase "Xác thực thông tin" as VALIDATE
-  usecase "Đăng nhập"         as LOGIN
-  usecase "Làm mới token"     as REFRESH
-  usecase "Đăng xuất"         as LOGOUT
-}
+usecase "Cấp tài khoản"             as UC1
+usecase "Nhập thông tin người dùng" as UC1a
+usecase "Gán vai trò"               as UC1b
+usecase "Đặt mật khẩu ban đầu"     as UC1c
+usecase "Thông báo tài khoản"       as UC1d
 
-User --> REG
-User --> LOGIN
-User --> LOGOUT
-REG ..> VALIDATE  : <<include>>
-LOGIN ..> REFRESH : <<extend>>
-Sys  --> VALIDATE
+ADMIN --> UC1
+UC1   ..> UC1a : <<include>>
+UC1   ..> UC1b : <<include>>
+UC1   ..> UC1c : <<include>>
+UC1d  ..> UC1  : <<extend>>
 @enduml
 
-
-' ── [UC1] Activity Diagram – Đăng nhập ────────────────────────────────────
-@startuml ACT1_DangNhap
-title [UC1] Activity – Đăng nhập
+' ── UC1 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC1_Cap_Tai_Khoan_Activity
+title UC1 – Cấp tài khoản 
 
 start
-:Người dùng nhập email & mật khẩu;
-:Gửi yêu cầu đến API /auth/login;
-
-if (Thông tin hợp lệ?) then (Có)
-  :Tạo Access Token & Refresh Token;
-  :Lưu token vào HTTP-only Cookie;
-  :Chuyển hướng tới trang chính theo vai trò;
-else (Không)
-  :Trả về lỗi 401 Unauthorized;
-  :Hiển thị thông báo lỗi;
+:Quản trị viên nhập thông tin người dùng mới;
+if (Dữ liệu hợp lệ & không trùng lặp?) then (Không)
+  :Hiển thị lỗi;
+  stop
+else (Có)
 endif
+:Tạo tài khoản, gán vai trò;
+:Hiển thị xác nhận;
 stop
 @enduml
 
+' ── UC1 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC1_Cap_Tai_Khoan_Sequence
+title UC1 – Cấp tài khoản 
 
-' ── [UC1] Activity Diagram – Đăng ký ──────────────────────────────────────
-@startuml ACT1_DangKy
-title [UC1] Activity – Đăng ký tài khoản
+actor       "Quản trị viên" as ADMIN
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
 
-start
-:Sinh viên điền thông tin đăng ký;
-:Gửi yêu cầu POST /auth/register;
+ADMIN -> UI  : Điền form tạo tài khoản
+UI    -> API : POST /api/v1/admin/users
+API   -> API : Validate dữ liệu đầu vào
+API   -> DB  : Kiểm tra email/MSSV trùng lặp
+DB   --> API : Kết quả kiểm tra
 
-if (Email đã tồn tại?) then (Có)
-  :Trả về lỗi 409 Conflict;
-  :Hiển thị thông báo lỗi;
-else (Không)
-  :Hash mật khẩu;
-  :Lưu tài khoản vào CSDL với role = student;
-  :Tạo Access Token & Refresh Token;
-  :Trả về thông tin người dùng;
-  :Chuyển hướng tới trang sinh viên;
-endif
-stop
-@enduml
-
-
-' ── [UC1] Sequence Diagram – Đăng nhập ────────────────────────────────────
-@startuml SEQ1_DangNhap
-title [UC1] Sequence – Đăng nhập
-
-actor "Người dùng" as User
-participant "Frontend"  as FE
-participant "Auth API"  as API
-database "Database"     as DB
-
-User -> FE    : Nhập email & mật khẩu
-FE   -> API   : POST /auth/login {email, password}
-API  -> DB    : Truy vấn user theo email
-DB   --> API  : Trả về thông tin user
-API  -> API   : Kiểm tra mật khẩu (bcrypt)
-alt Hợp lệ
-  API -> API   : Tạo Access Token + Refresh Token
-  API --> FE   : 200 OK + Set-Cookie (tokens)
-  FE  --> User : Chuyển hướng tới Dashboard
-else Không hợp lệ
-  API --> FE   : 401 Unauthorized
-  FE  --> User : Hiển thị thông báo lỗi
+alt Trùng lặp
+  API --> UI   : 409 Conflict
+  UI  --> ADMIN: Hiển thị thông báo lỗi
+else Hợp lệ
+  API -> API  : Hash mật khẩu mặc định
+  API -> DB   : INSERT user với vai trò tương ứng
+  DB --> API  : user_id mới
+  API --> UI  : 201 Created – thông tin tài khoản
+  UI --> ADMIN: Hiển thị xác nhận
 end
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC2] QUẢN LÝ TÒA NHÀ & PHÒNG
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC2 – ĐĂNG NHẬP                                        ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC2] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC2_ToaNha_Phong
-skinparam actorStyle awesome
+' ── UC2 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC2_Dang_Nhap_UseCase
 left to right direction
-title [UC2] Use Case – Quản lý Tòa nhà & Phòng
+title UC2 – Đăng nhập 
 
-actor "Quản trị viên" as ADMIN
 actor "Sinh viên"     as SV
 actor "Nhân viên"     as NV
+actor "Quản trị viên" as ADMIN
 
-rectangle "Quản lý Tòa nhà & Phòng" {
-  usecase "Thêm tòa nhà"              as UC_ADD_B
-  usecase "Xem danh sách tòa nhà"     as UC_LIST_B
-  usecase "Thêm phòng vào tòa nhà"    as UC_ADD_R
-  usecase "Cập nhật trạng thái phòng" as UC_UPD_R
-  usecase "Xem danh sách phòng trống" as UC_AVAIL_R
-}
+usecase "Đăng nhập"                as UC2
+usecase "Nhập thông tin đăng nhập" as UC2a
+usecase "Xác thực thông tin"       as UC2b
+usecase "Cấp JWT Token"            as UC2c
+usecase "Làm mới Token"            as UC2d
 
-ADMIN --> UC_ADD_B
-ADMIN --> UC_LIST_B
-ADMIN --> UC_ADD_R
-ADMIN --> UC_UPD_R
-ADMIN --> UC_AVAIL_R
-NV    --> UC_LIST_B
-NV    --> UC_AVAIL_R
-SV    --> UC_AVAIL_R
+SV    --> UC2
+NV    --> UC2
+ADMIN --> UC2
+UC2   ..> UC2a : <<include>>
+UC2   ..> UC2b : <<include>>
+UC2   ..> UC2c : <<include>>
+UC2d  ..> UC2  : <<extend>>
 @enduml
 
-
-' ── [UC2] Activity Diagram – Thêm phòng mới ───────────────────────────────
-@startuml ACT2_ThemPhong
-title [UC2] Activity – Thêm phòng mới
+' ── UC2 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC2_Dang_Nhap_Activity
+title UC2 – Đăng nhập 
 
 start
-:Admin chọn tòa nhà;
-:Nhập thông tin phòng (số phòng, loại, giá, sức chứa);
-:Gửi yêu cầu POST /rooms;
-
-if (Số phòng đã tồn tại trong tòa nhà?) then (Có)
-  :Trả về lỗi 409;
-  :Hiển thị thông báo trùng phòng;
-else (Không)
-  :Lưu phòng vào CSDL (trạng thái: available);
-  :Hiển thị thông báo thành công;
+:Người dùng nhập email và mật khẩu;
+if (Xác thực thành công?) then (Không)
+  :Trả lỗi 401;
+  stop
+else (Có)
 endif
+:Cấp JWT Token, lưu vào HttpOnly Cookie;
+:Chuyển hướng đến Dashboard theo vai trò;
 stop
 @enduml
 
+' ── UC2 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC2_Dang_Nhap_Sequence
+title UC2 – Đăng nhập 
 
-' ── [UC2] Sequence Diagram – Admin thêm phòng ─────────────────────────────
-@startuml SEQ2_ThemPhong
-title [UC2] Sequence – Admin thêm phòng
+actor       "Người dùng"  as USER
+participant "Giao diện"   as UI
+participant "Backend API" as API
+database    "Cơ sở dữ liệu" as DB
 
-actor "Admin"      as ADMIN
-participant "Frontend"  as FE
-participant "Room API"  as API
-database "Database"     as DB
+USER -> UI  : Nhập email + mật khẩu, bấm Đăng nhập
+UI   -> API : POST /api/v1/auth/login
+API  -> DB  : Truy vấn user theo email
+DB  --> API : Thông tin user (hashed password, role)
 
-ADMIN -> FE  : Điền form thêm phòng
-FE   -> API  : POST /rooms {building_id, room_number, type, price, capacity}
-API  -> API  : Kiểm tra quyền Admin
-API  -> DB   : Kiểm tra trùng phòng
-alt Không trùng
-  API -> DB   : INSERT room
-  DB  --> API : Trả về room mới
-  API --> FE  : 201 Created + RoomResponse
-  FE  --> ADMIN: Hiển thị phòng mới
-else Trùng
-  API --> FE  : 409 Conflict
-  FE  --> ADMIN: Thông báo lỗi
+alt User không tồn tại hoặc sai mật khẩu
+  API --> UI  : 401 Unauthorized
+  UI  --> USER: Hiển thị thông báo lỗi
+else Hợp lệ
+  API -> API  : Tạo Access Token + Refresh Token
+  API --> UI  : 200 OK + Set-Cookie (httpOnly)
+  UI  --> USER: Chuyển sang trang dashboard
 end
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC3] ĐĂNG KÝ PHÒNG Ở
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC3 – QUẢN LÝ TÒA NHÀ & PHÒNG                         ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC3] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC3_DangKyPhong
-skinparam actorStyle awesome
+' ── UC3 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC3_Quan_Ly_Toa_Nha_UseCase
 left to right direction
-title [UC3] Use Case – Đăng ký phòng ở
+title UC3 – Quản lý Tòa nhà & Phòng
 
-actor "Sinh viên" as SV
-actor "Nhân viên" as NV
 actor "Quản trị viên" as ADMIN
 
-rectangle "Đăng ký Phòng" {
-  usecase "Xem phòng trống"        as UC_AVAIL
-  usecase "Nộp đơn đăng ký"       as UC_SUBMIT
-  usecase "Xem trạng thái đơn"    as UC_STATUS
-  usecase "Duyệt đơn"             as UC_APPROVE
-  usecase "Từ chối đơn"           as UC_REJECT
-  usecase "Trả phòng"             as UC_CHECKOUT
-}
+usecase "Quản lý tòa nhà & phòng"  as UC3
+usecase "Thêm / Sửa / Xóa tòa nhà" as UC3a
+usecase "Thêm / Sửa / Xóa phòng"   as UC3b
+usecase "Cập nhật trạng thái phòng" as UC3c
+usecase "Xem danh sách phòng"       as UC3d
 
-SV    --> UC_AVAIL
-SV    --> UC_SUBMIT
-SV    --> UC_STATUS
-NV    --> UC_APPROVE
-NV    --> UC_REJECT
-NV    --> UC_CHECKOUT
-ADMIN --> UC_APPROVE
-ADMIN --> UC_REJECT
-
-UC_SUBMIT ..> UC_AVAIL : <<include>>
+ADMIN --> UC3
+UC3   ..> UC3a : <<include>>
+UC3   ..> UC3b : <<include>>
+UC3   ..> UC3d : <<include>>
+UC3c  ..> UC3b : <<extend>>
 @enduml
 
+' ── UC3 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC3_Quan_Ly_Toa_Nha_Activity
+title UC3 – Quản lý Tòa nhà & Phòng 
 
-' ── [UC3] Activity Diagram – Quy trình đăng ký & duyệt ───────────────────
-@startuml ACT3_DangKyPhong
-title [UC3] Activity – Quy trình đăng ký phòng
-
-|Sinh viên|
 start
-:Xem danh sách phòng trống;
-:Chọn phòng và nộp đơn đăng ký;
-
-|Hệ thống|
-:Kiểm tra sinh viên đã có đơn đang xử lý?;
-if (Đã có đơn pending?) then (Có)
-  :Từ chối, trả lỗi 409;
-  |Sinh viên|
-  :Nhận thông báo lỗi;
+:Quản trị viên chọn thao tác (tòa nhà hoặc phòng);
+:Thực hiện thêm / sửa / xóa;
+if (Hợp lệ & không vi phạm ràng buộc?) then (Không)
+  :Hiển thị lỗi;
   stop
-else (Không)
-  :Tạo đơn đăng ký (trạng thái: pending);
-  :Cập nhật trạng thái phòng -> reserved;
+else (Có)
 endif
-
-|Nhân viên|
-:Xem danh sách đơn đăng ký;
-if (Duyệt hay từ chối?) then (Duyệt)
-  |Hệ thống|
-  :Cập nhật đơn -> approved;
-  :Cập nhật phòng -> occupied;
-  |Sinh viên|
-  :Nhận thông báo phê duyệt;
-else (Từ chối)
-  |Hệ thống|
-  :Cập nhật đơn -> rejected;
-  :Cập nhật phòng -> available;
-  |Sinh viên|
-  :Nhận thông báo từ chối;
-endif
+:Lưu thay đổi, cập nhật danh sách;
 stop
 @enduml
 
+' ── UC3 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC3_Quan_Ly_Toa_Nha_Sequence
+title UC3 – Quản lý Tòa nhà & Phòng 
 
-' ── [UC3] Sequence Diagram – Sinh viên đăng ký phòng ─────────────────────
-@startuml SEQ3_DangKyPhong
-title [UC3] Sequence – Đăng ký và duyệt phòng
+actor       "Quản trị viên" as ADMIN
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
 
-actor "Sinh viên"  as SV
-actor "Nhân viên"  as NV
-participant "Frontend"          as FE
-participant "Registration API"  as API
-database "Database"             as DB
+ADMIN -> UI  : Chọn thao tác (thêm/sửa/xóa tòa nhà hoặc phòng)
+UI    -> API : POST/PUT/DELETE /api/v1/buildings hoặc /rooms
+API   -> API : Kiểm tra quyền ADMIN
+API   -> DB  : Thực hiện thao tác CRUD
+DB   --> API : Kết quả
 
-SV  -> FE  : Chọn phòng & nộp đơn
-FE  -> API : POST /registrations {room_id}
-API -> DB  : Kiểm tra đơn pending của SV
-alt Chưa có đơn pending
-  API -> DB  : INSERT registration (pending)
-  API -> DB  : UPDATE room status = reserved
-  DB  --> API: Trả về registration
-  API --> FE : 201 Created
-  FE  --> SV : Hiển thị đơn đã nộp
-else Đã có đơn pending
-  API --> FE : 409 Conflict
-  FE  --> SV : Thông báo lỗi
+alt Thất bại (vi phạm ràng buộc)
+  API --> UI  : 400/409 – Thông báo lỗi
+  UI --> ADMIN: Hiển thị lỗi
+else Thành công
+  API --> UI  : 200/201 – Dữ liệu cập nhật
+  UI --> ADMIN: Hiển thị danh sách mới
 end
-
-NV  -> FE  : Xem danh sách đơn
-FE  -> API : GET /registrations
-API -> DB  : Truy vấn danh sách
-DB  --> API: Danh sách đơn
-API --> FE : 200 OK + List
-FE  --> NV : Hiển thị danh sách
-
-NV  -> FE  : Duyệt đơn
-FE  -> API : PATCH /registrations/{id}/approve
-API -> DB  : UPDATE registration = approved
-API -> DB  : UPDATE room = occupied
-DB  --> API: OK
-API --> FE : 200 OK
-FE  --> NV : Cập nhật trạng thái
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC4] QUẢN LÝ HÓA ĐƠN
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC5 – ĐĂNG KÝ PHÒNG                                    ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC4] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC4_HoaDon
-skinparam actorStyle awesome
+' ── UC5 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC5_Dang_Ky_Phong_UseCase
 left to right direction
-title [UC4] Use Case – Quản lý Hóa đơn
+title UC5 – Đăng ký phòng 
 
 actor "Sinh viên" as SV
-actor "Nhân viên" as NV
-actor "Quản trị viên" as ADMIN
 
-rectangle "Quản lý Hóa đơn" {
-  usecase "Tạo hóa đơn tháng" as UC_CREATE
-  usecase "Xem danh sách hóa đơn" as UC_LIST
-  usecase "Thanh toán hóa đơn"    as UC_PAY
-}
+usecase "Đăng ký phòng"              as UC5
+usecase "Xem danh sách phòng trống"  as UC5a
+usecase "Kiểm tra điều kiện đăng ký" as UC5b
+usecase "Gửi đơn đăng ký"            as UC5c
+usecase "Xem trạng thái đơn"         as UC5d
 
-NV    --> UC_CREATE
-NV    --> UC_LIST
-ADMIN --> UC_CREATE
-ADMIN --> UC_LIST
-SV    --> UC_LIST
-SV    --> UC_PAY
+SV   --> UC5
+SV   --> UC5d
+UC5  ..> UC5a : <<include>>
+UC5  ..> UC5b : <<include>>
+UC5  ..> UC5c : <<include>>
+UC5d ..> UC5  : <<extend>>
+@enduml
+
+' ── UC5 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC5_Dang_Ky_Phong_Activity
+title UC5 – Đăng ký phòng 
+
+start
+:Sinh viên xem danh sách phòng AVAILABLE và chọn phòng;
+if (Đủ điều kiện đăng ký?) then (Không)
+  note right: Đã có đăng ký active,
+  note right: sai loại phòng hoặc phòng đầy
+  :Hiển thị lý do từ chối;
+  stop
+else (Có)
+endif
+:Tạo đơn đăng ký với trạng thái PENDING;
+stop
+@enduml
+
+' ── UC5 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC5_Dang_Ky_Phong_Sequence
+title UC5 – Đăng ký phòng 
+
+actor       "Sinh viên"     as SV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
+
+SV  -> UI   : Xem danh sách phòng có sẵn
+UI  -> API  : GET /api/v1/rooms?status=AVAILABLE
+API -> DB   : Truy vấn phòng theo điều kiện
+DB --> API  : Danh sách phòng
+API --> UI  : Trả về danh sách phòng
+UI  --> SV  : Hiển thị phòng + thông tin
+
+SV  -> UI   : Chọn phòng và xác nhận đăng ký
+UI  -> API  : POST /api/v1/registrations
+API -> DB   : Kiểm tra sinh viên đã có đăng ký active?
+DB --> API  : Kết quả
+
+alt Vi phạm điều kiện (đã đăng ký / không đủ điều kiện)
+  API --> UI : 400 Bad Request – Lý do từ chối
+  UI  --> SV : Hiển thị thông báo lỗi
+else Hợp lệ
+  API -> DB  : INSERT registration (status=PENDING)
+  DB --> API : registration_id
+  API --> UI : 201 Created – Đơn đang chờ duyệt
+  UI  --> SV : Xác nhận gửi đơn thành công
+end
 @enduml
 
 
-' ── [UC4] Activity Diagram – Tạo và thanh toán hóa đơn ───────────────────
-@startuml ACT4_HoaDon
-title [UC4] Activity – Tạo & Thanh toán hóa đơn
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC6 – DUYỆT ĐƠN ĐĂNG KÝ                               ║
+' ╚══════════════════════════════════════════════════════════╝
 
-|Nhân viên|
+' ── UC6 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml
+left to right direction
+title UC6 – Duyệt đơn đăng ký 
+
+actor "Nhân viên" as NV
+
+usecase "Duyệt đơn đăng ký" as UC6
+usecase "Phê duyệt" as UC6a
+usecase "Từ chối" as UC6b
+
+NV --> UC6
+UC6 <.. UC6a : <<extend>>
+UC6 <.. UC6b : <<extend>>
+
+@enduml
+
+
+' ── UC6 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC6_Duyet_Don_Dang_Ky_Activity
+title UC6 – Duyệt đơn đăng ký 
+
 start
-:Chọn sinh viên & kỳ thanh toán;
-:Nhập các khoản phí (phòng, dịch vụ...);
-:Gửi yêu cầu tạo hóa đơn;
-
-|Hệ thống|
-:Kiểm tra hóa đơn trùng kỳ?;
-if (Đã tồn tại?) then (Có)
-  :Trả lỗi 409;
-  |Nhân viên|
-  :Nhận thông báo lỗi;
+:Nhân viên chọn đơn PENDING cần xét duyệt;
+if (Quyết định?) then (Từ chối)
+  :Cập nhật → REJECTED, gửi thông báo;
   stop
-else (Không)
-  :Tạo hóa đơn (trạng thái: unpaid);
+else (Phê duyệt)
 endif
+:Cập nhật → APPROVED;
+:Tăng current_occupancy, cập nhật trạng thái phòng;
+:Gửi thông báo cho sinh viên;
+stop
+@enduml
 
-|Sinh viên|
-:Xem hóa đơn;
-:Chọn hóa đơn cần thanh toán;
+' ── UC6 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC6_Duyet_Don_Dang_Ky_Sequence
+title UC6 – Duyệt đơn đăng ký 
+
+actor       "Nhân viên"     as NV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
+
+NV  -> UI   : Xem danh sách đơn PENDING
+UI  -> API  : GET /api/v1/registrations?status=PENDING
+API -> DB   : Truy vấn đơn
+DB --> API  : Danh sách đơn
+API --> UI  : Danh sách đơn đăng ký
+UI  --> NV  : Hiển thị
+
+NV  -> UI   : Chọn Duyệt / Từ chối
+UI  -> API  : PUT /api/v1/registrations/{id}/approve (hoặc /reject)
+API -> DB   : Kiểm tra phòng còn chỗ & trạng thái
+DB --> API  : Thông tin phòng
+
+alt Phê duyệt
+  API -> DB  : UPDATE registration status=APPROVED
+  API -> DB  : UPDATE room current_occupancy +1 (và status nếu đầy)
+  API -> DB  : INSERT notification cho sinh viên
+  DB --> API : OK
+  API --> UI : 200 OK – Đã phê duyệt
+else Từ chối
+  API -> DB  : UPDATE registration status=REJECTED
+  API -> DB  : INSERT notification cho sinh viên
+  DB --> API : OK
+  API --> UI : 200 OK – Đã từ chối
+end
+UI  --> NV  : Cập nhật danh sách
+@enduml
+
+
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC7 – TRẢ PHÒNG                                        ║
+' ╚══════════════════════════════════════════════════════════╝
+
+' ── UC7 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC7_Tra_Phong_UseCase
+left to right direction
+title UC7 – Trả phòng 
+
+actor "Nhân viên" as NV
+
+usecase "Trả phòng"                  as UC7
+usecase "Tìm đăng ký của sinh viên"  as UC7a
+usecase "Xác nhận trả phòng"         as UC7b
+usecase "Cập nhật trạng thái phòng"  as UC7c
+usecase "Thông báo trả phòng"        as UC7d
+
+NV   --> UC7
+UC7  ..> UC7a : <<include>>
+UC7  ..> UC7b : <<include>>
+UC7  ..> UC7c : <<include>>
+UC7d ..> UC7  : <<extend>>
+@enduml
+
+' ── UC7 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC7_Tra_Phong_Activity
+title UC7 – Trả phòng 
+
+start
+:Nhân viên tìm đăng ký APPROVED và xác nhận trả phòng;
+:Cập nhật → CHECKED_OUT, ghi ngày trả phòng;
+:Giảm current_occupancy, cập nhật trạng thái phòng;
+:Gửi thông báo cho sinh viên;
+stop
+@enduml
+
+' ── UC7 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC7_Tra_Phong_Sequence
+title UC7 – Trả phòng 
+
+actor       "Nhân viên"     as NV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
+
+NV  -> UI   : Tìm sinh viên / đăng ký APPROVED
+UI  -> API  : GET /api/v1/registrations?status=APPROVED&student_id=...
+API -> DB   : Truy vấn
+DB --> API  : Thông tin đăng ký
+API --> UI  : Dữ liệu đăng ký
+UI  --> NV  : Hiển thị
+
+NV  -> UI   : Xác nhận trả phòng
+UI  -> API  : PUT /api/v1/registrations/{id}/checkout
+API -> DB   : UPDATE registration status=CHECKED_OUT, checkout_date=now
+API -> DB   : UPDATE room current_occupancy -1 (và status nếu cần)
+API -> DB   : INSERT notification cho sinh viên
+DB --> API  : OK
+API --> UI  : 200 OK – Trả phòng thành công
+UI  --> NV  : Xác nhận
+@enduml
+
+
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC8 – TẠO HÓA ĐƠN                                     ║
+' ╚══════════════════════════════════════════════════════════╝
+
+' ── UC8 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC8_Tao_Hoa_Don_UseCase
+left to right direction
+title UC8 – Tạo hóa đơn 
+
+actor "Nhân viên" as NV
+
+usecase "Tạo hóa đơn"            as UC8
+usecase "Chọn sinh viên & tháng" as UC8a
+usecase "Nhập chỉ số điện, nước" as UC8b
+usecase "Tính tổng tiền"         as UC8c
+usecase "Lưu & gửi thông báo"   as UC8d
+
+NV  --> UC8
+UC8 ..> UC8a : <<include>>
+UC8 ..> UC8b : <<include>>
+UC8 ..> UC8c : <<include>>
+UC8 ..> UC8d : <<include>>
+@enduml
+
+' ── UC8 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC8_Tao_Hoa_Don_Activity
+title UC8 – Tạo hóa đơn
+
+start
+:Nhân viên chọn sinh viên, tháng/năm; nhập chỉ số điện, nước;
+if (Hóa đơn đã tồn tại?) then (Đã có)
+  :Thông báo trùng lặp;
+  stop
+else (Chưa có)
+endif
+:Tính tổng tiền, lưu hóa đơn UNPAID;
+:Gửi thông báo cho sinh viên;
+stop
+@enduml
+
+' ── UC8 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC8_Tao_Hoa_Don_Sequence
+title UC8 – Tạo hóa đơn 
+
+actor       "Nhân viên"     as NV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
+
+NV  -> UI   : Điền form: sinh viên, tháng/năm, điện, nước
+UI  -> UI   : Tính tạm thời: room_fee + kwh×3500 + m3×15000
+UI  --> NV  : Hiển thị tổng tiền dự tính
+
+NV  -> UI   : Xác nhận tạo hóa đơn
+UI  -> API  : POST /api/v1/invoices
+API -> DB   : Kiểm tra hóa đơn trùng (student + month + year + room)
+DB --> API  : Kết quả
+
+alt Trùng lặp
+  API --> UI : 409 Conflict
+  UI  --> NV : Thông báo lỗi
+else Hợp lệ
+  API -> DB  : INSERT invoice (status=UNPAID, total=...)
+  API -> DB  : INSERT notification cho sinh viên
+  DB --> API : invoice_id
+  API --> UI : 201 Created – Hóa đơn mới
+  UI  --> NV : Xác nhận tạo thành công
+end
+@enduml
+
+
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC9 – THANH TOÁN HÓA ĐƠN                              ║
+' ╚══════════════════════════════════════════════════════════╝
+
+' ── UC9 | Biểu đồ ca sử dụng ─────────────────────────────
+@startuml UC9_Thanh_Toan_Hoa_Don_UseCase
+left to right direction
+title UC9 – Thanh toán hóa đơn
+
+actor "Sinh viên" as SV
+
+usecase "Thanh toán hóa đơn"    as UC9
+usecase "Xem danh sách hóa đơn" as UC9a
+usecase "Xem chi tiết hóa đơn"  as UC9b
+usecase "Xác nhận thanh toán"   as UC9c
+
+SV  --> UC9
+SV  --> UC9a
+UC9 ..> UC9a : <<include>>
+UC9 ..> UC9b : <<include>>
+UC9 ..> UC9c : <<include>>
+@enduml
+
+' ── UC9 | Biểu đồ hoạt động ──────────────────────────────
+@startuml UC9_Thanh_Toan_Hoa_Don_Activity
+title UC9 – Thanh toán hóa đơn 
+
+start
+:Sinh viên xem danh sách hóa đơn và chọn hóa đơn UNPAID;
 :Xác nhận thanh toán;
-
-|Hệ thống|
-:Kiểm tra trạng thái hóa đơn;
-if (Chưa thanh toán?) then (Có)
-  :Cập nhật trạng thái -> paid;
-  :Ghi nhận thời gian thanh toán;
-  |Sinh viên|
-  :Nhận xác nhận thanh toán;
-else (Đã thanh toán)
-  :Trả lỗi 400;
-  |Sinh viên|
-  :Thông báo lỗi;
-endif
+:Cập nhật trạng thái → PAID, ghi nhận ngày thanh toán;
 stop
 @enduml
 
+' ── UC9 | Biểu đồ tuần tự ────────────────────────────────
+@startuml UC9_Thanh_Toan_Hoa_Don_Sequence
+title UC9 – Thanh toán hóa đơn 
+actor       "Sinh viên"     as SV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
 
-' ── [UC4] Sequence Diagram – Thanh toán hóa đơn ──────────────────────────
-@startuml SEQ4_HoaDon
-title [UC4] Sequence – Tạo & Thanh toán hóa đơn
+SV  -> UI   : Vào trang Hóa đơn
+UI  -> API  : GET /api/v1/invoices/me
+API -> DB   : Truy vấn hóa đơn theo student_id
+DB --> API  : Danh sách hóa đơn (UNPAID/PAID)
+API --> UI  : Danh sách hóa đơn
+UI  --> SV  : Hiển thị
 
-actor "Nhân viên" as NV
-actor "Sinh viên" as SV
-participant "Frontend"     as FE
-participant "Invoice API"  as API
-database "Database"        as DB
+SV  -> UI   : Chọn hóa đơn UNPAID → Thanh toán
+UI  -> API  : PUT /api/v1/invoices/{id}/pay
+API -> DB   : Kiểm tra trạng thái hóa đơn là UNPAID
+DB --> API  : Trạng thái hiện tại
 
-NV  -> FE  : Tạo hóa đơn
-FE  -> API : POST /invoices {user_id, month, year, amount}
-API -> DB  : Kiểm tra hóa đơn tháng đó
-alt Chưa tồn tại
-  API -> DB  : INSERT invoice (unpaid)
-  DB  --> API: Invoice
-  API --> FE : 201 Created
-  FE  --> NV : Xác nhận tạo thành công
-else Đã tồn tại
-  API --> FE : 409 Conflict
-  FE  --> NV : Thông báo lỗi
+alt Đã thanh toán rồi
+  API --> UI : 400 Bad Request
+  UI  --> SV : Thông báo lỗi
+else Hợp lệ
+  API -> DB  : UPDATE invoice status=PAID, paid_at=now
+  DB --> API : OK
+  API --> UI : 200 OK – Thanh toán thành công
+  UI  --> SV : Xác nhận & cập nhật trạng thái
 end
-
-SV  -> FE  : Xem hóa đơn
-FE  -> API : GET /invoices
-API -> DB  : Truy vấn hóa đơn của SV
-DB  --> API: Danh sách hóa đơn
-API --> FE : 200 OK
-FE  --> SV : Hiển thị danh sách
-
-SV  -> FE  : Thanh toán hóa đơn {id}
-FE  -> API : PATCH /invoices/{id}/pay
-API -> DB  : Kiểm tra trạng thái
-DB  --> API: unpaid
-API -> DB  : UPDATE invoice = paid
-API --> FE : 200 OK
-FE  --> SV : Xác nhận thanh toán
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC5] YÊU CẦU BẢO TRÌ
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC10 – YÊU CẦU BẢO TRÌ                                ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC5] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC5_BaoTri
-skinparam actorStyle awesome
+' ── UC10 | Biểu đồ ca sử dụng ────────────────────────────
+@startuml UC10_Yeu_Cau_Bao_Tri_UseCase
 left to right direction
-title [UC5] Use Case – Yêu cầu Bảo trì
+title UC10 – Yêu cầu bảo trì
 
 actor "Sinh viên" as SV
-actor "Nhân viên" as NV
-actor "Quản trị viên" as ADMIN
 
-rectangle "Yêu cầu Bảo trì" {
-  usecase "Gửi yêu cầu bảo trì"        as UC_CREATE
-  usecase "Xem danh sách yêu cầu"      as UC_LIST
-  usecase "Cập nhật trạng thái"        as UC_UPDATE
-}
+usecase "Yêu cầu bảo trì"        as UC10
+usecase "Mô tả sự cố"             as UC10a
+usecase "Gửi yêu cầu"             as UC10b
 
-SV    --> UC_CREATE
-SV    --> UC_LIST
-NV    --> UC_LIST
-NV    --> UC_UPDATE
-ADMIN --> UC_LIST
+SV    --> UC10
+UC10  ..> UC10a : <<include>>
+UC10  ..> UC10b : <<include>>
 @enduml
 
+' ── UC10 | Biểu đồ hoạt động ─────────────────────────────
+@startuml UC10_Yeu_Cau_Bao_Tri_Activity
+title UC10 – Yêu cầu bảo trì
 
-' ── [UC5] Activity Diagram – Gửi & xử lý yêu cầu bảo trì ────────────────
-@startuml ACT5_BaoTri
-title [UC5] Activity – Gửi & Xử lý Yêu cầu Bảo trì
-
-|Sinh viên|
 start
-:Phát hiện sự cố;
-:Mô tả sự cố & gửi yêu cầu bảo trì;
-
-|Hệ thống|
-:Tạo yêu cầu (trạng thái: pending);
-
-|Nhân viên|
-:Xem danh sách yêu cầu bảo trì;
-:Tiếp nhận yêu cầu;
-:Cập nhật trạng thái -> in_progress;
-
-:Tiến hành sửa chữa;
-
-if (Hoàn tất?) then (Có)
-  :Cập nhật trạng thái -> resolved;
-  |Sinh viên|
-  :Nhận thông báo hoàn tất;
-else (Cần thêm thời gian)
-  :Giữ trạng thái in_progress;
+:Sinh viên nhập tiêu đề và mô tả sự cố;
+if (Có đăng ký APPROVED hợp lệ?) then (Không)
+  :Từ chối (403);
+  stop
+else (Có)
 endif
+:Tạo yêu cầu với trạng thái PENDING;
 stop
 @enduml
 
+' ── UC10 | Biểu đồ tuần tự ───────────────────────────────
+@startuml UC10_Yeu_Cau_Bao_Tri_Sequence
+title UC10 – Yêu cầu bảo trì
 
-' ── [UC5] Sequence Diagram – Yêu cầu bảo trì ─────────────────────────────
-@startuml SEQ5_BaoTri
-title [UC5] Sequence – Gửi & Xử lý Yêu cầu Bảo trì
+actor       "Sinh viên"     as SV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
 
-actor "Sinh viên"  as SV
-actor "Nhân viên"  as NV
-participant "Frontend"          as FE
-participant "Maintenance API"   as API
-database "Database"             as DB
+SV  -> UI   : Điền form yêu cầu bảo trì (tiêu đề, mô tả, loại)
+UI  -> API  : POST /api/v1/maintenance-requests
+API -> DB   : Kiểm tra sinh viên có registration APPROVED
+DB --> API  : Kết quả
 
-SV  -> FE  : Điền form yêu cầu bảo trì
-FE  -> API : POST /maintenance {title, description, room_id}
-API -> DB  : INSERT maintenance_request (pending)
-DB  --> API: Request
-API --> FE : 201 Created
-FE  --> SV : Xác nhận đã gửi
-
-NV  -> FE  : Xem danh sách yêu cầu
-FE  -> API : GET /maintenance
-API -> DB  : Truy vấn danh sách
-DB  --> API: Danh sách
-API --> FE : 200 OK
-FE  --> NV : Hiển thị danh sách
-
-NV  -> FE  : Cập nhật trạng thái
-FE  -> API : PATCH /maintenance/{id}/status {status: "resolved"}
-API -> DB  : UPDATE maintenance = resolved
-DB  --> API: OK
-API --> FE : 200 OK
-FE  --> NV : Cập nhật hoàn tất
+alt Không có đăng ký hợp lệ
+  API --> UI : 403 Forbidden
+  UI  --> SV : Thông báo không đủ điều kiện
+else Hợp lệ
+  API -> DB  : INSERT maintenance_request (status=PENDING)
+  DB --> API : request_id
+  API --> UI : 201 Created – Đã tiếp nhận yêu cầu
+  UI  --> SV : Xác nhận gửi thành công
+end
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC6] GỬI THÔNG BÁO
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC11 – XỬ LÝ BẢO TRÌ                                  ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC6] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC6_ThongBao
-skinparam actorStyle awesome
+' ── UC11 | Biểu đồ ca sử dụng ────────────────────────────
+@startuml UC11_Xu_Ly_Bao_Tri_UseCase
 left to right direction
-title [UC6] Use Case – Thông báo
+title UC11 – Xử lý bảo trì
 
-actor "Quản trị viên" as ADMIN
+actor "Nhân viên" as NV
+
+usecase "Xử lý bảo trì"             as UC11
+usecase "Xem danh sách yêu cầu"     as UC11a
+usecase "Cập nhật trạng thái xử lý" as UC11b
+usecase "Thông báo kết quả cho SV"  as UC11c
+
+NV   --> UC11
+UC11 ..> UC11a : <<include>>
+UC11 ..> UC11b : <<include>>
+UC11 ..> UC11c : <<include>>
+@enduml
+
+' ── UC11 | Biểu đồ hoạt động ─────────────────────────────
+@startuml UC11_Xu_Ly_Bao_Tri_Activity
+title UC11 – Xử lý bảo trì 
+
+start
+:Nhân viên chọn yêu cầu cần xử lý;
+:Cập nhật trạng thái (PENDING → IN_PROGRESS → COMPLETED);
+:Gửi thông báo tiến độ cho sinh viên;
+stop
+@enduml
+
+' ── UC11 | Biểu đồ tuần tự ───────────────────────────────
+@startuml UC11_Xu_Ly_Bao_Tri_Sequence
+title UC11 – Xử lý bảo trì
+
+actor       "Nhân viên"     as NV
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
+
+NV  -> UI   : Xem danh sách yêu cầu bảo trì
+UI  -> API  : GET /api/v1/maintenance-requests
+API -> DB   : Truy vấn yêu cầu
+DB --> API  : Danh sách yêu cầu
+API --> UI  : Danh sách
+UI  --> NV  : Hiển thị
+
+NV  -> UI   : Chọn yêu cầu → Cập nhật trạng thái
+UI  -> API  : PUT /api/v1/maintenance-requests/{id}
+note right: status = IN_PROGRESS hoặc COMPLETED\n+ ghi chú xử lý
+API -> DB   : UPDATE maintenance_request status + notes
+API -> DB   : INSERT notification cho sinh viên
+DB --> API  : OK
+API --> UI  : 200 OK – Đã cập nhật
+UI  --> NV  : Xác nhận
+@enduml
+
+
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC12 – GỬI THÔNG BÁO                                   ║
+' ╚══════════════════════════════════════════════════════════╝
+
+' ── UC12 | Biểu đồ ca sử dụng ────────────────────────────
+@startuml UC12_Gui_Thong_Bao_UseCase
+left to right direction
+title UC12 – Gửi thông báo
+
 actor "Nhân viên"     as NV
-actor "Sinh viên"     as SV
+actor "Quản trị viên" as ADMIN
 
-rectangle "Thông báo" {
-  usecase "Tạo & gửi thông báo" as UC_SEND
-  usecase "Chọn đối tượng nhận" as UC_TARGET
-  usecase "Xem thông báo cá nhân" as UC_VIEW
-}
+usecase "Gửi thông báo"           as UC12
+usecase "Soạn nội dung thông báo" as UC12a
+usecase "Chọn đối tượng nhận"     as UC12b
+usecase "Phát hành thông báo"     as UC12c
+usecase "Xem thông báo"           as UC12d
 
-ADMIN --> UC_SEND
-NV    --> UC_SEND
-UC_SEND ..> UC_TARGET : <<include>>
-SV    --> UC_VIEW
-NV    --> UC_VIEW
+NV    --> UC12
+ADMIN --> UC12
+UC12  ..> UC12a : <<include>>
+UC12  ..> UC12b : <<include>>
+UC12  ..> UC12c : <<include>>
+UC12d ..> UC12  : <<extend>>
 @enduml
 
+' ── UC12 | Biểu đồ hoạt động ─────────────────────────────
+@startuml UC12_Gui_Thong_Bao_Activity
+title UC12 – Gửi thông báo
 
-' ── [UC6] Activity Diagram – Gửi thông báo ────────────────────────────────
-@startuml ACT6_ThongBao
-title [UC6] Activity – Gửi Thông báo
-
-|Admin / Nhân viên|
 start
-:Soạn nội dung thông báo;
-:Chọn đối tượng nhận (all / student / staff);
-:Gửi thông báo;
-
-|Hệ thống|
-:Lưu thông báo vào CSDL;
-:Phân phối thông báo theo vai trò đích;
-
-|Người nhận|
-:Xem thông tin trên Dashboard;
+:Soạn tiêu đề, nội dung; chọn đối tượng nhận (ALL/STUDENT/STAFF);
+if (Nội dung hợp lệ?) then (Không)
+  :Hiển thị lỗi;
+  stop
+else (Có)
+endif
+:Lưu thông báo với target_role tương ứng;
 stop
 @enduml
 
+' ── UC12 | Biểu đồ tuần tự ───────────────────────────────
+@startuml UC12_Gui_Thong_Bao_Sequence
+title UC12 – Gửi thông báo
 
-' ── [UC6] Sequence Diagram – Gửi thông báo ────────────────────────────────
-@startuml SEQ6_ThongBao
-title [UC6] Sequence – Gửi & Nhận Thông báo
+actor       "Admin/Nhân viên" as SENDER
+participant "Giao diện"       as UI
+participant "Backend API"     as API
+database    "Cơ sở dữ liệu"   as DB
+actor       "Người nhận"      as RECEIVER
 
-actor "Admin/Staff" as SENDER
-actor "Sinh viên"   as SV
-participant "Frontend"           as FE
-participant "Notification API"   as API
-database "Database"              as DB
+SENDER -> UI  : Soạn thông báo + chọn target_role
+UI     -> API : POST /api/v1/notifications
+API    -> API : Kiểm tra quyền (ADMIN hoặc STAFF)
+API    -> DB  : INSERT notification (title, content, target_role)
+DB    --> API : notification_id
+API   --> UI  : 201 Created – Đã gửi
+UI    --> SENDER : Xác nhận gửi thành công
 
-SENDER -> FE  : Soạn thông báo & chọn đối tượng
-FE     -> API : POST /notifications {title, content, target_role}
-API    -> DB  : INSERT notification
-DB     --> API: Notification
-API    --> FE : 201 Created
-FE     --> SENDER: Xác nhận gửi thành công
-
-SV  -> FE  : Truy cập trang thông báo
-FE  -> API : GET /notifications/me
-API -> DB  : Truy vấn thông báo theo role = student
-DB  --> API: Danh sách thông báo
-API --> FE : 200 OK
-FE  --> SV : Hiển thị danh sách thông báo
+note over RECEIVER: Khi đăng nhập / tải trang
+RECEIVER -> UI  : Xem thông báo
+UI       -> API : GET /api/v1/notifications (lọc theo role người dùng)
+API      -> DB  : Truy vấn theo target_role phù hợp
+DB      --> API : Danh sách thông báo
+API     --> UI  : Danh sách
+UI      --> RECEIVER : Hiển thị thông báo
 @enduml
 
 
-' ███████████████████████████████████████████████████████████████████████████
-' [UC7] BÁO CÁO THỐNG KÊ
-' ███████████████████████████████████████████████████████████████████████████
+' ╔══════════════════════════════════════════════════════════╗
+' ║  UC13 – XEM BÁO CÁO THỐNG KÊ                           ║
+' ╚══════════════════════════════════════════════════════════╝
 
-' ── [UC7] Use Case Diagram ─────────────────────────────────────────────────
-@startuml UC7_BaoCao
-skinparam actorStyle awesome
+' ── UC13 | Biểu đồ ca sử dụng ────────────────────────────
+@startuml UC13_Xem_Bao_Cao_UseCase
 left to right direction
-title [UC7] Use Case – Báo cáo & Thống kê
+title UC13 – Xem báo cáo thống kê
 
 actor "Quản trị viên" as ADMIN
 
-rectangle "Báo cáo & Thống kê" {
-  usecase "Xem báo cáo theo tháng"       as UC_MONTHLY
-  usecase "Thống kê tỷ lệ lấp đầy"      as UC_OCCUPANCY
-  usecase "Thống kê doanh thu"           as UC_REVENUE
-  usecase "Thống kê yêu cầu bảo trì"    as UC_MAINT_STAT
-}
+usecase "Xem báo cáo thống kê"      as UC13
+usecase "Báo cáo doanh thu tháng"   as UC13a
+usecase "Báo cáo tỷ lệ lấp đầy"    as UC13b
+usecase "Lọc theo khoảng thời gian" as UC13c
+usecase "Lọc theo tòa nhà"          as UC13d
 
-ADMIN --> UC_MONTHLY
-UC_MONTHLY ..> UC_OCCUPANCY  : <<include>>
-UC_MONTHLY ..> UC_REVENUE    : <<include>>
-UC_MONTHLY ..> UC_MAINT_STAT : <<include>>
+ADMIN --> UC13
+UC13  ..> UC13a : <<include>>
+UC13  ..> UC13b : <<include>>
+UC13c ..> UC13a : <<extend>>
+UC13d ..> UC13b : <<extend>>
 @enduml
 
-
-' ── [UC7] Activity Diagram – Xem báo cáo ─────────────────────────────────
-@startuml ACT7_BaoCao
-title [UC7] Activity – Xem Báo cáo tháng
+' ── UC13 | Biểu đồ hoạt động ─────────────────────────────
+@startuml UC13_Xem_Bao_Cao_Activity
+title UC13 – Xem báo cáo thống kê
 
 start
-:Admin chọn tháng & năm cần xem;
-:Gửi yêu cầu GET /reports/monthly;
-
-|Hệ thống|
-fork
-  :Tính tổng doanh thu (hóa đơn paid);
-fork again
-  :Tính tỷ lệ lấp đầy phòng;
-fork again
-  :Đếm tổng sinh viên đang ở;
-fork again
-  :Đếm số yêu cầu bảo trì;
-end fork
-:Tổng hợp kết quả;
-:Trả về báo cáo tổng hợp;
-
-|Admin|
-:Xem biểu đồ & số liệu thống kê;
+:Quản trị viên chọn loại báo cáo và tham số lọc;
+if (Loại báo cáo?) then (Doanh thu)
+  :Tổng hợp hóa đơn PAID theo tháng/năm;
+else (Tỷ lệ lấp đầy)
+  :Tính current_occupancy / capacity theo tòa nhà;
+endif
+:Hiển thị kết quả;
 stop
 @enduml
 
+' ── UC13 | Biểu đồ tuần tự ───────────────────────────────
+@startuml UC13_Xem_Bao_Cao_Sequence
+title UC13 – Xem báo cáo thống kê
 
-' ── [UC7] Sequence Diagram – Xem báo cáo ─────────────────────────────────
-@startuml SEQ7_BaoCao
-title [UC7] Sequence – Xem Báo cáo tháng
+actor       "Quản trị viên" as ADMIN
+participant "Giao diện"     as UI
+participant "Backend API"   as API
+database    "Cơ sở dữ liệu" as DB
 
-actor "Admin"      as ADMIN
-participant "Frontend"   as FE
-participant "Report API" as API
-database "Database"      as DB
+ADMIN -> UI  : Chọn loại báo cáo + tham số lọc
 
-ADMIN -> FE  : Chọn tháng/năm và xem báo cáo
-FE   -> API  : GET /reports/monthly?month=4&year=2026
-API  -> DB   : Truy vấn tổng doanh thu tháng
-API  -> DB   : Truy vấn tỷ lệ lấp đầy phòng
-API  -> DB   : Truy vấn số lượng sinh viên
-API  -> DB   : Truy vấn số yêu cầu bảo trì
-DB   --> API : Dữ liệu tổng hợp
-API  -> API  : Tổng hợp & tính toán chỉ số
-API  --> FE  : 200 OK + MonthlyReport
-FE   --> ADMIN: Hiển thị dashboard báo cáo
+alt Báo cáo doanh thu
+  UI   -> API : GET /api/v1/reports/revenue?month=X&year=Y
+  API  -> DB  : Tổng hợp SUM(total_amount) từ hóa đơn PAID
+  DB  --> API : Kết quả doanh thu
+  API --> UI  : Dữ liệu doanh thu theo tháng
+  UI  --> ADMIN : Hiển thị biểu đồ doanh thu
+else Báo cáo tỷ lệ lấp đầy
+  UI   -> API : GET /api/v1/reports/occupancy?building_id=...
+  API  -> DB  : Truy vấn current_occupancy / capacity theo tòa nhà
+  DB  --> API : Dữ liệu các phòng
+  API -> API  : Tính tỷ lệ lấp đầy từng tòa nhà
+  API --> UI  : Kết quả tỷ lệ lấp đầy
+  UI  --> ADMIN : Hiển thị bảng / biểu đồ tỷ lệ
+end
 @enduml
-
-
-'===========================================================================
-' END OF FILE
-'===========================================================================
