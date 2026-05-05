@@ -21,8 +21,8 @@ const highlights = [
     },
     {
         icon: BedDouble,
-        title: 'Dữ liệu sẵn sàng',
-        description: 'Seed mặc định gồm 2 khu, 20 phòng và nhiều tài khoản mẫu để kiểm thử ngay.',
+        title: 'Quản lý phòng thông minh',
+        description: 'Theo dõi tình trạng phòng, sức chứa và danh sách sinh viên theo từng khu nhà.',
     },
     {
         icon: BellRing,
@@ -71,7 +71,7 @@ export function AuthShell({ children }: AuthShellProps) {
                             })}
                         </div>
 
-                        <div className="rounded-[1.5rem] border border-white/12 bg-black/10 p-5 backdrop-blur-md">
+                        {/* <div className="rounded-[1.5rem] border border-white/12 bg-black/10 p-5 backdrop-blur-md">
                             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-lime-200">
                                 Tài khoản demo
                             </p>
@@ -84,7 +84,7 @@ export function AuthShell({ children }: AuthShellProps) {
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </section>
 
