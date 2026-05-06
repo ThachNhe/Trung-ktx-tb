@@ -40,7 +40,6 @@ async def send_email(
         logger.info("Email sent to %s | subject: %s", to, subject)
     except Exception as exc:
         logger.error("Failed to send email to %s: %s", to, exc)
-        raise
 
 
 async def send_account_credentials(
