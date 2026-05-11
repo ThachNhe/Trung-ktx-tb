@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff, Loader2, LogIn } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from '@tanstack/react-router'
 
@@ -14,11 +14,9 @@ import { useToast } from '@/hooks/useToast'
 import { useLogin } from '../hooks/useLogin'
 import type { LoginFormValues } from '../types/auth.types'
 
-interface LoginFormProps {
-  // no props needed
-}
+const LOGIN_EMAIL_KEY = 'login_draft_email'
 
-export function LoginForm(_: LoginFormProps) {
+export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const { mutate: login, isPending, error } = useLogin()
   const navigate = useNavigate()
@@ -27,14 +25,24 @@ export function LoginForm(_: LoginFormProps) {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
+      email: sessionStorage.getItem(LOGIN_EMAIL_KEY) ?? '',
       password: '',
     },
   })
 
+  useEffect(() => {
+    const subscription = form.watch((values) => {
+      if (values.email !== undefined) {
+        sessionStorage.setItem(LOGIN_EMAIL_KEY, values.email)
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [form])
+
   const onSubmit = (values: LoginFormValues) => {
     login(values, {
       onSuccess: (data) => {
+        sessionStorage.removeItem(LOGIN_EMAIL_KEY)
         toast.success('Đăng nhập thành công', 'Đang chuyển đến trang làm việc của bạn')
         navigate({ to: getDefaultRouteForRole(data.user.role), replace: true })
       },

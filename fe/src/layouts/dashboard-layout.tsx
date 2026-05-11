@@ -60,10 +60,15 @@ export function DashboardLayout() {
                     isSidebarCollapsed ? 'lg:w-24' : 'lg:w-72',
                 )}
             >
-                <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
+                <div className="flex min-h-[72px] items-center justify-between border-b border-white/10 px-5 py-5">
                     <div className={cn(isSidebarCollapsed ? 'lg:hidden' : 'block')}>
                         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-lime-200">KTX UTB</p>
                         <h1 className="mt-2 font-display text-2xl text-white">{APP_NAME}</h1>
+                    </div>
+                    <div className={cn('hidden items-center justify-center', isSidebarCollapsed && 'lg:flex')}>
+                        <span className="flex size-10 items-center justify-center rounded-2xl bg-white/15 font-display text-lg font-bold text-lime-200">
+                            K
+                        </span>
                     </div>
                     <Button
                         type="button"
@@ -76,19 +81,22 @@ export function DashboardLayout() {
                     </Button>
                 </div>
 
-                <div className="border-b border-white/10 px-5 py-5">
-                    <div className="rounded-[1.5rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-                        <p className="text-xs uppercase tracking-[0.22em] text-white/60">Phiên làm việc</p>
-                        <div className={cn('mt-2 font-semibold text-white', isSidebarCollapsed && 'lg:hidden')}>
-                            {user.full_name}
+                <div className={cn('border-b border-white/10 px-5 py-5', isSidebarCollapsed && 'lg:px-3')}>
+                    <div className={cn('rounded-[1.5rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm', isSidebarCollapsed && 'lg:flex lg:justify-center lg:rounded-2xl lg:p-2')}>
+                        <div className={cn(isSidebarCollapsed && 'lg:hidden')}>
+                            <p className="text-xs uppercase tracking-[0.22em] text-white/60">Phiên làm việc</p>
+                            <div className="mt-2 font-semibold text-white">{user.full_name}</div>
+                            <div className="mt-1 text-sm text-white/72">{ROLE_LABELS[user.role]}</div>
                         </div>
-                        <div className={cn('mt-1 text-sm text-white/72', isSidebarCollapsed && 'lg:hidden')}>
-                            {ROLE_LABELS[user.role]}
+                        <div className={cn('hidden', isSidebarCollapsed && 'lg:flex lg:size-10 lg:items-center lg:justify-center lg:rounded-xl lg:bg-white/10')}>
+                            <span className="text-xs font-bold text-white/80">
+                                {user.full_name.charAt(0).toUpperCase()}
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <nav className="flex-1 space-y-2 px-4 py-5">
+                <nav className="flex-1 space-y-2 overflow-y-auto px-4 py-5">
                     {navigationItems.map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.path
@@ -176,10 +184,30 @@ export function DashboardLayout() {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-3 rounded-full border border-green-100 bg-green-50/70 px-4 py-2 text-sm text-green-900">
-                            <Shield className="size-4 text-green-700" />
-                            <span className="hidden sm:inline">{user.student_code}</span>
-                            <span className="font-semibold">{ROLE_LABELS[user.role]}</span>
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-3 rounded-full border border-green-100 bg-green-50/70 px-4 py-2 text-sm text-green-900">
+                                <Shield className="size-4 text-green-700" />
+                                <span className="hidden sm:inline">{user.student_code}</span>
+                                <span className="font-semibold">{ROLE_LABELS[user.role]}</span>
+                            </div>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="icon"
+                                className="border-slate-200 bg-white text-slate-600 hover:text-rose-600 lg:hidden"
+                                disabled={isPending}
+                                title="Đăng xuất"
+                                onClick={() =>
+                                    logout(undefined, {
+                                        onSuccess: () => {
+                                            toast.info('Đăng xuất', 'Phiên làm việc đã kết thúc')
+                                            navigate({ to: '/login' })
+                                        },
+                                    })
+                                }
+                            >
+                                <LogOut className="size-4" />
+                            </Button>
                         </div>
                     </div>
                 </header>
