@@ -81,21 +81,6 @@ export function DashboardLayout() {
                     </Button>
                 </div>
 
-                <div className={cn('border-b border-white/10 px-5 py-5', isSidebarCollapsed && 'lg:px-3')}>
-                    <div className={cn('rounded-[1.5rem] border border-white/10 bg-white/8 p-4 backdrop-blur-sm', isSidebarCollapsed && 'lg:flex lg:justify-center lg:rounded-2xl lg:p-2')}>
-                        <div className={cn(isSidebarCollapsed && 'lg:hidden')}>
-                            <p className="text-xs uppercase tracking-[0.22em] text-white/60">Phiên làm việc</p>
-                            <div className="mt-2 font-semibold text-white">{user.full_name}</div>
-                            <div className="mt-1 text-sm text-white/72">{ROLE_LABELS[user.role]}</div>
-                        </div>
-                        <div className={cn('hidden', isSidebarCollapsed && 'lg:flex lg:size-10 lg:items-center lg:justify-center lg:rounded-xl lg:bg-white/10')}>
-                            <span className="text-xs font-bold text-white/80">
-                                {user.full_name.charAt(0).toUpperCase()}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
                 <nav className="flex-1 space-y-2 overflow-y-auto px-4 py-5">
                     {navigationItems.map((item) => {
                         const Icon = item.icon
