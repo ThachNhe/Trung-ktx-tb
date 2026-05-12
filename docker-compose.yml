@@ -30,6 +30,7 @@ services:
   db:
     image: postgres:16-alpine
     container_name: ktx_tb_db
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -49,6 +50,7 @@ services:
   mailhog:
     image: mailhog/mailhog:latest
     container_name: ktx_tb_mailhog
+    restart: unless-stopped
     ports:
       - "1027:1025" # SMTP
       - "8027:8025" # Web UI

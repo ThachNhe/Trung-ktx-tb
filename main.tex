@@ -30,8 +30,9 @@
 \addto\captionsvietnamese{\renewcommand{\abstractname}{Mở đầu}}
 \usepackage[letterpaper,top=2.5cm,bottom=3cm,left=3.5cm,right=2cm,marginparwidth=1.75cm]{geometry}
 
-\setlength{\parindent}{1.5cm}
+\setlength{\parindent}{0.85cm}
 \setlength{\parskip}{0.25em}
+\renewcommand{\labelitemi}{-}
 
 % Định dạng mục lục phân cấp đẹp
 \usepackage{tocloft}
@@ -53,6 +54,9 @@
 
 
 \begin{document}
+	\pagenumbering{gobble}
+	\pagestyle{empty}
+
 	%===========================
 	% Trang bìa
 	%===========================
@@ -69,7 +73,7 @@
 		
 		\begin{center}
 			\vspace{7pt}
-			BỘ GIÁO DỤC VÀ ĐẠO TẠO
+			BỘ GIÁO DỤC VÀ ĐÀO TẠO
 			
 			\vspace{7pt}
 			\textbf{TRƯỜNG ĐẠI HỌC TÂY BẮC}
@@ -131,7 +135,6 @@
 			\vspace{10pt}
 			% \textbf{\footnotesize MÔN HỌC}
 			\vspace{7pt}
-			% \textbf{Môn học: Các vấn đề hiện đại của Công nghệ thông tin}
 		\end{center}
 		
 		%		\begin{flushleft}
@@ -174,7 +177,7 @@
 	
 	Trong suốt quá trình nghiên cứu, phân tích và hoàn thiện báo cáo về hệ thống quản lý ký túc xá, em đã nhận được nhiều sự hỗ trợ quý báu từ thầy cô, bạn bè và những tài liệu chuyên môn liên quan đến phát triển phần mềm, quản lý cơ sở dữ liệu và xây dựng ứng dụng web hiện đại.
 	Trước hết, em xin bày tỏ lòng biết ơn sâu sắc đến giảng viên hướng dẫn \textbf{ThS. Phạm Quang Trung} đã tận tình định hướng phương pháp tiếp cận, góp ý chuyên sâu về mặt học thuật và đồng hành cùng em trong suốt quá trình hoàn thiện nội dung khóa luận. Những nhận xét thẳng thắn và sát thực tế của thầy là cơ sở quan trọng giúp em điều chỉnh hướng đi và hoàn thiện hệ thống đúng với yêu cầu thực tiễn.
-	Em xin chân thành cảm ơn Ban Giám hiệu \textbf{Trường Đại học Tây Bắc}, Ban chủ nhiệm \textbf{Khoa Công nghệ Thông tin} cùng toàn thể quý thầy cô đã truyền đạt kiến thức nền tảng về phân tích và thiết kế hệ thống, cơ sở dữ liệu, lập trình ứng dụng web và kiểm thử phần mềm trong suốt những năm học vừa qua. Đây chính là hành trang thiết yếu giúp em có thể tiếp cận bài toán quản lý ký túc xá một cách có hệ thống và khoa học.
+	Em xin chân thành cảm ơn Ban Giám hiệu \textbf{Trường Đại học Tây Bắc}, Ban chủ nhiệm \textbf{Khoa Khoa học Tự nhiên - Công Nghệ} cùng toàn thể quý thầy cô đã truyền đạt kiến thức nền tảng về phân tích và thiết kế hệ thống, cơ sở dữ liệu, lập trình ứng dụng web và kiểm thử phần mềm trong suốt những năm học vừa qua. Đây chính là hành trang thiết yếu giúp em có thể tiếp cận bài toán quản lý ký túc xá một cách có hệ thống và khoa học.
 	Em cũng xin gửi lời cảm ơn chân thành đến Ban Quản lý Ký túc xá \textbf{Trường Đại học Tây Bắc} đã tạo điều kiện để em tìm hiểu thực tế quy trình vận hành, từ đó xác định đúng các yêu cầu nghiệp vụ và xây dựng hệ thống phù hợp với nhu cầu sử dụng thực tế.
 	Em xin cảm ơn gia đình và bạn bè đã luôn động viên, chia sẻ và tạo điều kiện thuận lợi trong suốt quá trình học tập và thực hiện đề tài. Sự ủng hộ đó là nguồn động lực giúp em duy trì sự tập trung và hoàn thành tốt nhiệm vụ được giao.
 	Mặc dù đã cố gắng nghiên cứu và trình bày đầy đủ, báo cáo vẫn không tránh khỏi những thiếu sót nhất định do giới hạn về thời gian và kinh nghiệm thực tế. Em rất mong nhận được thêm các góp ý từ quý thầy cô và bạn đọc để nội dung được hoàn thiện hơn trong các lần cập nhật tiếp theo.
@@ -263,22 +266,11 @@
 	% Mở đầu
 	%===========================
 	\begin{abstract}
-		\pagenumbering{arabic}
-		\pagestyle{fancy}
-		\fancyhf{}
-		\fancyhead[L]{Khóa luận tốt nghiệp}
-		\fancyhead[R]{\thepage}
-		\renewcommand{\headrulewidth}{0.4pt}
-		
 		Trường Đại học Tây Bắc là cơ sở đào tạo đại học đa ngành trực thuộc Bộ Giáo dục và Đào tạo, với quy mô đào tạo hơn 5.000 sinh viên, học viên mỗi năm học. Trong đó, tỷ lệ sinh viên là người dân tộc thiểu số chiếm hơn 76\% và gần 500 lưu học sinh đến từ nước CHDCND Lào. Với đặc thù sinh viên phần lớn đến từ các tỉnh miền núi xa xôi, hệ thống ký túc xá của nhà trường đóng vai trò thiết yếu trong việc bảo đảm điều kiện học tập và sinh hoạt cho người học. Tuy nhiên, công tác quản lý nội trú hiện tại chủ yếu vẫn dựa trên phương thức thủ công hoặc các công cụ rời rạc, dẫn đến nhiều khó khăn trong việc theo dõi thông tin cư trú, quản lý hóa đơn, xử lý sự cố cơ sở vật chất và tổng hợp báo cáo vận hành.
 		
 		Đề tài này tập trung phân tích, thiết kế và xây dựng \textbf{Ứng dụng Quản lý Ký túc xá Trường Đại học Tây Bắc} -- một ứng dụng web hỗ trợ số hóa các nghiệp vụ cốt lõi trong công tác nội trú sinh viên. Hệ thống phục vụ ba vai trò chính là quản trị viên, nhân viên quản lý và sinh viên. Các chức năng chính bao gồm: xác thực và phân quyền người dùng, quản lý danh mục tòa nhà và phòng ở, tiếp nhận và xét duyệt đơn đăng ký nội trú, lập và theo dõi hóa đơn tiền phòng theo tháng, tiếp nhận yêu cầu bảo trì, gửi thông báo nội bộ và xem báo cáo thống kê vận hành. Phần backend được xây dựng bằng FastAPI, sử dụng PostgreSQL làm cơ sở dữ liệu; phần frontend được phát triển với React, TypeScript và Vite; toàn bộ hệ thống được đóng gói bằng Docker Compose để thuận lợi cho triển khai.
 		
-		\textbf{Nội dung, phạm vi của đề tài}
-		\begin{itemize}
-			\item \textbf{Nội dung:} Khảo sát bài toán quản lý nội trú sinh viên tại Đại học Tây Bắc, phân tích yêu cầu, thiết kế cơ sở dữ liệu và xây dựng hệ thống web quản lý phòng ở, đăng ký nội trú, hóa đơn, bảo trì và báo cáo thống kê.
-			\item \textbf{Phạm vi:} Tập trung vào phiên bản web phục vụ quản trị viên, nhân viên và sinh viên; hóa đơn bao gồm tiền phòng, điện và nước; hệ thống hỗ trợ phân loại phòng theo đối tượng cư trú (giới tính, quốc tịch) và phân quyền theo vai trò. Phiên bản hiện tại chưa tích hợp thanh toán trực tuyến qua ngân hàng và chưa đồng bộ với hệ thống quản lý đào tạo của nhà trường.
-		\end{itemize}
+		\textbf{Nội dung, phạm vi của đề tài.} Đề tài khảo sát bài toán quản lý nội trú sinh viên tại Đại học Tây Bắc, phân tích yêu cầu, thiết kế cơ sở dữ liệu và xây dựng hệ thống web quản lý phòng ở, đăng ký nội trú, hóa đơn, bảo trì và báo cáo thống kê. Phạm vi thực hiện tập trung vào phiên bản web phục vụ quản trị viên, nhân viên và sinh viên; hóa đơn bao gồm tiền phòng, điện và nước; hệ thống hỗ trợ phân loại phòng theo đối tượng cư trú (giới tính, quốc tịch) và phân quyền theo vai trò. Phiên bản hiện tại chưa tích hợp thanh toán trực tuyến qua ngân hàng và chưa đồng bộ với hệ thống quản lý đào tạo của nhà trường.
 	\end{abstract}
 	
 	\clearpage
@@ -304,8 +296,6 @@
 		API  & Application Programming Interface, giao diện lập trình ứng dụng kết nối frontend và backend. \\
 		\hline
 		BE   & Backend, phần xử lý nghiệp vụ và truy xuất dữ liệu phía máy chủ. \\
-		\hline
-		CNTT & Công nghệ Thông tin. \\
 		\hline
 		CRUD & Create, Read, Update, Delete — bốn thao tác cơ bản với dữ liệu. \\
 		\hline
@@ -334,7 +324,17 @@
 	% ============================================================
 	
 	\newpage
-	\section*{MỞ ĐẦU}
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+	\pagestyle{fancy}
+	\fancyhf{}
+	\fancyhead[L]{Khóa luận tốt nghiệp}
+	\fancyhead[R]{\thepage}
+	\renewcommand{\headrulewidth}{0.4pt}
+	\begin{center}
+        \fontsize{14pt}{17pt}\selectfont
+        \textbf{MỞ ĐẦU}
+    \end{center}
 	\addcontentsline{toc}{section}{MỞ ĐẦU}
 	
 	% -----------------------------------------------------------
@@ -345,7 +345,7 @@
 	
 	Khu ký túc xá của nhà trường hiện có 8 tòa nhà 5 tầng với 473 phòng ở, đáp ứng khoảng 3.000 chỗ ở \cite{utb_ktx}. Tuy nhiên, công tác quản lý nội trú hiện tại chủ yếu vẫn dựa trên phương thức thủ công và các công cụ rời rạc, chưa có một hệ thống phần mềm thống nhất hỗ trợ toàn bộ chu trình từ đăng ký đến thanh lý nội trú. Thực trạng này dẫn đến nhiều khó khăn trong việc theo dõi thông tin cư trú, quản lý hóa đơn, xử lý sự cố cơ sở vật chất và tổng hợp báo cáo vận hành -- đặc biệt khi đối tượng cư trú đa dạng và số lượng người ở đông như tại Trường Đại học Tây Bắc.
 	
-	Xuất phát từ thực tiễn đó, đề tài \textbf{``Xây dựng hệ thống quản lý ký túc xá Trường Đại học Tây Bắc''} được lựa chọn nhằm phân tích, thiết kế và triển khai một ứng dụng web hỗ trợ số hóa các nghiệp vụ cốt lõi trong công tác nội trú sinh viên. Đây là bài toán có giá trị thực tiễn cao, đủ rõ về phạm vi và đủ phong phú về nghiệp vụ để xây dựng thành một hệ thống thông tin hoàn chỉnh, đồng thời cho phép vận dụng tổng hợp các kiến thức về phân tích yêu cầu, thiết kế cơ sở dữ liệu, xây dựng API RESTful, phát triển giao diện web và triển khai hệ thống trong môi trường container hóa.
+	Xuất phát từ thực tiễn đó, đề tài \textbf{``Xây dựng hệ thống quản lý ký túc xá Trường Đại học Tây Bắc''} được lựa chọn nhằm phân tích, thiết kế và triển khai một ứng dụng web hỗ trợ số hóa các nghiệp vụ cốt lõi trong công tác nội trú sinh viên. Đây là bài toán có giá trị thực tiễn cao, đủ rõ về phạm vi và đủ phong phú về nghiệp vụ để xây dựng thành một hệ thống thông tin hoàn chỉnh, đồng thời cho phép vận dụng tổng hợp các kiến thức về phân tích yêu cầu, thiết kế cơ sở dữ liệu, phát triển giao diện web và triển khai hệ thống trong môi trường đóng gói.
 	
 	% -----------------------------------------------------------
 	\subsection*{2. Mục tiêu nghiên cứu}
@@ -353,14 +353,7 @@
 	
 	Mục tiêu tổng quát của đề tài là xây dựng một hệ thống quản lý ký túc xá trên nền tảng web, hỗ trợ số hóa các nghiệp vụ cốt lõi trong công tác quản lý nội trú sinh viên. Hệ thống không chỉ đóng vai trò lưu trữ dữ liệu mà còn phải trở thành công cụ kiểm soát quy trình, giúp giảm thiểu thao tác thủ công, hạn chế sai sót nghiệp vụ và tạo môi trường tương tác minh bạch giữa sinh viên với bộ phận quản lý.
 	
-	Các mục tiêu cụ thể của đề tài bao gồm:
-	
-	\begin{itemize}
-		\item Khảo sát, phân tích yêu cầu và xây dựng đặc tả hệ thống quản lý ký túc xá phù hợp với thực tiễn vận hành tại Trường Đại học Tây Bắc.
-		\item Thiết kế cơ sở dữ liệu quan hệ và kiến trúc hệ thống theo mô hình nhiều lớp, đảm bảo tính nhất quán dữ liệu và khả năng mở rộng.
-		\item Hiện thực hóa các chức năng cốt lõi bao gồm: xác thực và phân quyền người dùng; quản lý danh mục tòa nhà và phòng ở; tiếp nhận và xét duyệt đơn đăng ký nội trú; lập và theo dõi hóa đơn định kỳ; tiếp nhận và xử lý yêu cầu bảo trì; gửi thông báo nội bộ và xem báo cáo thống kê vận hành.
-		\item Triển khai hệ thống trong môi trường container hóa sử dụng Docker Compose, đảm bảo tính ổn định và khả năng tái triển khai.
-	\end{itemize}
+	Cụ thể, đề tài tiến hành khảo sát, phân tích yêu cầu và xây dựng đặc tả hệ thống quản lý ký túc xá phù hợp với thực tiễn vận hành tại Trường Đại học Tây Bắc. Trên cơ sở đó, hệ thống được thiết kế với cơ sở dữ liệu quan hệ và kiến trúc nhiều lớp nhằm đảm bảo tính nhất quán dữ liệu, khả năng mở rộng và khả năng bảo trì. Phần hiện thực tập trung vào các chức năng cốt lõi như xác thực và phân quyền người dùng, quản lý danh mục tòa nhà và phòng ở, tiếp nhận và xét duyệt đơn đăng ký nội trú, lập và theo dõi hóa đơn định kỳ, tiếp nhận và xử lý yêu cầu bảo trì, gửi thông báo nội bộ và xem báo cáo thống kê vận hành. Hệ thống cũng được triển khai trong môi trường đóng gói để đảm bảo tính ổn định và khả năng tái triển khai.
 	
 	% -----------------------------------------------------------
 	\subsection*{3. Đối tượng và phạm vi nghiên cứu}
@@ -368,13 +361,7 @@
 	
 	\textbf{Đối tượng nghiên cứu} của đề tài là bài toán quản lý ký túc xá trong trường đại học, tập trung vào các quy trình nghiệp vụ phát sinh trong đời sống nội trú của sinh viên và công tác điều hành của bộ phận quản lý. Đối tượng nghiên cứu bao gồm ba nhóm chủ thể: sinh viên (người sử dụng dịch vụ nội trú), nhân viên quản lý (người vận hành quy trình) và quản trị viên hệ thống (người quản lý danh mục chung). Đề tài cũng nghiên cứu cách biểu diễn các quy tắc nghiệp vụ thành logic xử lý trong phần mềm, bao gồm điều kiện phê duyệt đơn nội trú, cơ chế cập nhật sức chứa phòng, điều kiện lập hóa đơn và phạm vi hợp lệ của yêu cầu bảo trì.
 	
-	\textbf{Phạm vi nghiên cứu} được xác định như sau:
-	
-	\begin{itemize}
-		\item \textit{Phạm vi chức năng:} Đề tài tập trung vào các nghiệp vụ chính gồm xác thực người dùng, quản lý phòng ở, quản lý đăng ký nội trú, quản lý hóa đơn (tiền phòng, điện, nước), quản lý yêu cầu bảo trì, gửi thông báo và báo cáo thống kê theo tháng. Phiên bản hiện tại chưa tích hợp thanh toán trực tuyến qua cổng ngân hàng và chưa đồng bộ với hệ thống quản lý đào tạo của nhà trường.
-		\item \textit{Phạm vi công nghệ:} Backend sử dụng FastAPI, SQLAlchemy, Alembic và PostgreSQL; frontend sử dụng React, Vite và TypeScript; môi trường triển khai sử dụng Docker Compose.
-		\item \textit{Phạm vi người dùng:} Hệ thống phục vụ ba vai trò là quản trị viên, nhân viên quản lý và sinh viên, với cơ chế phân quyền theo vai trò được áp dụng xuyên suốt.
-	\end{itemize}
+	\textbf{Phạm vi nghiên cứu} của đề tài tập trung vào các nghiệp vụ chính gồm xác thực người dùng, quản lý phòng ở, quản lý đăng ký nội trú, quản lý hóa đơn (tiền phòng, điện, nước), quản lý yêu cầu bảo trì, gửi thông báo và báo cáo thống kê theo tháng. Phiên bản hiện tại chưa tích hợp thanh toán trực tuyến qua cổng ngân hàng và chưa đồng bộ với hệ thống quản lý đào tạo của nhà trường. Về công nghệ, backend sử dụng FastAPI, PostgreSQL; frontend sử dụng React-v; môi trường triển khai sử dụng Docker Compose. Về người dùng, hệ thống phục vụ ba vai trò là quản trị viên, nhân viên quản lý và sinh viên, với cơ chế phân quyền theo vai trò được áp dụng xuyên suốt.
 	
 	% -----------------------------------------------------------
 	\subsection*{4. Phương pháp nghiên cứu}
@@ -400,19 +387,20 @@
 	
 	\textbf{Chương 2 -- Phân tích và Thiết kế hệ thống:} Trình bày kiến trúc tổng thể của hệ thống; thiết kế cơ sở dữ liệu; thiết kế các luồng xử lý nghiệp vụ thông qua biểu đồ hoạt động và biểu đồ tuần tự; thiết kế giao diện người dùng.
 	
-	\textbf{Chương 3 -- Cài đặt và Triển khai hệ thống:} Mô tả môi trường phát triển và công nghệ sử dụng; trình bày chi tiết cài đặt các chức năng cốt lõi ở cả backend và frontend; hướng dẫn triển khai hệ thống với Docker Compose.
-	
-	\textbf{Chương 4 -- Kiểm thử và Đánh giá:} Trình bày kế hoạch kiểm thử, các kịch bản thử nghiệm điển hình và kết quả kiểm thử; đánh giá mức độ đáp ứng yêu cầu và định hướng phát triển tiếp theo của hệ thống.
+	\textbf{Chương 3 -- Xây dựng chương trình:} Mô tả kiến trúc, môi trường phát triển và công nghệ sử dụng; trình bày chi tiết cài đặt các chức năng cốt lõi ở cả backend và frontend; hướng dẫn triển khai hệ thống.
 	
 	% ============================================================
 	%  CHƯƠNG 1: KHẢO SÁT VÀ ĐẶC TẢ HỆ THỐNG
 	% ============================================================
 	
 	\newpage
-	\section{KHẢO SÁT VÀ ĐẶC TẢ HỆ THỐNG}
+	% \section{KHẢO SÁT VÀ ĐẶC TẢ HỆ THỐNG}
 	
+	\section*{CHƯƠNG 1: KHẢO SÁT VÀ ĐẶC TẢ HỆ THỐNG}
+	\addcontentsline{toc}{section}{CHƯƠNG 1: KHẢO SÁT VÀ ĐẶC TẢ HỆ THỐNG}
 	% -----------------------------------------------------------
-	\subsection{Bối cảnh và lý do chọn đề tài}
+	\subsection*{1. Bối cảnh và lý do chọn đề tài}
+	\addcontentsline{toc}{subsection}{1. Bối cảnh và lý do chọn đề tài}
 	
 	Trường Đại học Tây Bắc được thành lập theo Quyết định số 39/2001/QĐ-TTg ngày 23 tháng 3 năm 2001 của Thủ tướng Chính phủ, trên cơ sở nâng cấp Trường Cao đẳng Sư phạm Tây Bắc \cite{utb_history}. Đây là trường đại học đa ngành duy nhất của khu vực Tây Bắc, đặt trụ sở tại thành phố Sơn La, với sứ mệnh đào tạo nguồn nhân lực chất lượng cao phục vụ phát triển kinh tế -- xã hội vùng Tây Bắc. Quy mô đào tạo hằng năm đạt hơn 5.000 học viên và sinh viên, trong đó tỷ lệ sinh viên là người dân tộc thiểu số chiếm hơn 76\% \cite{utb_khaigiang2024}. Đặc thù sinh viên phần lớn đến từ các huyện miền núi xa xôi thuộc các tỉnh Sơn La, Điện Biên, Lai Châu và từ nước bạn Lào tạo ra nhu cầu nội trú rất lớn và mang tính đặc thù cao.
 	
@@ -423,9 +411,13 @@
 	Chính vì vậy, việc xây dựng một hệ thống quản lý ký túc xá có tính tập trung, nhất quán và minh bạch là nhu cầu thực sự cần thiết, đồng thời mang lại giá trị ứng dụng cao đối với Trường Đại học Tây Bắc trong giai đoạn hiện nay.
 	
 	% -----------------------------------------------------------
-	\subsection{Khảo sát thực tế}
+	\subsection*{2. Khảo sát thực tế}
+	\addcontentsline{toc}{subsection}{2. Khảo sát thực tế}
 	
-	\subsubsection{Kết quả khảo sát}
+	
+	\subsubsection*{2.1 Kết quả khảo sát}
+	\addcontentsline{toc}{subsubsection}{2.1 Kết quả khảo sát}
+	
 	
 	Khảo sát nghiệp vụ tại khu ký túc xá Trường Đại học Tây Bắc cho thấy hoạt động quản lý nội trú xoay quanh một chuỗi quy trình lặp lại theo chu kỳ, có thể phân thành bốn nhóm nghiệp vụ chính.
 	
@@ -439,56 +431,50 @@
 	
 	Hiện tại, toàn bộ các công việc trên chủ yếu được thực hiện thủ công hoặc qua bảng tính, chưa có một phần mềm thống nhất hỗ trợ toàn bộ chu trình từ đăng ký đến thanh lý nội trú \cite{utb_phongsban}. Điều này dẫn đến tình trạng dữ liệu phân tán, khó tổng hợp báo cáo và chậm trễ trong phản hồi các yêu cầu phát sinh của sinh viên.
 	
-	\subsubsection{Phân tích kết quả khảo sát}
+	% \subsubsection{Phân tích kết quả khảo sát}
+	\subsubsection*{2.2 Phân tích kết quả khảo sát}
+	\addcontentsline{toc}{subsubsection}{2.2 Phân tích kết quả khảo sát}
 	
 	Từ kết quả khảo sát, có thể nhận thấy bài toán quản lý ký túc xá ẩn chứa sự phức tạp đáng kể khi nhìn từ góc độ luồng dữ liệu và trạng thái nghiệp vụ. Một thao tác tưởng như đơn giản -- chẳng hạn phê duyệt cho sinh viên vào ở -- thực tế kéo theo nhiều điều kiện kiểm tra đồng thời: tính phù hợp của loại phòng với đối tượng sinh viên, trạng thái hiện tại của phòng (còn chỗ hay đã đầy, đang bảo trì hay đang hoạt động bình thường), và tình trạng đăng ký hiện tại của sinh viên (đã có đăng ký đang có hiệu lực chưa). Tương tự, việc lập hóa đơn cũng phụ thuộc vào quan hệ hợp lệ giữa sinh viên với phòng ở và kỳ thanh toán, chứ không thể tạo tùy ý nếu chưa có cơ sở cư trú hợp lệ.
 	
-	Phân tích này dẫn đến một yêu cầu thiết kế quan trọng: hệ thống không thể chỉ là giao diện nhập liệu đơn thuần, mà phải được xây dựng theo hướng \textit{kiểm soát quy trình}, trong đó tầng nghiệp vụ (service layer) đóng vai trò trung tâm để kiểm tra điều kiện, thực thi ràng buộc và cập nhật trạng thái một cách nhất quán. Đây là điểm mấu chốt để hệ thống vừa đảm bảo tính đúng đắn của dữ liệu, vừa thực sự hữu ích trong vận hành thực tế.
+	Phân tích này dẫn đến một yêu cầu thiết kế quan trọng: hệ thống không thể chỉ là giao diện nhập liệu đơn thuần, mà phải được xây dựng theo hướng \textit{kiểm soát quy trình}, trong đó tầng nghiệp vụ đóng vai trò trung tâm để kiểm tra điều kiện, thực thi ràng buộc và cập nhật trạng thái một cách nhất quán. Đây là điểm mấu chốt để hệ thống vừa đảm bảo tính đúng đắn của dữ liệu, vừa thực sự hữu ích trong vận hành thực tế.
 	
 	Bên cạnh đó, sự đa dạng của đối tượng cư trú tại Trường Đại học Tây Bắc đặt ra yêu cầu hệ thống phải xử lý được các trường hợp phòng dành riêng theo nhóm, không thể áp dụng một mô hình quản lý phòng đồng nhất. Đây là điểm khác biệt quan trọng so với bài toán ký túc xá tại các cơ sở đào tạo thông thường.
 	
 	% -----------------------------------------------------------
-	\subsection{Đặc tả hệ thống}
+	% \subsection{Đặc tả hệ thống}
+	\subsection*{3. Đặc tả hệ thống}
+	\addcontentsline{toc}{subsection}{3. Đặc tả hệ thống}
 	
-	\subsubsection{Tổng quan kiến trúc}
+	% \subsubsection*{3.1 Tổng quan kiến trúc}
+	\subsubsection*{3.1 Tổng quan kiến trúc}
+	\addcontentsline{toc}{subsubsection}{3.1 Tổng quan kiến trúc}
 	
-	Hệ thống quản lý ký túc xá được đặc tả như một ứng dụng web nhiều người dùng, hoạt động theo mô hình client-server. Phía client, sinh viên và cán bộ quản lý thao tác thông qua giao diện web được xây dựng bằng React và TypeScript. Phía server, backend tiếp nhận yêu cầu thông qua API RESTful, thực hiện xác thực danh tính, kiểm tra quyền truy cập, áp dụng các quy tắc nghiệp vụ và truy xuất dữ liệu từ cơ sở dữ liệu quan hệ PostgreSQL. Toàn bộ hệ thống được đóng gói bằng Docker Compose để đảm bảo tính nhất quán giữa các môi trường triển khai.
+	Hệ thống quản lý ký túc xá được đặc tả như một ứng dụng web nhiều người dùng, hoạt động theo mô hình client-server. Phía client, sinh viên và cán bộ quản lý thao tác thông qua giao diện web được xây dựng bằng React. Phía server tiếp nhận yêu cầu thông qua API RESTful, thực hiện xác thực danh tính, kiểm tra quyền truy cập, áp dụng các quy tắc nghiệp vụ và truy xuất dữ liệu từ cơ sở dữ liệu quan hệ. 
 	
-	\subsubsection{Các tác nhân và vai trò}
+	% \subsubsection{Các tác nhân và vai trò}
+	\subsubsection*{3.2 Các tác nhân và vai trò}
+	\addcontentsline{toc}{subsubsection}{3.2 Các tác nhân và vai trò}
 	
-	Hệ thống xác định ba nhóm tác nhân với phạm vi thao tác được phân quyền rõ ràng:
+	Hệ thống xác định ba nhóm tác nhân với phạm vi thao tác được phân quyền rõ ràng. \textbf{Quản trị viên (Admin)} quản lý danh mục chung của hệ thống bao gồm thông tin người dùng, tòa nhà và phòng ở; đây là vai trò có quyền truy cập rộng nhất, bao gồm cả việc theo dõi báo cáo tổng hợp và giám sát vận hành toàn hệ thống. \textbf{Nhân viên quản lý (Staff)} là người trực tiếp vận hành các quy trình nghiệp vụ hằng ngày như xét duyệt đơn đăng ký nội trú, lập và xác nhận hóa đơn, xử lý yêu cầu bảo trì và gửi thông báo đến sinh viên. \textbf{Sinh viên (Student)} là người dùng cuối sử dụng hệ thống để tra cứu thông tin phòng còn chỗ, nộp đơn đăng ký, theo dõi trạng thái xét duyệt, kiểm tra hóa đơn và gửi yêu cầu bảo trì.
 	
-	\begin{itemize}
-		\item \textbf{Quản trị viên (Admin):} Quản lý danh mục chung của hệ thống bao gồm thông tin người dùng, tòa nhà và phòng ở. Quản trị viên có quyền truy cập rộng nhất, bao gồm cả việc theo dõi báo cáo tổng hợp và giám sát vận hành toàn hệ thống.
-		\item \textbf{Nhân viên quản lý (Staff):} Là người trực tiếp vận hành các quy trình nghiệp vụ hằng ngày: xét duyệt đơn đăng ký nội trú, lập và xác nhận hóa đơn, xử lý yêu cầu bảo trì và gửi thông báo đến sinh viên.
-		\item \textbf{Sinh viên (Student):} Là người dùng cuối sử dụng hệ thống để tra cứu thông tin phòng còn chỗ, nộp đơn đăng ký, theo dõi trạng thái xét duyệt, kiểm tra hóa đơn và gửi yêu cầu bảo trì.
-	\end{itemize}
+	% \subsubsection{Yêu cầu chức năng}
+	\subsubsection*{3.3 Yêu cầu chức năng}
+	\addcontentsline{toc}{subsubsection}{3.3 Yêu cầu chức năng}
 	
-	\subsubsection{Yêu cầu chức năng}
+	Hệ thống bao gồm nhiều nhóm chức năng liên kết với nhau theo quy trình quản lý nội trú. Nhóm \textbf{xác thực và phân quyền} cho phép người dùng đăng nhập bằng tên tài khoản và mật khẩu, xác thực theo cơ chế JWT (JSON Web Token) và áp dụng phân quyền theo vai trò xuyên suốt tất cả các API. Nhóm \textbf{quản lý tòa nhà và phòng ở} hỗ trợ thêm, sửa, xóa thông tin tòa nhà và quản lý danh sách phòng theo từng tòa, bao gồm sức chứa, loại đối tượng được phép ở và trạng thái phòng. Nhóm \textbf{đăng ký và quản lý nội trú} cho phép sinh viên nộp đơn đăng ký phòng, nhân viên xét duyệt, hệ thống tự động cập nhật số người ở thực tế và trạng thái phòng sau mỗi quyết định, đồng thời xử lý thanh lý khi sinh viên rời khỏi ký túc xá.
 	
-	Hệ thống bao gồm các nhóm chức năng chính sau:
+	Bên cạnh đó, nhóm \textbf{quản lý hóa đơn} hỗ trợ lập hóa đơn định kỳ theo tháng đối với tiền phòng, điện và nước; theo dõi trạng thái thanh toán; xác nhận khi nhận tiền và thống kê công nợ theo kỳ. Nhóm \textbf{quản lý bảo trì} tiếp nhận yêu cầu bảo trì từ sinh viên đang cư trú hợp lệ, cập nhật trạng thái xử lý và theo dõi lịch sử bảo trì theo phòng. Nhóm \textbf{thông báo} cho phép nhân viên và quản trị viên gửi thông báo đến cá nhân hoặc nhóm sinh viên, đồng thời cho phép sinh viên xem và đánh dấu đã đọc. Nhóm \textbf{báo cáo thống kê} tổng hợp số liệu theo tháng về tỷ lệ lấp đầy từng khu nhà, tình hình thu phí và thống kê yêu cầu bảo trì.
 	
-	\begin{enumerate}
-		\item \textbf{Xác thực và phân quyền:} Đăng nhập bằng tên tài khoản và mật khẩu; xác thực theo cơ chế JWT (JSON Web Token); phân quyền theo vai trò được áp dụng xuyên suốt tất cả các API.
-		\item \textbf{Quản lý tòa nhà và phòng ở:} Thêm, sửa, xóa thông tin tòa nhà; quản lý danh sách phòng theo từng tòa, bao gồm sức chứa, loại đối tượng được phép ở và trạng thái phòng (đang sử dụng, đang bảo trì, còn trống).
-		\item \textbf{Đăng ký và quản lý nội trú:} Sinh viên nộp đơn đăng ký phòng; nhân viên xét duyệt; hệ thống tự động cập nhật số người ở thực tế và trạng thái phòng sau mỗi quyết định; xử lý thanh lý khi sinh viên rời khỏi ký túc xá.
-		\item \textbf{Quản lý hóa đơn:} Lập hóa đơn định kỳ theo tháng (tiền phòng, điện, nước); theo dõi trạng thái thanh toán; xác nhận khi nhận tiền; thống kê công nợ theo kỳ.
-		\item \textbf{Quản lý bảo trì:} Tiếp nhận yêu cầu bảo trì từ sinh viên đang cư trú hợp lệ; cập nhật trạng thái xử lý; theo dõi lịch sử bảo trì theo phòng.
-		\item \textbf{Thông báo:} Nhân viên và quản trị viên gửi thông báo đến cá nhân hoặc nhóm sinh viên; sinh viên xem và đánh dấu đã đọc.
-		\item \textbf{Báo cáo thống kê:} Tổng hợp số liệu theo tháng về tỷ lệ lấp đầy từng khu nhà, tình hình thu phí và thống kê yêu cầu bảo trì.
-	\end{enumerate}
+	% \subsubsection{Yêu cầu phi chức năng}
+	\subsubsection*{3.4 Yêu cầu phi chức năng}
+	\addcontentsline{toc}{subsubsection}{3.4 Yêu cầu phi chức năng}
 	
-	\subsubsection{Yêu cầu phi chức năng}
+	Về yêu cầu phi chức năng, hệ thống cần đảm bảo \textbf{bảo mật} thông qua việc mã hóa mật khẩu bằng thuật toán bcrypt, sử dụng token JWT có thời hạn giới hạn và yêu cầu xác thực, kiểm tra quyền ở mọi endpoint trước khi xử lý. \textbf{Tính nhất quán dữ liệu} được đảm bảo bằng cách thực thi các thao tác liên quan đến trạng thái nghiệp vụ, chẳng hạn như duyệt đăng ký, lập hóa đơn và xử lý bảo trì, trong phạm vi giao dịch cơ sở dữ liệu. \textbf{Khả năng mở rộng} được hỗ trợ bởi kiến trúc nhiều lớp (router -- service -- repository), cho phép bổ sung tính năng mới mà không ảnh hưởng đến các thành phần hiện có. Đồng thời, hệ thống được đóng gói bằng Docker để có thể triển khai nhất quán trên các môi trường khác nhau, còn giao diện người dùng sử dụng tiếng Việt nhằm phù hợp với ngữ cảnh sử dụng thực tế tại Trường Đại học Tây Bắc.
 	
-	\begin{itemize}
-		\item \textbf{Bảo mật:} Mật khẩu được mã hóa bằng thuật toán bcrypt; token JWT có thời hạn sử dụng giới hạn; mọi endpoint đều yêu cầu xác thực và kiểm tra quyền trước khi xử lý.
-		\item \textbf{Tính nhất quán dữ liệu:} Các thao tác liên quan đến trạng thái nghiệp vụ (duyệt đăng ký, lập hóa đơn, xử lý bảo trì) được thực thi trong phạm vi giao dịch cơ sở dữ liệu để đảm bảo toàn vẹn dữ liệu.
-		\item \textbf{Khả năng mở rộng:} Kiến trúc nhiều lớp (router -- service -- repository) cho phép bổ sung tính năng mới mà không ảnh hưởng đến các thành phần hiện có.
-		\item \textbf{Khả năng triển khai:} Hệ thống được đóng gói bằng Docker Compose, có thể triển khai nhất quán trên các môi trường khác nhau mà không cần cấu hình thủ công phức tạp.
-		\item \textbf{Giao diện tiếng Việt:} Toàn bộ giao diện người dùng sử dụng tiếng Việt, phù hợp với ngữ cảnh sử dụng thực tế tại Trường Đại học Tây Bắc.
-	\end{itemize}
-	
-	\subsubsection{Ràng buộc nghiệp vụ}
+	% \subsubsection{Ràng buộc nghiệp vụ}
+	\subsubsection*{3.5 Ràng buộc nghiệp vụ}
+	\addcontentsline{toc}{subsubsection}{3.5 Ràng buộc nghiệp vụ}
 	
 	Một số ràng buộc nghiệp vụ trọng tâm được đặc tả như sau:
 	
@@ -565,7 +551,7 @@
 				\vspace{2pt}
 			\end{minipage} \\
 			\hline
-			Dòng sự kiện phụ & Nếu email hoặc mã số đã tồn tại trong hệ thống, hệ thống trả về lỗi 409 Conflict và yêu cầu nhập lại. Nếu dữ liệu không hợp lệ (thiếu trường bắt buộc, sai định dạng), hệ thống hiển thị thông báo lỗi xác thực tương ứng. \\
+			Dòng sự kiện phụ & Nếu email hoặc mã số đã tồn tại trong hệ thống, hệ thống trả về lỗi 409 và yêu cầu nhập lại. Nếu dữ liệu không hợp lệ (thiếu trường bắt buộc, sai định dạng), hệ thống hiển thị thông báo lỗi xác thực tương ứng. \\
 			\hline
 			Điều kiện tiên quyết & Người thực hiện đã đăng nhập với vai trò Quản trị viên. \\
 			\hline
@@ -585,7 +571,7 @@
 	\end{figure}
 	
 	
-	Quản trị viên điền thông tin người dùng mới; hệ thống kiểm tra tính hợp lệ của dữ liệu đầu vào và tra soát trùng lặp email hoặc mã số. Nếu hợp lệ, hệ thống tạo tài khoản với mật khẩu băm mặc định và gán vai trò; ngược lại trả thông báo lỗi tương ứng (lỗi xác thực hoặc 409 Conflict).
+	Quản trị viên điền thông tin người dùng mới; hệ thống kiểm tra tính hợp lệ của dữ liệu đầu vào và tra soát trùng lặp email hoặc mã số. Nếu hợp lệ, hệ thống tạo tài khoản với mật khẩu băm mặc định và gán vai trò; ngược lại trả thông báo lỗi tương ứng.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
@@ -598,7 +584,7 @@
 	\end{figure}
 	
 	
-	Quản trị viên gửi \texttt{POST /api/v1/admin/users} kèm thông tin người dùng; Backend kiểm tra trùng lặp email và mã số trong Database, nếu hợp lệ thì băm mật khẩu mặc định, lưu bản ghi mới vào bảng \texttt{users} và trả về 201 Created với thông tin tài khoản đã tạo.
+	Quản trị viên gửi yêu cầu cấp tài khoản \texttt{POST /api/v1/admin/users} kèm thông tin người dùng; Backend kiểm tra trùng lặp email và mã số trong cơ sở dữ liệu, nếu hợp lệ thì băm mật khẩu mặc định, lưu bản ghi mới vào cơ sở dữ liệu và trả về mã 201 Created với thông tin tài khoản đã tạo.
 	
 	% -----------------------------------------------------------
 	\subsubsection*{1.3 Ca sử dụng đăng nhập}
@@ -629,12 +615,12 @@
 					\item Người dùng nhập email và mật khẩu trên màn hình đăng nhập.
 					\item Hệ thống xác thực thông tin đăng nhập và kiểm tra trạng thái tài khoản.
 					\item Nếu hợp lệ, hệ thống phát hành JWT Access Token và Refresh Token lưu trong HttpOnly cookie.
-					\item Hệ thống điều hướng đến Dashboard tương ứng với vai trò người dùng.
+					\item Hệ thống điều hướng đến trang tương ứng với vai trò người dùng.
 				\end{enumerate}
 				\vspace{2pt}
 			\end{minipage} \\
 			\hline
-			Dòng sự kiện phụ & Nếu email không tồn tại hoặc mật khẩu sai, hệ thống trả thông báo lỗi 401 Unauthorized. Khi Access Token hết hạn, hệ thống tự động làm mới bằng Refresh Token thông qua cơ chế \textit{token rotation}. \\
+			Dòng sự kiện phụ & Nếu email không tồn tại hoặc mật khẩu sai, hệ thống trả thông báo lỗi 401 Unauthorized. Khi Access Token hết hạn, hệ thống tự động làm mới bằng Refresh Token thông qua cơ chế \textit{xoay vòng token}. \\
 			\hline
 			Điều kiện tiên quyết & Người dùng đã có tài khoản được Quản trị viên tạo trong hệ thống. \\
 			\hline
@@ -664,10 +650,10 @@
 		\label{fig:sequenceuc02}
 	\end{figure}
 	
-	Frontend gửi \texttt{POST /api/v1/auth/login} với email và mật khẩu đến Auth API; Backend tra cứu tài khoản trong Database theo email, xác thực mật khẩu băm bằng bcrypt, sau đó phát hành cặp JWT Token trong HttpOnly cookie và điều hướng Frontend đến Dashboard phù hợp với vai trò.
+	Người dùng gửi yêu cầu đăng nhập thông qua giao diện \texttt{POST /api/v1/auth/login} với email và mật khẩu đến Auth API; Backend tra cứu tài khoản trong cơ sở dữ liệu theo email, xác thực mật khẩu người dùng, sau đó phát hành cặp JWT Token trong HttpOnly cookie và điều hướng đến giao diện phù hợp với vai trò.
 	
 	% -----------------------------------------------------------
-	\subsubsection*{1.4 Ca sử dụng uản lý tòa nhà và phòng ở}
+	\subsubsection*{1.4 Ca sử dụng quản lý tòa nhà và phòng ở}
 	\addcontentsline{toc}{subsubsection}{1.4 Ca sử dụng quản lý tòa nhà và phòng ở}
 	
 	\paragraph{Biểu đồ ca sử dụng}
@@ -731,7 +717,7 @@
 	\end{figure}
 	
 	
-	Quản trị viên gửi yêu cầu \texttt{POST/PUT/DELETE} đến \texttt{/api/v1/buildings} hoặc \texttt{/rooms}; Backend kiểm tra quyền ADMIN, thực hiện thao tác CRUD trên Database. Nếu vi phạm ràng buộc, trả về 400/409 kèm thông báo lỗi; nếu thành công, trả về 200/201 với dữ liệu cập nhật.
+	Quản trị viên gửi yêu cầu \texttt{POST/PUT/DELETE} đến \texttt{/api/v1/buildings} hoặc \texttt{/rooms}; Backend kiểm tra quyền quản trị viên, thực hiện thao tác thêm/sửa/xóa trên cơ sở dữ liệu. Nếu vi phạm ràng buộc, trả về 400/409 kèm thông báo lỗi; nếu thành công, trả về 200/201 với dữ liệu cập nhật.
 	
 	% -----------------------------------------------------------
 	\subsubsection*{1.5 Ca sử dụng đăng ký phòng}
@@ -762,7 +748,7 @@
 					\item Sinh viên xem danh sách phòng còn chỗ trống (trạng thái AVAILABLE).
 					\item Hệ thống lọc và hiển thị các phòng phù hợp với giới tính và quốc tịch của sinh viên.
 					\item Sinh viên chọn phòng và xác nhận đăng ký với ngày bắt đầu và ngày kết thúc dự kiến.
-					\item Hệ thống tạo đơn đăng ký với trạng thái PENDING và thông báo cho sinh viên.
+					\item Hệ thống tạo đơn đăng ký với trạng thái chờ (PENDING) và thông báo cho sinh viên.
 				\end{enumerate}
 				\vspace{2pt}
 			\end{minipage} \\
@@ -771,7 +757,7 @@
 			\hline
 			Điều kiện tiên quyết & Sinh viên đã đăng nhập và chưa có đăng ký đang có hiệu lực. \\
 			\hline
-			Điều kiện sau & Đơn đăng ký được tạo với trạng thái PENDING, chờ nhân viên xét duyệt. \\
+			Điều kiện sau & Đơn đăng ký được tạo với trạng thái chờ, chờ nhân viên xét duyệt. \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -787,7 +773,7 @@
 	\end{figure}
 	
 	
-	Sinh viên xem danh sách phòng AVAILABLE và chọn phòng; hệ thống kiểm tra tuần tự ba điều kiện: sinh viên chưa có đăng ký đang hoạt động, giới tính và quốc tịch phù hợp loại phòng, và phòng còn chỗ trống. Nếu vượt qua cả ba điều kiện, đơn đăng ký được tạo với trạng thái PENDING.
+	Sinh viên xem danh sách phòng còn trống (AVAILABLE) và chọn phòng; hệ thống kiểm tra tuần tự ba điều kiện: sinh viên chưa có đăng ký đang hoạt động, giới tính và quốc tịch phù hợp loại phòng, và phòng còn chỗ trống. Nếu vượt qua cả ba điều kiện, đơn đăng ký được tạo với trạng thái chờ.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
@@ -799,7 +785,7 @@
 		%		\label{fig:sequenceuc05}
 		%	\end{figure}
 	
-	Sinh viên gửi \texttt{GET /api/v1/rooms?status=AVAILABLE} để lấy danh sách phòng, sau đó gửi \texttt{POST /api/v1/registrations} để đăng ký; Backend kiểm tra điều kiện sinh viên và phòng trong Database, nếu hợp lệ thì \texttt{INSERT} bản ghi đăng ký với trạng thái PENDING và trả về 201 Created.
+	Sinh viên gửi \texttt{GET /api/v1/rooms?status=AVAILABLE} để lấy danh sách phòng, sau đó gửi \texttt{POST /api/v1/registrations} để đăng ký; Backend kiểm tra điều kiện sinh viên và phòng trong cơ sở dữ liệu, nếu hợp lệ thì chèn bản ghi đăng ký với trạng thái chờ và trả về mã tạo thành công 201 created.
 	
 	\begin{figure}[H]
 		\centering
@@ -811,7 +797,7 @@
 	
 	% -----------------------------------------------------------
 	\subsubsection*{1.6 Ca sử dụng duyệt đơn đăng ký}
-	\addcontentsline{toc}{subsubsection}{1.6 Ca sử dụng uyệt đơn đăng ký}
+	\addcontentsline{toc}{subsubsection}{1.6 Ca sử dụng duyệt đơn đăng ký}
 	
 	\paragraph{Biểu đồ ca sử dụng}
 	\noindent
@@ -835,20 +821,20 @@
 			\begin{minipage}[t]{10cm}
 				\vspace{2pt}
 				\begin{enumerate}
-					\item Nhân viên xem danh sách đơn đăng ký có trạng thái PENDING.
+					\item Nhân viên xem danh sách đơn đăng ký có trạng thái chờ.
 					\item Chọn đơn và xem chi tiết thông tin sinh viên và phòng đăng ký.
 					\item Nhân viên ra quyết định phê duyệt hoặc từ chối.
-					\item Nếu phê duyệt: cập nhật trạng thái đơn thành APPROVED, tăng \texttt{current\_occupancy} của phòng, cập nhật trạng thái phòng nếu đầy và gửi thông báo cho sinh viên.
-					\item Nếu từ chối: cập nhật trạng thái đơn thành REJECTED, gửi thông báo từ chối cho sinh viên.
+					\item Nếu phê duyệt: cập nhật trạng thái đơn thành phê duyệt (APPROVED), tăng \texttt{current\_occupancy} của phòng, cập nhật trạng thái phòng nếu đầy và gửi thông báo cho sinh viên.
+					\item Nếu từ chối: cập nhật trạng thái đơn thành từ chối (REJECTED), gửi thông báo từ chối cho sinh viên.
 				\end{enumerate}
 				\vspace{2pt}
 			\end{minipage} \\
 			\hline
 			Dòng sự kiện phụ & Nếu tại thời điểm phê duyệt phòng đã đầy hoặc đang bảo trì, hệ thống cảnh báo và yêu cầu xác nhận lại. \\
 			\hline
-			Điều kiện tiên quyết & Nhân viên đã đăng nhập; tồn tại đơn đăng ký ở trạng thái PENDING. \\
+			Điều kiện tiên quyết & Nhân viên đã đăng nhập; tồn tại đơn đăng ký ở trạng thái chờ. \\
 			\hline
-			Điều kiện sau & Đơn được cập nhật trạng thái; nếu APPROVED thì số người ở trong phòng tăng lên một và trạng thái phòng được rà soát lại. \\
+			Điều kiện sau & Đơn được cập nhật trạng thái; nếu chấp thuận thì số người ở trong phòng tăng lên một và trạng thái phòng được rà soát lại. \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -864,12 +850,12 @@
 	\end{figure}
 	
 	
-	Nhân viên xem danh sách đơn PENDING và chọn đơn cần xử lý; nếu quyết định từ chối, cập nhật trạng thái thành REJECTED và gửi thông báo. Nếu đồng ý, hệ thống kiểm tra lại phòng còn hợp lệ trước khi cập nhật thành APPROVED, tăng số người ở thực tế, cập nhật trạng thái phòng nếu đạt sức chứa tối đa và gửi thông báo xác nhận.
+	Nhân viên xem danh sách đơn chờ (PENDING) và chọn đơn cần xử lý; nếu quyết định từ chối, cập nhật trạng thái thành từ chối (REJECTED) và gửi thông báo. Nếu đồng ý, hệ thống kiểm tra lại phòng còn hợp lệ trước khi cập nhật thành chấp thuận, tăng số người ở thực tế, cập nhật trạng thái phòng nếu đạt sức chứa tối đa và gửi thông báo xác nhận.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
 	
-	Nhân viên gửi \texttt{PUT /api/v1/registrations/\{id\}/approve} hoặc \texttt{/reject}; Backend truy vấn trạng thái phòng trong Database, nếu phê duyệt thì \texttt{UPDATE} trạng thái đơn thành APPROVED, \texttt{UPDATE} \texttt{current\_occupancy} phòng và \texttt{INSERT} thông báo cho sinh viên trong cùng một giao dịch.
+	Nhân viên gửi \texttt{PUT /api/v1/registrations/\{id\}/approve} hoặc \texttt{/reject}; Backend truy vấn trạng thái phòng trong cơ sở dữ liệu, nếu phê duyệt thì cập nhật trạng thái đơn thành chấp thuận, câp nhật số sinh viên trong phòng đó và thêm thông báo cho sinh viên trong cùng một giao dịch.
 	
 	\begin{figure}[H]
 		\centering
@@ -905,11 +891,11 @@
 			\begin{minipage}[t]{10cm}
 				\vspace{2pt}
 				\begin{enumerate}
-					\item Nhân viên tìm kiếm đăng ký APPROVED của sinh viên cần trả phòng.
+					\item Nhân viên tìm kiếm đăng ký chấp thuận (APPROVED) của sinh viên cần trả phòng.
 					\item Xem thông tin chi tiết đăng ký và tình trạng hóa đơn của sinh viên.
 					\item Xác nhận thực hiện trả phòng.
-					\item Hệ thống cập nhật trạng thái đơn thành CHECKED\_OUT, ghi nhận ngày trả phòng thực tế.
-					\item Giảm \texttt{current\_occupancy} của phòng và cập nhật trạng thái phòng nếu cần.
+					\item Hệ thống cập nhật trạng thái đơn thành trả phòng (CHECKED\_OUT), ghi nhận ngày trả phòng thực tế.
+					\item Giảm số sinh viên của phòng đó và cập nhật trạng thái phòng nếu cần.
 					\item Gửi thông báo xác nhận trả phòng cho sinh viên.
 				\end{enumerate}
 				\vspace{2pt}
@@ -917,9 +903,9 @@
 			\hline
 			Dòng sự kiện phụ & Nếu sinh viên còn hóa đơn chưa thanh toán, hệ thống cảnh báo nhưng vẫn cho phép nhân viên tiếp tục thực hiện trả phòng. \\
 			\hline
-			Điều kiện tiên quyết & Tồn tại đăng ký ở trạng thái APPROVED của sinh viên cần trả phòng. \\
+			Điều kiện tiên quyết & Tồn tại đăng ký ở trạng thái chấp thuận (APPROVED) của sinh viên cần trả phòng. \\
 			\hline
-			Điều kiện sau & Đơn đăng ký chuyển sang CHECKED\_OUT; số người ở trong phòng giảm đi một và trạng thái phòng được rà soát lại. \\
+			Điều kiện sau & Đơn đăng ký chuyển sang trả phòng (CHECKED\_OUT); số người ở trong phòng giảm đi một và trạng thái phòng được rà soát lại. \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -935,12 +921,12 @@
 	\end{figure}
 	
 	
-	Nhân viên tìm và chọn đăng ký APPROVED cần xử lý; hệ thống kiểm tra và cảnh báo nếu sinh viên còn nợ hóa đơn. Sau khi xác nhận, hệ thống cập nhật trạng thái thành CHECKED\_OUT, giảm số người ở thực tế của phòng, cập nhật trạng thái phòng sang AVAILABLE nếu phòng vừa trống chỗ và gửi thông báo.
+	Nhân viên tìm và chọn đăng ký chấp thuận cần xử lý; hệ thống kiểm tra và cảnh báo nếu sinh viên còn nợ hóa đơn. Sau khi xác nhận, hệ thống cập nhật trạng thái thành CHECKED\_OUT, giảm số người ở thực tế của phòng, cập nhật trạng thái phòng sang sẫn phòng nếu phòng vừa trống chỗ và gửi thông báo.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
 	
-	Nhân viên gửi \texttt{PUT /api/v1/registrations/\{id\}/checkout}; Backend \texttt{UPDATE} trạng thái đăng ký thành CHECKED\_OUT với \texttt{checkout\_date = now()}, \texttt{UPDATE} \texttt{current\_occupancy} phòng giảm một, rà soát và cập nhật trạng thái phòng, đồng thời \texttt{INSERT} thông báo cho sinh viên, tất cả trong cùng một giao dịch.
+	Nhân viên gửi trả phòng \texttt{PUT /api/v1/registrations/\{id\}/checkout}; Backend cập nhật trạng thái đăng ký thành trả phòng (CHECKED\_OUT), cập nhật sinh viên của phòng giảm đi một, rà soát và cập nhật trạng thái phòng, đồng thời chèn thông báo cho sinh viên, tất cả trong cùng một giao dịch.
 	
 	\begin{figure}[H]
 		\centering
@@ -1016,7 +1002,7 @@
 		\caption{Biểu đồ tuần tự tạo hóa đơn}
 		\label{fig:sequenceuc08}
 	\end{figure}
-	Frontend tính tạm thời tổng tiền và hiển thị cho nhân viên xem trước; sau khi xác nhận, gửi \texttt{POST /api/v1/invoices}; Backend kiểm tra trùng lặp (student + month + year + room) trong Database. Nếu hợp lệ thì \texttt{INSERT} hóa đơn với trạng thái UNPAID và \texttt{INSERT} thông báo, trả về 201 Created.
+	 Giao diện tính tạm thời tổng tiền và hiển thị cho nhân viên xem trước; sau khi xác nhận, gửi \texttt{POST /api/v1/invoices}; Backend kiểm tra trùng lặp trong cơ sở dữ liệu. Nếu hợp lệ thì cập nhật hóa đơn với trạng thái đã thanh toán và thêm thông báo tạo hóa đơn thành công.
 	
 	
 	
@@ -1075,12 +1061,12 @@
 	\end{figure}
 	
 	
-	Sinh viên vào trang Hóa đơn và chọn hóa đơn UNPAID để xem chi tiết; nếu xác nhận thanh toán, hệ thống cập nhật trạng thái thành PAID và ghi nhận ngày thanh toán rồi hiển thị xác nhận. Nếu hủy, sinh viên quay lại danh sách.
+	Sinh viên vào trang hóa đơn và chọn hóa đơn chưa trả (UNPAID) để xem chi tiết; nếu xác nhận thanh toán, hệ thống cập nhật trạng thái thành đã trả(PAID) và ghi nhận ngày thanh toán rồi hiển thị xác nhận. Nếu hủy, sinh viên quay lại danh sách.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
 	
-	Sinh viên gửi \texttt{GET /api/v1/invoices/me} để lấy danh sách hóa đơn; sau đó gửi \texttt{PUT /api/v1/invoices/\{id\}/pay}; Backend kiểm tra trạng thái hóa đơn trong Database, nếu là UNPAID thì \texttt{UPDATE} sang PAID với \texttt{paid\_at = now()} và trả về 200 OK.
+	Sinh viên gửi \texttt{GET /api/v1/invoices/me} để lấy danh sách hóa đơn; sau đó gửi \texttt{PUT /api/v1/invoices/\{id\}/pay}; Backend kiểm tra trạng thái hóa đơn trong cơ sở dữ liệu, nếu là chưa trả thì cập nhật trạng thái sang đã trả.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.9\linewidth]{images/sequence_uc09}
@@ -1137,7 +1123,7 @@
 	\paragraph{Biểu đồ hoạt động}
 	\noindent
 	
-	Sinh viên vào mục Yêu cầu bảo trì; hệ thống kiểm tra điều kiện cư trú hợp lệ trước khi cho phép nhập thông tin. Sau khi điền tiêu đề và mô tả sự cố, sinh viên gửi yêu cầu và nhận thông báo tiếp nhận; trạng thái yêu cầu được đặt thành PENDING.	
+	Sinh viên vào mục Yêu cầu bảo trì; hệ thống kiểm tra điều kiện cư trú hợp lệ trước khi cho phép nhập thông tin. Sau khi điền tiêu đề và mô tả sự cố, sinh viên gửi yêu cầu và nhận thông báo tiếp nhận; trạng thái yêu cầu được đặt thành chờ.	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.45\linewidth]{images/activity_uc10}
@@ -1158,7 +1144,7 @@
 	\end{figure}
 	
 	
-	Sinh viên gửi \texttt{POST /api/v1/maintenance-requests}; Backend kiểm tra sinh viên có bản ghi trong \texttt{room\_registrations} với trạng thái APPROVED trong Database. Nếu hợp lệ thì \texttt{INSERT} yêu cầu bảo trì với trạng thái PENDING và trả về 201 Created; ngược lại trả 403 Forbidden.
+	Sinh viên gửi yêu cầu bảo trì \texttt{POST /api/v1/maintenance-requests}; Backend kiểm tra sinh viên có bản ghi hợp lệ với trạng thái APPROVED trong cơ sở dữ liệu. Nếu hợp lệ thì thêm yêu cầu bảo trì với trạng thái chờ và trả về 201 Created; ngược lại trả 403 Forbidden.
 	
 	% -----------------------------------------------------------
 	\subsubsection*{1.11 Ca sử dụng xử lý bảo trì}
@@ -1210,10 +1196,10 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.55\linewidth]{images/activity_uc11}
-		\caption{Biểu đồ hoạt động xử lý bào trì}
+		\caption{Biểu đồ hoạt động xử lý bảo trì}
 		\label{fig:activityuc11}
 	\end{figure}
-	Nhân viên xem và lọc danh sách yêu cầu bảo trì; chọn yêu cầu và cập nhật trạng thái theo tiến trình xử lý: PENDING $\to$ IN\_PROGRESS $\to$ COMPLETED. Mỗi lần chuyển trạng thái đều kèm thông báo gửi đến sinh viên liên quan.
+	Nhân viên xem và lọc danh sách yêu cầu bảo trì; chọn yêu cầu và cập nhật trạng thái theo tiến trình xử lý: Chờ $\to$ đang xử lý $\to$ đã xử xử lý. Mỗi lần chuyển trạng thái đều kèm thông báo gửi đến sinh viên liên quan.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
@@ -1226,11 +1212,11 @@
 	\end{figure}
 	
 	
-	Nhân viên gửi \texttt{GET /api/v1/maintenance-requests} để lấy danh sách, sau đó gửi \texttt{PUT /api/v1/maintenance-requests/\{id\}} với trạng thái mới (IN\_PROGRESS hoặc COMPLETED) và ghi chú xử lý; Backend \texttt{UPDATE} bản ghi và \texttt{INSERT} thông báo cho sinh viên, trả về 200 OK.
+	Nhân viên gửi yêu cầu bảo trì \texttt{GET /api/v1/maintenance-requests} để lấy danh sách, sau đó cập nhật trạng thái yêu cầu \texttt{PUT /api/v1/maintenance-requests/\{id\}} với trạng thái mới đang xử lý hoặc đã xử lý và kèm ghi chú; Backend cập nhật bản ghi và chèn thông báo cho sinh viên.
 	
 	% -----------------------------------------------------------
 	\subsubsection*{1.12 Ca sử dụng gửi thông báo}
-	\addcontentsline{toc}{subsubsection}{1.12 ca sử dụng gửi thông báo}
+	\addcontentsline{toc}{subsubsection}{1.12 Ca sử dụng gửi thông báo}
 	
 	\paragraph{Biểu đồ ca sử dụng}
 	\noindent
@@ -1280,7 +1266,7 @@
 		\label{fig:activityuc12}
 	\end{figure}
 	
-	Người gửi soạn tiêu đề, nội dung và chọn đối tượng nhận; hệ thống kiểm tra dữ liệu hợp lệ trước khi phát hành. Sau khi lưu thông báo vào cơ sở dữ liệu với \texttt{target\_role} phù hợp, người dùng thuộc đúng đối tượng sẽ thấy thông báo khi truy cập hệ thống.
+	Người gửi soạn tiêu đề, nội dung và chọn đối tượng nhận; hệ thống kiểm tra dữ liệu hợp lệ trước khi phát hành. Sau khi lưu thông báo vào cơ sở dữ liệu với đối tượng phù hợp, người dùng thuộc đúng đối tượng sẽ thấy thông báo khi truy cập hệ thống.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
@@ -1292,7 +1278,7 @@
 		\label{fig:sequenceuc12}
 	\end{figure}
 	
-	Người gửi gửi \texttt{POST /api/v1/notifications} với tiêu đề, nội dung và \texttt{target\_role}; Backend kiểm tra quyền (ADMIN hoặc STAFF) và \texttt{INSERT} thông báo vào Database. Người nhận gửi \texttt{GET /api/v1/notifications}; Backend truy vấn và lọc theo \texttt{target\_role} phù hợp với vai trò người dùng hiện tại rồi trả về danh sách.
+	Người gửi gửi \texttt{POST /api/v1/notifications} với tiêu đề, nội dung và đối tượng nhận thông báo; Backend kiểm tra quyền (ADMIN hoặc STAFF) và \texttt{INSERT} thông báo vào cơ sở dữ liệu. Người nhận gửi \texttt{GET /api/v1/notifications}; Backend truy vấn và lọc theo đối tượng phù hợp với vai trò người dùng hiện tại rồi trả về danh sách.
 	
 	% -----------------------------------------------------------
 	\subsubsection*{1.13 Ca sử dụng xem báo cáo thống kê}
@@ -1348,7 +1334,7 @@
 		\label{fig:activityuc13}
 	\end{figure}
 	
-	Quản trị viên truy cập trang Báo cáo và chọn loại báo cáo; hệ thống xử lý song song hai luồng: báo cáo doanh thu (tổng hợp \texttt{SUM(total\_amount)} từ hóa đơn PAID theo tháng/năm) và báo cáo tỷ lệ lấp đầy (tính \texttt{current\_occupancy / capacity} theo từng tòa nhà). Kết quả được hiển thị dưới dạng bảng thống kê.
+	Quản trị viên truy cập trang Báo cáo và chọn loại báo cáo; hệ thống xử lý song song hai luồng: báo cáo doanh thu (tổng hợp từ hóa đơn hóa đơn đã trả theo theo tháng/năm) và báo cáo tỷ lệ lấp đầy. Kết quả được hiển thị dưới dạng bảng thống kê.
 	
 	\paragraph{Biểu đồ tuần tự}
 	\noindent
@@ -1360,7 +1346,7 @@
 		\label{fig:sequenceuc13}
 	\end{figure}
 	
-	Quản trị viên gửi \texttt{GET /api/v1/reports/revenue?month=X\&year=Y} hoặc \texttt{GET /api/v1/reports/occupancy?building\_id=...}; Backend thực hiện truy vấn tổng hợp trên Database (\texttt{SUM} hoặc tính tỷ lệ), xử lý kết quả và trả về dữ liệu cho Frontend hiển thị.
+	Quản trị viên gửi \texttt{GET /api/v1/reports/revenue?month=X\&year=Y} hoặc \path{GET /api/v1/reports/occupancy?building\_id=...}; Backend thực hiện truy vấn tổng hợp trên Database (\texttt{SUM} hoặc tính tỷ lệ), xử lý kết quả và trả về dữ liệu cho Frontend hiển thị.
 	
 	% -----------------------------------------------------------
 	\subsection*{2. Cơ sở dữ liệu}
@@ -1621,39 +1607,58 @@
 			\node[outerbox, fill=gray!12] at (0, 0) {};
 			\node[font=\bfseries\small, anchor=north west]
 			at (-4.15, 0.85) {Client};
-			\node[comp] at (0, -0.1) {Trình duyệt web};
+			\node[comp] at (0, -0.1) {Trình duyệt web --- Thực thi React SPA};
 			
 			%% Web Server
-			\node[outerbox, fill=blue!8] at (0, -3.5) {};
+			\node[outerbox, fill=blue!8, minimum height=2.6cm] at (0, -3.6) {};
 			\node[font=\bfseries\small, anchor=north west]
 			at (-4.15, -2.65) {Web Server};
-			\node[comp] at (0, -3.6)
-			{Ứng dụng React (Giao diện người dùng)};
+			\node[comp] at (0, -3.35) {Nginx --- Reverse proxy \& Static file server};
+			\node[comp] at (0, -4.05) {React Build (HTML / CSS / JS tĩnh)};
 			
 			%% Application Server
-			\node[outerbox, fill=green!8] at (0, -7) {};
+			\node[outerbox, fill=green!8] at (0, -7.2) {};
 			\node[font=\bfseries\small, anchor=north west]
-			at (-4.15, -6.15) {Application Server};
-			\node[comp] at (0, -7.1)
+			at (-4.15, -6.35) {Application Server};
+			\node[comp] at (0, -7.3)
 			{FastAPI --- Xử lý nghiệp vụ};
 			
 			%% Database Server
-			\node[outerbox, fill=yellow!10] at (0, -10.5) {};
+			\node[outerbox, fill=yellow!10] at (0, -10.7) {};
 			\node[font=\bfseries\small, anchor=north west]
-			at (-4.15, -9.65) {Database Server};
-			\node[comp] at (0, -10.6)
+			at (-4.15, -9.85) {Database Server};
+			\node[comp] at (0, -10.8)
 			{Cơ sở dữ liệu PostgreSQL};
 			
-			%% Arrows (bottom of upper box → top of lower box, gap = 1.5cm)
-			\draw[->, thick] (0, -1)   -- node[lbl, right=0.15cm] {HTTP/HTTPS}       (0, -2.5);
-			\draw[->, thick] (0, -4.5) -- node[lbl, right=0.15cm] {REST API (JSON)}  (0, -6);
-			\draw[->, thick] (0, -8)   -- node[lbl, right=0.15cm] {SQL / asyncpg}    (0, -9.5);
+			%% Arrows
+			\draw[->, thick] (0, -1)   -- node[lbl, right=0.15cm] {HTTP/HTTPS}      (0, -2.5);
+			\draw[->, thick] (0, -4.8) -- node[lbl, right=0.15cm] {REST API (JSON)} (0, -6.2);
+			\draw[->, thick] (0, -8.2) -- node[lbl, right=0.15cm] {SQL / asyncpg}   (0, -9.7);
 		\end{tikzpicture}
 		\caption{Kiến trúc tổng thể của hệ thống quản lý ký túc xá}
 		\label{fig:system-architecture}
 	\end{figure}
 	
-	Hệ thống được xây dựng theo mô hình kiến trúc nhiều tầng (multi-tier architecture) với bốn lớp được phân tách rõ ràng theo chức năng. Tầng Client là trình duyệt web của người dùng -- nơi khởi phát mọi yêu cầu tương tác và nhận lại kết quả hiển thị từ phía máy chủ. Tầng Web Server đảm nhiệm việc phục vụ ứng dụng giao diện đơn trang (SPA) được xây dựng bằng React, cho phép người dùng tương tác liền mạch mà không cần tải lại toàn bộ trang. Tầng Application Server chứa toàn bộ logic nghiệp vụ, tiếp nhận yêu cầu từ giao diện qua giao thức REST API, thực hiện xác thực danh tính bằng cơ chế JWT, kiểm tra phân quyền và áp dụng các ràng buộc nghiệp vụ trước khi truy xuất hoặc thay đổi dữ liệu. Tầng Database Server chịu trách nhiệm lưu trữ và quản lý toàn bộ dữ liệu vận hành của hệ thống thông qua cơ sở dữ liệu quan hệ PostgreSQL, với mọi thao tác I/O được thực hiện theo phương thức bất đồng bộ nhằm tối ưu hiệu năng xử lý đồng thời. Toàn bộ bốn thành phần này được đóng gói và vận hành trong môi trường container hóa, đảm bảo tính nhất quán và khả năng tái triển khai giữa các môi trường phát triển và sản xuất thực tế.
+	Hệ thống được xây dựng theo mô hình kiến trúc nhiều tầng (multi-tier
+	architecture) với bốn lớp được phân tách rõ ràng theo chức năng.
+	Tầng Client là trình duyệt web của người dùng --- nơi khởi phát mọi
+	yêu cầu tương tác, đồng thời là môi trường thực thi ứng dụng giao
+	diện đơn trang sau khi các file tĩnh được tải về từ máy chủ.
+	Tầng Web Server sử dụng Nginx để tiếp nhận các yêu cầu HTTP/HTTPS từ
+	trình duyệt và phục vụ các file tĩnh của React (HTML, CSS, JavaScript)
+	được tạo ra sau quá trình xây dựng; Nginx cũng đóng vai trò máy chủ proxy ngược,
+	chuyển tiếp các yêu cầu API từ giao diện xuống tầng Application Server.
+	Tầng Application Server chứa toàn bộ logic nghiệp vụ, tiếp nhận yêu
+	cầu từ giao diện qua giao thức REST API, thực hiện xác thực danh tính
+	bằng cơ chế JWT, kiểm tra phân quyền và áp dụng các ràng buộc nghiệp
+	vụ trước khi truy xuất hoặc thay đổi dữ liệu.
+	Tầng cơ sở dữ liệu(Database) chịu trách nhiệm lưu trữ và quản lý toàn bộ dữ
+	liệu vận hành của hệ thống thông qua cơ sở dữ liệu quan hệ,
+	với mọi thao tác I/O được thực hiện theo phương thức bất đồng bộ thông
+	qua thư viện asyncpg nhằm tối ưu hiệu năng xử lý đồng thời.
+	Toàn bộ bốn thành phần này được đóng gói và vận hành trong môi trường
+	container hóa sử dụng Docker Compose, đảm bảo tính nhất quán và khả
+	năng tái triển khai giữa các môi trường phát triển và sản xuất thực tế.
 	
 	% -----------------------------------------------------------
 	\subsection*{3.2. Công nghệ sử dụng}
@@ -1770,7 +1775,7 @@
 		\label{fig:uibuildingmanagement}
 	\end{figure}
 	
-		
+	
 	Giao diện này cho phép quản trị viên xem và quản lý danh sách tòa nhà cùng toàn bộ phòng ở trong từng khu, với đầy đủ thông tin về sức chứa, số người đang ở thực tế, loại phòng (nam/nữ/lưu học sinh Lào) và trạng thái hiện tại. Quản trị viên có thể thêm mới, chỉnh sửa thông tin hoặc đánh dấu phòng đang bảo trì trực tiếp từ giao diện danh sách.
 	
 	\begin{figure}[H]
@@ -1780,7 +1785,7 @@
 		\label{fig:uiroommanagement}
 	\end{figure}
 	
-
+	
 	
 	\subsubsection*{3.3.4. Quản lý đăng ký nội trú}
 	\addcontentsline{toc}{subsubsection}{3.3.4. Quản lý đăng ký nội trú}
@@ -1832,7 +1837,7 @@
 	Trang báo cáo cung cấp hai nhóm thống kê chính: doanh thu thu phí theo tháng (tổng hợp từ các hóa đơn đã thanh toán) và tỷ lệ lấp đầy theo từng tòa nhà. Dữ liệu được trình bày dưới dạng bảng và biểu đồ trực quan, cho phép quản trị viên theo dõi xu hướng vận hành và đưa ra các quyết định điều chỉnh kịp thời.
 	
 	\subsubsection*{3.3.8. Quản lý người dùng}
-	\addcontentsline{toc}{subsubsection}{3.3.7. Quản lý người dùng}
+	\addcontentsline{toc}{subsubsection}{3.3.8. Quản lý người dùng}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.85\linewidth]{images/ui_user_management}
