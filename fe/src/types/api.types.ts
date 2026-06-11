@@ -2,6 +2,7 @@ import type {
   Building,
   BuildingCode,
   BuildingStatus,
+  CheckoutRequest,
   Gender,
   Invoice,
   MaintenanceRequest,
@@ -103,6 +104,12 @@ export interface CreateRegistrationPayload {
   end_date: string
 }
 
+export interface CreateCheckoutRequestPayload {
+  registration_id: number
+  requested_checkout_date: string
+  reason: string
+}
+
 export interface AvailableRoomQueryParams extends ListQueryParams {
   gender?: Gender
   nationality?: Nationality
@@ -164,6 +171,7 @@ export interface MonthlyReport {
 export type BuildingsPage = PaginatedData<Building>
 export type RoomsPage = PaginatedData<Room>
 export type RegistrationsPage = PaginatedData<Registration>
+export type CheckoutRequestsPage = PaginatedData<CheckoutRequest>
 export type InvoicesPage = PaginatedData<Invoice>
 export type MaintenancePage = PaginatedData<MaintenanceRequest>
 export type NotificationsPage = PaginatedData<NotificationItem>

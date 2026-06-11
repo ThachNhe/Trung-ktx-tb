@@ -5,7 +5,9 @@ import { API_ENDPOINTS } from '@/services/endpoints'
 import type {
   ApiResponse,
   BuildingsPage,
+  CheckoutRequestsPage,
   CreateBuildingPayload,
+  CreateCheckoutRequestPayload,
   CreateInvoicePayload,
   CreateMaintenancePayload,
   CreateNotificationPayload,
@@ -27,6 +29,7 @@ import type {
 } from '@/types/api.types'
 import type {
   Building,
+  CheckoutRequest,
   Invoice,
   MaintenanceRequest,
   NotificationItem,
@@ -136,6 +139,28 @@ export const dormitoryService = {
         API_ENDPOINTS.REGISTRATIONS.CHECKOUT(registrationId),
       ),
       'Không thể cập nhật trạng thái trả phòng',
+    ),
+
+  listCheckoutRequests: async (
+    params?: ListQueryParams,
+  ): Promise<CheckoutRequestsPage> =>
+    executeRequest(
+      apiGet<ApiResponse<CheckoutRequestsPage>>(
+        API_ENDPOINTS.CHECKOUT_REQUESTS.LIST,
+        cleanObject(params ?? {}),
+      ),
+      'Không thể tải danh sách yêu cầu trả phòng',
+    ),
+
+  createCheckoutRequest: async (
+    payload: CreateCheckoutRequestPayload,
+  ): Promise<CheckoutRequest> =>
+    executeRequest(
+      apiPost<ApiResponse<CheckoutRequest>>(
+        API_ENDPOINTS.CHECKOUT_REQUESTS.CREATE,
+        payload,
+      ),
+      'Không thể tạo yêu cầu trả phòng',
     ),
 
   listInvoices: async (params?: ListQueryParams): Promise<InvoicesPage> =>

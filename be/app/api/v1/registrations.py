@@ -82,5 +82,5 @@ async def checkout_registration(
     current_user: AdminOrStaffUser,
     service: RegistrationService = Depends(get_registration_service),
 ):
-    data = await service.checkout_registration(registration_id)
+    data = await service.checkout_registration(registration_id, current_user)
     return BaseResponse.ok(data=data, message="Trả phòng thành công")

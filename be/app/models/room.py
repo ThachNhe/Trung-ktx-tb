@@ -34,3 +34,4 @@ class Room(Base):
     registrations = relationship("RoomRegistration", back_populates="room", cascade="all, delete-orphan")
     invoices = relationship("Invoice", back_populates="room", cascade="all, delete-orphan")
     maintenance_requests = relationship("MaintenanceRequest", back_populates="room", cascade="all, delete-orphan")
+    checkout_requests = relationship("CheckoutRequest", back_populates="room", cascade="all, delete-orphan")

@@ -1,0 +1,185 @@
+\documentclass[13pt,a4paper]{extarticle}
+
+\usepackage[T5]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{geometry}
+\usepackage{mathptmx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{top=2.5cm,bottom=2.5cm,left=3.5cm,right=2cm}
+\linespread{1.35}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[itemize]{label=-,leftmargin=1.3cm,itemsep=2pt,topsep=2pt}
+\hypersetup{hidelinks}
+\pagestyle{empty}
+
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+	{-3.5ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus .2ex}%
+	{\centering\normalfont\Large\bfseries}}
+\makeatother
+
+\begin{document}
+	
+	\section*{MỞ ĐẦU}
+	
+	\subsection*{1. Lý do chọn đề tài}
+	\begin{itemize}
+		\item Chuyển đổi số trong các cơ sở giáo dục đại học đang đặt ra yêu cầu số hóa những quy trình quản lý hành chính quan trọng, trong đó có công tác quản lý ký túc xá.
+		\item Trường Đại học Tây Bắc có quy mô đào tạo hơn 5.000 sinh viên và học viên mỗi năm học; tỷ lệ sinh viên dân tộc thiểu số cao và có gần 500 lưu học sinh Lào, nên nhu cầu quản lý nội trú lớn và có nhiều đặc thù.
+		\item Khu ký túc xá của trường gồm 8 tòa nhà 5 tầng, 473 phòng ở và khoảng 3.000 chỗ ở; tuy nhiên nhiều nghiệp vụ hiện vẫn dựa vào hồ sơ giấy, bảng tính hoặc trao đổi trực tiếp.
+		\item Cách quản lý phân tán gây khó khăn trong theo dõi phòng ở, xét duyệt đăng ký, quản lý hóa đơn, tiếp nhận bảo trì, gửi thông báo và tổng hợp số liệu vận hành.
+		\item Vì vậy, đề tài lựa chọn hướng xây dựng hệ thống quản lý ký túc xá Trường Đại học Tây Bắc trên nền tảng web nhằm tập trung hóa dữ liệu, kiểm soát quy trình và tăng tính minh bạch giữa sinh viên với bộ phận quản lý.
+	\end{itemize}
+	
+	\subsection*{2. Mục tiêu nghiên cứu}
+	\begin{itemize}
+		\item Xây dựng một ứng dụng web hỗ trợ số hóa các nghiệp vụ cốt lõi trong quản lý nội trú sinh viên tại Trường Đại học Tây Bắc.
+		\item Thiết kế hệ thống phục vụ ba nhóm người dùng chính gồm quản trị viên, nhân viên quản lý và sinh viên, với cơ chế phân quyền rõ ràng theo vai trò.
+		\item Quản lý tài khoản người dùng, tòa nhà, phòng ở, sức chứa, loại phòng, trạng thái phòng và thông tin sinh viên nội trú.
+		\item Hỗ trợ sinh viên xem phòng phù hợp, gửi đơn đăng ký, theo dõi trạng thái xét duyệt, xem hóa đơn và gửi yêu cầu bảo trì.
+		\item Hỗ trợ nhân viên quản lý duyệt hoặc từ chối đơn, xử lý trả phòng, lập hóa đơn tháng, xác nhận thanh toán, xử lý bảo trì và gửi thông báo.
+		\item Hỗ trợ quản trị viên theo dõi báo cáo doanh thu, công nợ, tình trạng hóa đơn và tỷ lệ lấp đầy phòng theo tháng hoặc theo tòa nhà.
+	\end{itemize}
+	
+	\subsection*{3. Đối tượng và phạm vi nghiên cứu}
+	\begin{itemize}
+		\item Đối tượng nghiên cứu là bài toán quản lý ký túc xá trong trường đại học, tập trung vào các quy trình phát sinh từ lúc sinh viên đăng ký phòng đến khi thanh lý nội trú.
+		\item Đối tượng sử dụng gồm sinh viên, nhân viên quản lý ký túc xá và quản trị viên hệ thống.
+		\item Phạm vi chức năng gồm xác thực người dùng, quản lý phòng ở, quản lý đăng ký nội trú, hóa đơn tiền phòng -- điện -- nước, yêu cầu bảo trì, thông báo và báo cáo thống kê.
+		\item Phạm vi công nghệ gồm FastAPI, PostgreSQL, SQLAlchemy, Alembic, React, TypeScript, Vite, TanStack Router/Query, Zustand, Tailwind CSS, Shadcn/UI, Recharts và Docker Compose.
+		\item Giới hạn của đề tài là chưa tích hợp thanh toán trực tuyến, chưa đồng bộ tự động dữ liệu sinh viên từ hệ thống quản lý đào tạo, chưa có thông báo thời gian thực và chưa tự động hóa hoàn toàn việc lập hóa đơn định kỳ.
+	\end{itemize}
+	
+	\subsection*{4. Phương pháp nghiên cứu}
+	\begin{itemize}
+		\item Khảo sát nghiệp vụ quản lý ký túc xá, tổng hợp các tình huống vận hành thường gặp và phân tích nhu cầu thông tin của từng nhóm người dùng.
+		\item Phân tích hệ thống bằng mô hình tác nhân, ca sử dụng, biểu đồ hoạt động, biểu đồ tuần tự và phân tích trạng thái của các đối tượng nghiệp vụ như đơn đăng ký, phòng ở, hóa đơn và yêu cầu bảo trì.
+		\item Thiết kế hệ thống theo kiến trúc nhiều lớp, tách biệt tầng giao diện, tầng xử lý nghiệp vụ và tầng dữ liệu để dễ bảo trì và mở rộng.
+		\item Xây dựng, kiểm thử và đóng gói hệ thống bằng Docker Compose để kiểm chứng luồng đăng nhập, đăng ký phòng, duyệt đơn, lập hóa đơn, xử lý bảo trì và báo cáo thống kê.
+	\end{itemize}
+	
+	\subsection*{5. Cấu trúc báo cáo}
+	\begin{itemize}
+		\item Chương 1 trình bày bối cảnh, khảo sát thực tế, yêu cầu chức năng, yêu cầu phi chức năng và các ràng buộc nghiệp vụ của hệ thống.
+		\item Chương 2 trình bày mô hình hóa hệ thống, luồng xử lý của các nghiệp vụ chính và thiết kế cơ sở dữ liệu.
+		\item Chương 3 trình bày kiến trúc chương trình, công nghệ sử dụng, giao diện của hệ thống và kết quả triển khai các chức năng.
+	\end{itemize}
+	
+	\section*{CHƯƠNG 1: KHẢO SÁT VÀ ĐẶC TẢ HỆ THỐNG}
+	
+	\subsection*{1.1. Bối cảnh và lý do chọn đề tài}
+	\begin{itemize}
+		\item Trường Đại học Tây Bắc là cơ sở đào tạo đa ngành quan trọng của khu vực Tây Bắc, có nhiều sinh viên đến từ các huyện miền núi xa xôi và lưu học sinh Lào, tạo ra nhu cầu lưu trú tập trung trong ký túc xá.
+		\item Ký túc xá gồm nhiều tòa nhà, nhiều loại phòng và nhiều nhóm đối tượng cư trú khác nhau như sinh viên nam, sinh viên nữ và lưu học sinh Lào.
+		\item Công tác quản lý nội trú hiện còn phụ thuộc vào hồ sơ giấy, bảng tính và trao đổi trực tiếp, gây khó khăn khi theo dõi phòng ở, hóa đơn, phản ánh bảo trì và báo cáo vận hành.
+		\item Đề tài được lựa chọn nhằm xây dựng một hệ thống quản lý ký túc xá tập trung, nhất quán và minh bạch, phù hợp với quy mô và đặc thù nội trú của Trường Đại học Tây Bắc.
+	\end{itemize}
+	
+	\subsection*{1.2. Khảo sát thực tế}
+	\begin{itemize}
+		\item Hoạt động quản lý ký túc xá xoay quanh bốn nhóm nghiệp vụ chính: quản lý hạ tầng lưu trú, tiếp nhận và quản lý cư trú, quản lý hóa đơn -- thanh toán, bảo trì và thông báo.
+		\item Bộ phận quản lý cần theo dõi tình trạng từng tòa nhà, phòng ở, sức chứa, loại phòng, trạng thái sử dụng và số chỗ còn trống.
+		\item Quy trình cư trú gồm xem phòng phù hợp, nộp đơn đăng ký, xét duyệt, bố trí vào ở, theo dõi thời gian lưu trú và thanh lý khi sinh viên trả phòng.
+		\item Hóa đơn được lập định kỳ theo tháng, bao gồm tiền phòng, tiền điện, tiền nước và trạng thái thanh toán của từng sinh viên.
+		\item Sinh viên cần có kênh gửi phản ánh bảo trì; ban quản lý cần công cụ xử lý yêu cầu và gửi thông báo chung đến đúng nhóm đối tượng.
+		\item Kết quả khảo sát cho thấy hệ thống cần không chỉ lưu trữ dữ liệu mà còn phải kiểm soát quy trình, kiểm tra điều kiện nghiệp vụ và tự động cập nhật trạng thái liên quan.
+	\end{itemize}
+	
+	\subsection*{1.3. Đặc tả hệ thống}
+	Hệ thống quản lý ký túc xá được đặc tả là ứng dụng web máy khách -- máy chủ, gồm giao diện người dùng, API xử lý nghiệp vụ, cơ sở dữ liệu PostgreSQL và các quy trình quản lý nội trú. Các điểm chính gồm:
+	\begin{itemize}
+		\item Quản trị viên quản lý tài khoản người dùng, tòa nhà, phòng ở, dữ liệu nền và xem báo cáo tổng hợp toàn hệ thống.
+		\item Nhân viên quản lý xét duyệt đơn đăng ký, xử lý trả phòng, lập hóa đơn, xác nhận thanh toán, xử lý yêu cầu bảo trì và gửi thông báo.
+		\item Sinh viên xem phòng còn chỗ, gửi đơn đăng ký nội trú, theo dõi trạng thái xét duyệt, xem hóa đơn, gửi yêu cầu bảo trì và nhận thông báo.
+		\item Các ràng buộc chính gồm đăng ký phòng đúng giới tính/quốc tịch, mỗi sinh viên chỉ có một đăng ký hiệu lực, phòng đầy hoặc đang bảo trì không nhận đăng ký mới, không tạo trùng hóa đơn trong cùng kỳ và chỉ cho phép gửi bảo trì với phòng đang cư trú hợp lệ.
+	\end{itemize}
+	
+	\section*{CHƯƠNG 2: PHÂN TÍCH HỆ THỐNG}
+	
+	\subsection*{2.1. Mô hình hóa hệ thống}
+	Hệ thống có ba tác nhân chính là quản trị viên, nhân viên quản lý và sinh viên. Các ca sử dụng chính gồm:
+	\begin{itemize}
+		\item \textbf{Đăng nhập}: Xác thực email, mật khẩu, kiểm tra trạng thái tài khoản và điều hướng theo vai trò.
+		\item \textbf{Cấp tài khoản}: Quản trị viên nhập thông tin người dùng, hệ thống kiểm tra trùng email/mã số và gán vai trò tương ứng.
+		\item \textbf{Quản lý tòa nhà và phòng ở}: Quản trị viên tạo, cập nhật tòa nhà, phòng, sức chứa, loại phòng, giá phòng và trạng thái sử dụng.
+		\item \textbf{Đăng ký phòng}: Sinh viên chọn phòng còn chỗ phù hợp với giới tính/quốc tịch và gửi đơn đăng ký nội trú.
+		\item \textbf{Duyệt đơn đăng ký}: Nhân viên quản lý duyệt hoặc từ chối đơn, hệ thống cập nhật trạng thái đăng ký, số người ở và thông báo cho sinh viên.
+		\item \textbf{Trả phòng}: Nhân viên xác nhận sinh viên rời ký túc xá, hệ thống chuyển trạng thái đăng ký và cập nhật lại sức chứa phòng.
+		\item \textbf{Lập và thanh toán hóa đơn}: Nhân viên lập hóa đơn tiền phòng, điện, nước; hệ thống theo dõi trạng thái chưa thanh toán hoặc đã thanh toán.
+		\item \textbf{Gửi và xử lý bảo trì}: Sinh viên gửi yêu cầu bảo trì, nhân viên cập nhật tiến độ xử lý và thông báo kết quả.
+		\item \textbf{Gửi thông báo}: Quản trị viên hoặc nhân viên soạn thông báo và chọn nhóm đối tượng nhận.
+		\item \textbf{Xem báo cáo thống kê}: Quản trị viên xem doanh thu, tình trạng hóa đơn và tỷ lệ lấp đầy theo tháng hoặc theo tòa nhà.
+	\end{itemize}
+	
+	\subsection*{2.2. Cơ sở dữ liệu}
+	Hệ thống gồm các bảng chính:
+	\begin{itemize}
+		\item \textbf{Users}: Lưu thông tin tài khoản sinh viên, nhân viên quản lý và quản trị viên, vai trò, giới tính, quốc tịch và mật khẩu đã băm.
+		\item \textbf{Buildings}: Lưu thông tin các tòa nhà trong khu ký túc xá, số tầng, mô tả và trạng thái hoạt động.
+		\item \textbf{Rooms}: Lưu thông tin phòng ở, tòa nhà liên kết, tầng, sức chứa, số người đang ở, loại phòng, giá phòng và trạng thái sử dụng.
+		\item \textbf{Room\_registrations}: Lưu đơn đăng ký nội trú, sinh viên, phòng đăng ký, thời gian ở dự kiến và trạng thái từ chờ duyệt đến trả phòng.
+		\item \textbf{Invoices}: Lưu hóa đơn theo tháng, tiền phòng, tiền điện, tiền nước, tổng tiền, hạn nộp và trạng thái thanh toán.
+		\item \textbf{Maintenance\_requests}: Lưu yêu cầu bảo trì của sinh viên, phòng liên quan, mô tả sự cố, trạng thái xử lý và thời điểm hoàn thành.
+		\item \textbf{Notifications}: Lưu thông báo nội bộ, nội dung thông báo, người tạo và nhóm đối tượng nhận.
+	\end{itemize}
+	
+	\section*{CHƯƠNG 3: XÂY DỰNG CHƯƠNG TRÌNH}
+	
+	\subsection*{3.1. Kiến trúc hệ thống}
+	\begin{itemize}
+		\item Hệ thống được xây dựng theo kiến trúc nhiều tầng gồm Client, Web Server, Application Server và Database Server.
+		\item Tầng Client là trình duyệt web thực thi ứng dụng React SPA, nơi người dùng thao tác với các màn hình theo vai trò.
+		\item Tầng Web Server sử dụng Nginx để phục vụ file tĩnh của React và chuyển tiếp yêu cầu API xuống backend.
+		\item Tầng Application Server sử dụng FastAPI để xử lý REST API, xác thực, phân quyền, kiểm tra ràng buộc nghiệp vụ và điều phối các thao tác dữ liệu.
+		\item Tầng Database sử dụng PostgreSQL để lưu trữ toàn bộ dữ liệu vận hành, trong đó các thao tác truy xuất được thực hiện bất đồng bộ qua SQLAlchemy và asyncpg.
+		\item Toàn bộ hệ thống được đóng gói bằng Docker Compose để vận hành nhất quán trong môi trường phát triển và thuận lợi khi triển khai.
+	\end{itemize}
+	
+	\subsection*{3.2. Công nghệ sử dụng}
+	\begin{itemize}
+		\item \textbf{FastAPI}: xây dựng API phía máy chủ, hỗ trợ xử lý bất đồng bộ, Dependency Injection, kiểm tra dữ liệu bằng Pydantic và tổ chức code theo tầng.
+		\item \textbf{PostgreSQL}: lưu trữ dữ liệu quan hệ với các kiểu dữ liệu phù hợp như UUID, ENUM, TIMESTAMPTZ và hỗ trợ giao dịch.
+		\item \textbf{SQLAlchemy, Alembic}: ánh xạ đối tượng với bảng dữ liệu, truy vấn bất đồng bộ và quản lý lịch sử thay đổi lược đồ cơ sở dữ liệu.
+		\item \textbf{React, TypeScript, Vite}: xây dựng giao diện đơn trang, component hóa màn hình và tăng độ tin cậy mã nguồn bằng kiểu tĩnh.
+		\item \textbf{TanStack Router, TanStack Query, Zustand}: quản lý điều hướng, bảo vệ route theo vai trò, đồng bộ dữ liệu server và lưu trạng thái phiên đăng nhập.
+		\item \textbf{Tailwind CSS, Shadcn/UI, Recharts}: xây dựng giao diện, bảng dữ liệu, biểu mẫu, thông báo và biểu đồ thống kê.
+		\item \textbf{Docker Compose}: đóng gói frontend, backend, database và các dịch vụ hỗ trợ để triển khai nhanh và giảm lỗi khác biệt môi trường.
+	\end{itemize}
+	
+	\subsection*{3.3. Giao diện của hệ thống}
+	\begin{itemize}
+		\item \textbf{Đăng nhập}: người dùng nhập email và mật khẩu; hệ thống xác thực và chuyển đến khu vực quản trị viên, nhân viên hoặc sinh viên.
+		\item \textbf{Trang tổng quan}: hiển thị số tòa nhà, số phòng còn trống, số sinh viên nội trú, tỷ lệ lấp đầy, đơn chờ duyệt, hóa đơn chưa thanh toán và các chỉ số cần xử lý.
+		\item \textbf{Quản lý người dùng}: quản trị viên tạo tài khoản, tìm kiếm người dùng và theo dõi sinh viên đang nội trú.
+		\item \textbf{Quản lý tòa nhà và phòng ở}: quản trị viên quản lý danh sách tòa nhà, phòng, sức chứa, loại phòng, giá phòng và trạng thái phòng.
+		\item \textbf{Quản lý đăng ký nội trú}: nhân viên xem đơn đăng ký, duyệt hoặc từ chối đơn và kiểm soát việc cập nhật số người ở thực tế.
+		\item \textbf{Quản lý hóa đơn}: nhân viên lập hóa đơn tháng, hệ thống tự tính tiền phòng, tiền điện, tiền nước và theo dõi trạng thái thanh toán.
+		\item \textbf{Quản lý bảo trì}: sinh viên gửi yêu cầu, nhân viên cập nhật tiến độ xử lý và hệ thống thông báo trạng thái cho sinh viên.
+		\item \textbf{Báo cáo và thông báo}: quản trị viên xem doanh thu, công nợ, tỷ lệ lấp đầy; nhân viên hoặc quản trị viên gửi thông báo đến đúng nhóm người nhận.
+		\item \textbf{Giao diện sinh viên}: sinh viên xem phòng còn trống, gửi đơn, theo dõi đơn đăng ký, xem hóa đơn, gửi bảo trì và nhận thông báo mới.
+	\end{itemize}
+	
+	\section*{KẾT LUẬN}
+	
+	Các chức năng đã cài đặt được:
+	\begin{itemize}
+		\item \textbf{Xác thực và phân quyền}: đăng nhập, duy trì phiên bằng JWT, phân quyền theo ba vai trò quản trị viên, nhân viên và sinh viên.
+		\item \textbf{Quản lý người dùng}: cấp tài khoản, lưu thông tin định danh, giới tính, quốc tịch và vai trò để phục vụ cả đăng nhập lẫn ràng buộc nghiệp vụ.
+		\item \textbf{Quản lý tòa nhà và phòng ở}: tạo và cập nhật tòa nhà, phòng, sức chứa, loại phòng, giá phòng và trạng thái sử dụng.
+		\item \textbf{Quản lý đăng ký nội trú}: sinh viên gửi đơn, nhân viên duyệt hoặc từ chối, hệ thống tự cập nhật số người ở và trạng thái phòng.
+		\item \textbf{Xử lý trả phòng}: chuyển trạng thái đăng ký sang đã trả phòng, ghi nhận ngày trả thực tế và cập nhật lại sức chứa phòng.
+		\item \textbf{Quản lý hóa đơn}: lập hóa đơn tháng, tính tiền phòng, điện, nước, theo dõi trạng thái chưa thanh toán hoặc đã thanh toán.
+		\item \textbf{Quản lý bảo trì}: tiếp nhận yêu cầu từ sinh viên đang cư trú hợp lệ, cập nhật tiến độ xử lý và lưu lịch sử yêu cầu.
+		\item \textbf{Thông báo và báo cáo}: gửi thông báo theo nhóm đối tượng, tổng hợp doanh thu, hóa đơn và tỷ lệ lấp đầy phòng.
+	\end{itemize}
+	
+	Hệ thống đã góp phần số hóa hoạt động quản lý ký túc xá Trường Đại học Tây Bắc, giúp dữ liệu phòng ở, đăng ký, hóa đơn, bảo trì và thông báo được tổ chức tập trung hơn. Các thao tác quan trọng được kiểm soát theo trạng thái nghiệp vụ nên hạn chế sai sót khi cập nhật dữ liệu, đồng thời giúp sinh viên và bộ phận quản lý theo dõi thông tin minh bạch hơn so với cách xử lý thủ công.
+	
+	Hướng phát triển tiếp theo là tích hợp thanh toán trực tuyến, đồng bộ dữ liệu sinh viên từ hệ thống quản lý đào tạo, tự động hóa lập hóa đơn định kỳ, bổ sung thông báo thời gian thực, tối ưu giao diện trên thiết bị di động và thử nghiệm hệ thống trong môi trường ký túc xá thực tế để tiếp tục hoàn thiện quy trình nghiệp vụ.
+	
+\end{document}

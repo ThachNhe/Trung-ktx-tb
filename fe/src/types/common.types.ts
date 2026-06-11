@@ -18,6 +18,7 @@ export type RoomRegistrationStatus =
   | 'approved'
   | 'rejected'
   | 'checked_out'
+export type CheckoutRequestStatus = 'pending' | 'approved' | 'rejected'
 export type InvoiceStatus = 'unpaid' | 'paid'
 export type MaintenanceRequestStatus = 'pending' | 'in_progress' | 'resolved'
 export type NotificationTargetRole = 'all' | 'student' | 'staff'
@@ -105,6 +106,18 @@ export interface Invoice {
   status: InvoiceStatus
   due_date: string
   paid_at: string | null
+}
+
+export interface CheckoutRequest {
+  id: number
+  registration_id: number
+  student: UserSummary
+  room: RoomSummary
+  requested_checkout_date: string
+  reason: string
+  status: CheckoutRequestStatus
+  created_at: string
+  processed_at: string | null
 }
 
 export interface MaintenanceRequest {

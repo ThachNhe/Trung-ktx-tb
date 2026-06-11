@@ -1,10 +1,21 @@
+from datetime import datetime, timezone
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.constants.enums import Gender, Nationality, RoomRegistrationStatus, RoomStatus, RoomType, UserRole
+from app.constants.enums import (
+    CheckoutRequestStatus,
+    Gender,
+    Nationality,
+    RoomRegistrationStatus,
+    RoomStatus,
+    RoomType,
+    UserRole,
+)
 from app.core.exception import BadRequestException, ConflictException, NotFoundException
 from app.models.building import Building
+from app.models.checkout_request import CheckoutRequest
 from app.models.room import Room
 from app.models.room_registration import RoomRegistration
 from app.models.user import User
@@ -129,7 +140,11 @@ class RegistrationService:
         await self.db.flush()
         return self._to_response(registration)
 
-    async def checkout_registration(self, registration_id: int) -> RegistrationResponse:
+    async def checkout_registration(
+        self,
+        registration_id: int,
+        processor: User | None = None,
+    ) -> RegistrationResponse:
         registration = await self._get_registration(registration_id)
 
         if registration.status != RoomRegistrationStatus.APPROVED:
@@ -145,6 +160,8 @@ class RegistrationService:
                 if registration.room.current_occupancy >= registration.room.capacity
                 else RoomStatus.AVAILABLE
             )
+
+        await self._approve_pending_checkout_requests(registration.id, processor)
 
         await self.db.flush()
         return self._to_response(registration)
@@ -191,6 +208,23 @@ class RegistrationService:
         allowed_room_types = self._allowed_room_types(student.gender, student.nationality)
         if room.room_type not in allowed_room_types:
             raise BadRequestException("Phòng không phù hợp với giới tính hoặc quốc tịch của sinh viên")
+
+    async def _approve_pending_checkout_requests(
+        self,
+        registration_id: int,
+        processor: User | None,
+    ) -> None:
+        result = await self.db.execute(
+            select(CheckoutRequest).where(
+                CheckoutRequest.registration_id == registration_id,
+                CheckoutRequest.status == CheckoutRequestStatus.PENDING,
+            )
+        )
+        now = datetime.now(timezone.utc)
+        for request in result.scalars():
+            request.status = CheckoutRequestStatus.APPROVED
+            request.processed_by = processor.id if processor else None
+            request.processed_at = now
 
     def _allowed_room_types(self, gender: Gender, nationality: Nationality) -> set[RoomType]:
         if nationality == Nationality.LAOS:

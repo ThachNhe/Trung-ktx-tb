@@ -53,6 +53,12 @@ class User(Base):
         cascade="all, delete-orphan",
         foreign_keys="MaintenanceRequest.student_id",
     )
+    checkout_requests = relationship(
+        "CheckoutRequest",
+        back_populates="student",
+        cascade="all, delete-orphan",
+        foreign_keys="CheckoutRequest.student_id",
+    )
     notifications_created = relationship(
         "Notification",
         back_populates="creator",

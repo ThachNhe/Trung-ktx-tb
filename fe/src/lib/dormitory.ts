@@ -2,6 +2,7 @@ import { ROLE_HOME_ROUTES } from '@/lib/constants'
 import type {
   Building,
   BuildingStatus,
+  CheckoutRequestStatus,
   Gender,
   InvoiceStatus,
   MaintenanceRequestStatus,
@@ -52,6 +53,12 @@ export const REGISTRATION_STATUS_LABELS: Record<RoomRegistrationStatus, string> 
   approved: 'Đã duyệt',
   rejected: 'Từ chối',
   checked_out: 'Đã trả phòng',
+}
+
+export const CHECKOUT_REQUEST_STATUS_LABELS: Record<CheckoutRequestStatus, string> = {
+  pending: 'Chờ xử lý',
+  approved: 'Đã xác nhận',
+  rejected: 'Từ chối',
 }
 
 export const INVOICE_STATUS_LABELS: Record<InvoiceStatus, string> = {

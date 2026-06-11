@@ -27,3 +27,6 @@ class RoomRegistration(Base):
 
     student = relationship("User", back_populates="registrations", foreign_keys=[student_id])
     room = relationship("Room", back_populates="registrations")
+    checkout_requests = relationship(
+        "CheckoutRequest", back_populates="registration", cascade="all, delete-orphan"
+    )

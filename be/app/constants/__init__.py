@@ -1,6 +1,7 @@
 from app.constants.enums import (
     BuildingCode,
     BuildingStatus,
+    CheckoutRequestStatus,
     Gender,
     InvoiceStatus,
     MaintenanceRequestStatus,
@@ -22,6 +23,7 @@ __all__ = [
     "RoomType",
     "RoomStatus",
     "RoomRegistrationStatus",
+    "CheckoutRequestStatus",
     "InvoiceStatus",
     "MaintenanceRequestStatus",
     "NotificationTargetRole",

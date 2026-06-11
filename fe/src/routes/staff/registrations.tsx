@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { LogOut } from 'lucide-react'
 import { useState } from 'react'
 
 import { ConfirmDialog } from '@/features/dormitory/components/confirm-dialog'
@@ -14,6 +15,7 @@ import {
 } from '@/features/dormitory/components/dormitory-ui'
 import {
     useApproveRegistration,
+    useCheckoutRegistration,
     useRejectRegistration,
     useRegistrations,
 } from '@/hooks/useDormitory'
@@ -34,17 +36,53 @@ function StaffRegistrations() {
     const [limit, setLimit] = useState<number>(PAGINATION.DEFAULT_LIMIT)
     const [statusFilter, setStatusFilter] = useState<string>('all')
     const [confirmAction, setConfirmAction] = useState<{
-        type: 'approve' | 'reject'
+        type: 'approve' | 'reject' | 'checkout'
         registration: Registration
     } | null>(null)
 
     const { data, isPending, error } = useRegistrations({ page, limit })
     const { mutate: approve, isPending: isApproving } = useApproveRegistration()
     const { mutate: reject, isPending: isRejecting } = useRejectRegistration()
+    const { mutate: checkout, isPending: isCheckingOut } = useCheckoutRegistration()
     const toast = useToast()
 
     const allItems = data?.items ?? []
     const filtered = statusFilter === 'all' ? allItems : allItems.filter((r) => r.status === statusFilter)
+
+    const getConfirmContent = () => {
+        if (!confirmAction) {
+            return {
+                title: '',
+                description: '',
+                confirmLabel: '',
+            }
+        }
+
+        const { type, registration } = confirmAction
+        const studentName = registration.student.full_name
+        const roomName = getRoomDisplayName(registration.room)
+
+        switch (type) {
+            case 'approve':
+                return {
+                    title: 'Xác nhận duyệt đơn',
+                    description: `Duyệt đơn đăng ký phòng ${roomName} của sinh viên ${studentName}?`,
+                    confirmLabel: 'Duyệt đơn',
+                }
+            case 'reject':
+                return {
+                    title: 'Xác nhận từ chối đơn',
+                    description: `Từ chối đơn đăng ký của sinh viên ${studentName}?`,
+                    confirmLabel: 'Từ chối',
+                }
+            case 'checkout':
+                return {
+                    title: 'Xác nhận trả phòng',
+                    description: `Xác nhận sinh viên ${studentName} trả phòng ${roomName}?`,
+                    confirmLabel: 'Trả phòng',
+                }
+        }
+    }
 
     const handleConfirm = () => {
         if (!confirmAction) return
@@ -60,7 +98,10 @@ function StaffRegistrations() {
                     toast.error('Lỗi', err instanceof Error ? err.message : 'Không thể duyệt đơn.')
                 },
             })
-        } else {
+            return
+        }
+
+        if (type === 'reject') {
             reject(registration.id, {
                 onSuccess: () => {
                     toast.success('Đã từ chối đơn', `Đơn của ${registration.student.full_name} đã bị từ chối.`)
@@ -70,8 +111,21 @@ function StaffRegistrations() {
                     toast.error('Lỗi', err instanceof Error ? err.message : 'Không thể từ chối đơn.')
                 },
             })
+            return
         }
+
+        checkout(registration.id, {
+            onSuccess: () => {
+                toast.success('Đã trả phòng', `${registration.student.full_name} đã được cập nhật trả phòng.`)
+                setConfirmAction(null)
+            },
+            onError: (err) => {
+                toast.error('Lỗi', err instanceof Error ? err.message : 'Không thể trả phòng.')
+            },
+        })
     }
+
+    const confirmContent = getConfirmContent()
 
     const columns: TableColumn<Registration>[] = [
         {
@@ -112,25 +166,59 @@ function StaffRegistrations() {
         {
             key: 'actions',
             header: '',
-            render: (reg) =>
-                reg.status === 'pending' ? (
-                    <div className="flex gap-2">
-                        <Button
-                            size="sm"
-                            onClick={() => setConfirmAction({ type: 'approve', registration: reg })}
-                        >
-                            Duyệt
-                        </Button>
+            render: (reg) => {
+                if (reg.status === 'pending') {
+                    return (
+                        <div className="flex gap-2">
+                            <Button
+                                size="sm"
+                                onClick={() =>
+                                    setConfirmAction({
+                                        type: 'approve',
+                                        registration: reg,
+                                    })
+                                }
+                            >
+                                Duyệt
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                className="border-rose-300 text-rose-700 hover:bg-rose-50"
+                                onClick={() =>
+                                    setConfirmAction({
+                                        type: 'reject',
+                                        registration: reg,
+                                    })
+                                }
+                            >
+                                Từ chối
+                            </Button>
+                        </div>
+                    )
+                }
+
+                if (reg.status === 'approved') {
+                    return (
                         <Button
                             size="sm"
                             variant="outline"
-                            className="border-rose-300 text-rose-700 hover:bg-rose-50"
-                            onClick={() => setConfirmAction({ type: 'reject', registration: reg })}
+                            className="border-sky-300 text-sky-700 hover:bg-sky-50"
+                            onClick={() =>
+                                setConfirmAction({
+                                    type: 'checkout',
+                                    registration: reg,
+                                })
+                            }
                         >
-                            Từ chối
+                            <LogOut className="size-4" />
+                            Trả phòng
                         </Button>
-                    </div>
-                ) : null,
+                    )
+                }
+
+                return null
+            },
         },
     ]
 
@@ -138,21 +226,19 @@ function StaffRegistrations() {
         <div className="space-y-6">
             <PageHeader
                 eyebrow="Cán bộ quản lý"
-                title="Duyệt đơn đăng ký"
-                description="Xem xét và phê duyệt các đơn đăng ký ký túc xá của sinh viên."
+                title="Quản lý đăng ký phòng"
+                description="Xem xét đơn đăng ký ký túc xá và xử lý trả phòng cho sinh viên."
             />
 
             <SectionCard
                 title="Danh sách đơn đăng ký"
                 action={
-                    <Select
-                        className="h-9 w-44"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
+                    <Select className="h-9 w-44" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                         <option value="all">Tất cả</option>
                         {Object.entries(REGISTRATION_STATUS_LABELS).map(([k, v]) => (
-                            <option key={k} value={k}>{v}</option>
+                            <option key={k} value={k}>
+                                {v}
+                            </option>
                         ))}
                     </Select>
                 }
@@ -174,7 +260,10 @@ function StaffRegistrations() {
                             <PaginationControls
                                 pagination={data.pagination}
                                 onPageChange={setPage}
-                                onLimitChange={(l) => { setLimit(l); setPage(1) }}
+                                onLimitChange={(l) => {
+                                    setLimit(l)
+                                    setPage(1)
+                                }}
                             />
                         )}
                     </div>
@@ -184,15 +273,11 @@ function StaffRegistrations() {
             <ConfirmDialog
                 open={!!confirmAction}
                 onOpenChange={(open) => !open && setConfirmAction(null)}
-                title={confirmAction?.type === 'approve' ? 'Xác nhận duyệt đơn' : 'Xác nhận từ chối đơn'}
-                description={
-                    confirmAction?.type === 'approve'
-                        ? `Duyệt đơn đăng ký phòng ${getRoomDisplayName(confirmAction.registration.room)} của sinh viên ${confirmAction?.registration.student.full_name}?`
-                        : `Từ chối đơn đăng ký của sinh viên ${confirmAction?.registration.student.full_name}?`
-                }
-                confirmLabel={confirmAction?.type === 'approve' ? 'Duyệt đơn' : 'Từ chối'}
-                tone={confirmAction?.type === 'approve' ? 'default' : 'destructive'}
-                isPending={isApproving || isRejecting}
+                title={confirmContent.title}
+                description={confirmContent.description}
+                confirmLabel={confirmContent.confirmLabel}
+                tone={confirmAction?.type === 'reject' ? 'destructive' : 'default'}
+                isPending={isApproving || isRejecting || isCheckingOut}
                 onConfirm={handleConfirm}
             />
         </div>

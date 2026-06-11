@@ -10,6 +10,7 @@ import { dormitoryService } from '@/services/dormitory.service'
 import type {
   AvailableRoomQueryParams,
   CreateBuildingPayload,
+  CreateCheckoutRequestPayload,
   CreateInvoicePayload,
   CreateMaintenancePayload,
   CreateNotificationPayload,
@@ -193,6 +194,27 @@ export function useCheckoutRegistration() {
         queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REGISTRATIONS.ROOT }),
         queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS.ROOT }),
       ])
+    },
+  })
+}
+
+export function useCheckoutRequests(
+  params: ListQueryParams = DEFAULT_COLLECTION_PARAMS,
+) {
+  return useQuery({
+    queryKey: QUERY_KEYS.CHECKOUT_REQUESTS.LIST(params),
+    queryFn: () => dormitoryService.listCheckoutRequests(params),
+  })
+}
+
+export function useCreateCheckoutRequest() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (payload: CreateCheckoutRequestPayload) =>
+      dormitoryService.createCheckoutRequest(payload),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CHECKOUT_REQUESTS.ROOT })
     },
   })
 }

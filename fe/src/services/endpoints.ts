@@ -35,6 +35,10 @@ export const API_ENDPOINTS = {
     REJECT: (registrationId: number) => `/registrations/${registrationId}/reject`,
     CHECKOUT: (registrationId: number) => `/registrations/${registrationId}/checkout`,
   },
+  CHECKOUT_REQUESTS: {
+    LIST: '/checkout-requests',
+    CREATE: '/checkout-requests',
+  },
   INVOICES: {
     LIST: '/invoices',
     CREATE: '/invoices',

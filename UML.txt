@@ -1,7 +1,7 @@
 ' ============================================================
 ' HỆ THỐNG QUẢN LÝ KÝ TÚC XÁ – ĐẠI HỌC TÂY BẮC
 ' Biểu đồ chi tiết theo từng Use Case
-' Mỗi UC gồm: Biểu đồ ca sử dụng | Biểu đồ hoạt động | Biểu đồ tuần tự
+' Mỗi UC gồm: Biểu đồ sử dụng | Biểu đồ hoạt động | Biểu đồ tuần tự
 ' ============================================================
 
 
@@ -56,7 +56,7 @@ ADMIN --> UC13
 ' ║  UC1 – CẤP TÀI KHOẢN                                    ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC1 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC1 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC1_Cap_Tai_Khoan_UseCase
 left to right direction
 title UC1 – Cấp tài khoản 
@@ -124,7 +124,7 @@ end
 ' ║  UC2 – ĐĂNG NHẬP                                        ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC2 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC2 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC2_Dang_Nhap_UseCase
 left to right direction
 title UC2 – Đăng nhập 
@@ -193,7 +193,7 @@ end
 ' ║  UC3 – QUẢN LÝ TÒA NHÀ & PHÒNG                         ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC3 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC3 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC3_Quan_Ly_Toa_Nha_UseCase
 left to right direction
 title UC3 – Quản lý Tòa nhà & Phòng
@@ -258,7 +258,7 @@ end
 ' ║  UC5 – ĐĂNG KÝ PHÒNG                                    ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC5 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC5 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC5_Dang_Ky_Phong_UseCase
 left to right direction
 title UC5 – Đăng ký phòng 
@@ -333,7 +333,7 @@ end
 ' ║  UC6 – DUYỆT ĐƠN ĐĂNG KÝ                               ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC6 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC6 | Biểu đồ sử dụng ─────────────────────────────
 @startuml
 left to right direction
 title UC6 – Duyệt đơn đăng ký 
@@ -409,7 +409,7 @@ UI  --> NV  : Cập nhật danh sách
 ' ║  UC7 – TRẢ PHÒNG                                        ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC7 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC7 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC7_Tra_Phong_UseCase
 left to right direction
 title UC7 – Trả phòng 
@@ -472,7 +472,7 @@ UI  --> NV  : Xác nhận
 ' ║  UC8 – TẠO HÓA ĐƠN                                     ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC8 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC8 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC8_Tao_Hoa_Don_UseCase
 left to right direction
 title UC8 – Tạo hóa đơn 
@@ -543,7 +543,7 @@ end
 ' ║  UC9 – THANH TOÁN HÓA ĐƠN                              ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC9 | Biểu đồ ca sử dụng ─────────────────────────────
+' ── UC9 | Biểu đồ sử dụng ─────────────────────────────
 @startuml UC9_Thanh_Toan_Hoa_Don_UseCase
 left to right direction
 title UC9 – Thanh toán hóa đơn
@@ -609,7 +609,7 @@ end
 ' ║  UC10 – YÊU CẦU BẢO TRÌ                                ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC10 | Biểu đồ ca sử dụng ────────────────────────────
+' ── UC10 | Biểu đồ sử dụng ────────────────────────────
 @startuml UC10_Yeu_Cau_Bao_Tri_UseCase
 left to right direction
 title UC10 – Yêu cầu bảo trì
@@ -670,7 +670,7 @@ end
 ' ║  UC11 – XỬ LÝ BẢO TRÌ                                  ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC11 | Biểu đồ ca sử dụng ────────────────────────────
+' ── UC11 | Biểu đồ sử dụng ────────────────────────────
 @startuml UC11_Xu_Ly_Bao_Tri_UseCase
 left to right direction
 title UC11 – Xử lý bảo trì
@@ -730,7 +730,7 @@ UI  --> NV  : Xác nhận
 ' ║  UC12 – GỬI THÔNG BÁO                                   ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC12 | Biểu đồ ca sử dụng ────────────────────────────
+' ── UC12 | Biểu đồ sử dụng ────────────────────────────
 @startuml UC12_Gui_Thong_Bao_UseCase
 left to right direction
 title UC12 – Gửi thông báo
@@ -799,7 +799,7 @@ UI      --> RECEIVER : Hiển thị thông báo
 ' ║  UC13 – XEM BÁO CÁO THỐNG KÊ                           ║
 ' ╚══════════════════════════════════════════════════════════╝
 
-' ── UC13 | Biểu đồ ca sử dụng ────────────────────────────
+' ── UC13 | Biểu đồ sử dụng ────────────────────────────
 @startuml UC13_Xem_Bao_Cao_UseCase
 left to right direction
 title UC13 – Xem báo cáo thống kê

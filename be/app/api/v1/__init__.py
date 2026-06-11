@@ -1,12 +1,23 @@
 from fastapi import APIRouter
 
-from app.api.v1 import auth, buildings, invoices, maintenance, notifications, registrations, reports, users
+from app.api.v1 import (
+    auth,
+    buildings,
+    checkout_requests,
+    invoices,
+    maintenance,
+    notifications,
+    registrations,
+    reports,
+    users,
+)
 
 router = APIRouter(prefix="/v1")
 router.include_router(auth.router)
 router.include_router(users.router)
 router.include_router(buildings.router)
 router.include_router(registrations.router)
+router.include_router(checkout_requests.router)
 router.include_router(invoices.router)
 router.include_router(maintenance.router)
 router.include_router(notifications.router)

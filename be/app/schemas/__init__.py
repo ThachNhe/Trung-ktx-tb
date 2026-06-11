@@ -15,6 +15,7 @@ from app.schemas.common import (
     RoomSummaryResponse,
     UserSummaryResponse,
 )
+from app.schemas.checkout_request import CreateCheckoutRequest, CheckoutRequestResponse
 from app.schemas.invoice import CreateInvoiceRequest, InvoiceResponse
 from app.schemas.maintenance import (
     CreateMaintenanceRequest,
@@ -47,6 +48,8 @@ __all__ = [
     "RoomResponse",
     "CreateRegistrationRequest",
     "RegistrationResponse",
+    "CreateCheckoutRequest",
+    "CheckoutRequestResponse",
     "CreateInvoiceRequest",
     "InvoiceResponse",
     "CreateMaintenanceRequest",

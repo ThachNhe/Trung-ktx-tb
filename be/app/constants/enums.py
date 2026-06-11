@@ -53,6 +53,12 @@ class RoomRegistrationStatus(str, Enum):
     CHECKED_OUT = "checked_out"
 
 
+class CheckoutRequestStatus(str, Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+
+
 class InvoiceStatus(str, Enum):
     UNPAID = "unpaid"
     PAID = "paid"

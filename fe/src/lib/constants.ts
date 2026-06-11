@@ -82,6 +82,11 @@ export const QUERY_KEYS = {
     LIST: (params?: ListQueryParams) =>
       ['registrations', 'list', normalizePagination(params)] as const,
   },
+  CHECKOUT_REQUESTS: {
+    ROOT: ['checkout-requests'] as const,
+    LIST: (params?: ListQueryParams) =>
+      ['checkout-requests', 'list', normalizePagination(params)] as const,
+  },
   INVOICES: {
     ROOT: ['invoices'] as const,
     LIST: (params?: ListQueryParams) =>

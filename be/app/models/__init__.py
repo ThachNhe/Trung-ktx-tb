@@ -1,4 +1,5 @@
 from app.models.building import Building
+from app.models.checkout_request import CheckoutRequest
 from app.models.invoice import Invoice
 from app.models.maintenance_request import MaintenanceRequest
 from app.models.notification import Notification
@@ -10,8 +11,9 @@ __all__ = [
 	"User",
 	"Building",
 	"Room",
-	"RoomRegistration",
-	"Invoice",
+		"RoomRegistration",
+		"CheckoutRequest",
+		"Invoice",
 	"MaintenanceRequest",
 	"Notification",
 ]

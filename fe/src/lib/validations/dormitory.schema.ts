@@ -51,6 +51,12 @@ export const createMaintenanceSchema = z.object({
   description: z.string().min(1, 'Mô tả là bắt buộc'),
 })
 
+export const createCheckoutRequestSchema = z.object({
+  registration_id: z.coerce.number().int().min(1, 'Đơn đăng ký không hợp lệ'),
+  requested_checkout_date: z.string().min(1, 'Chọn ngày trả phòng dự kiến'),
+  reason: z.string().trim().min(1, 'Lý do trả phòng là bắt buộc'),
+})
+
 export const updateMaintenanceStatusSchema = z.object({
   status: maintenanceStatus,
 })
@@ -70,6 +76,7 @@ export type CreateRoomFormValues = z.infer<typeof createRoomSchema>
 export type CreateRegistrationFormValues = z.infer<typeof createRegistrationSchema>
 export type CreateInvoiceFormValues = z.infer<typeof createInvoiceSchema>
 export type CreateMaintenanceFormValues = z.infer<typeof createMaintenanceSchema>
+export type CreateCheckoutRequestFormValues = z.infer<typeof createCheckoutRequestSchema>
 export type UpdateMaintenanceStatusFormValues = z.infer<
   typeof updateMaintenanceStatusSchema
 >
